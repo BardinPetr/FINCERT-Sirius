@@ -2,6 +2,16 @@ import ReadFile
 import Crypt
 import os
 import platform
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+
+
+def days_from_modifed(s):
+    path = Path(s)
+    statResult = path.stat()
+    epoch = datetime(1970, 1, 1, tzinfo=timezone.utc)
+    modified = epoch + timedelta(seconds=statResult.st_mtime)
+    return (datetime.today().utcnow().date() - modified.date()).days
 
 
 def find(data):
@@ -19,6 +29,8 @@ def find(data):
     for root, dirs, files in os.walk(root_start):
         for file in files:
 
+            if days_from_modifed(file) > 10:
+                continue
             statinfo = os.stat(file)
             file_size = statinfo.st_size
             path = os.path.join(root, file)

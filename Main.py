@@ -10,7 +10,6 @@ def run(data):
         ResArr = fp.FileFinder.find(data['file'])
         for i in ResArr:
             print(i)
-
     if 'register' in data:
         pass
     if 'ram' in data:
