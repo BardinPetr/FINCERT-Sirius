@@ -7,7 +7,10 @@ def run(data):
     if 'net' in data:
         pass
     if 'file' in data:
-        fp.FileFinder.find(data['file'])
+        ResArr = fp.FileFinder.find(data['file'])
+        for i in ResArr:
+            print(i)
+
     if 'register' in data:
         pass
     if 'ram' in data:

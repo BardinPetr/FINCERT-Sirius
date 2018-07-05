@@ -14,6 +14,7 @@ def find(data):
     root_start = '/'
     if platform.system() == 'Windows':
         root_start = 'C:\\'
+    result = dict()
 
     for root, dirs, files in os.walk(root_start):
         for file in files:
@@ -22,7 +23,6 @@ def find(data):
             file_size = statinfo.st_size
             path = os.path.join(root, file)
             file_text = ReadFile.file_get_contents(file)
-            result = dict()
 
             for t in data:
                 if t[0][1] == file_size:
@@ -30,6 +30,8 @@ def find(data):
                         if t[0][2]['SHA1'] == Crypt.crypt_sha1(file_text):
                             if t[0][2]['SHA256'] == Crypt.crypt_sha256(file_text):
                                 result[file] = path
+
+    return result
 
 
 """
