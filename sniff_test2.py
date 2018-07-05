@@ -5,4 +5,5 @@ def pkt_callback(pkt):
     pkt.show()
 
 
-sniff(iface="wlp19s0", prn=pkt_callback, filter="tcp", store=0)
+# В iface указывать имя своего WI-FI модуля.
+sniff(iface="en0", prn=pkt_callback, filter="tcp", store=0)
