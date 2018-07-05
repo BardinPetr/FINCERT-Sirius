@@ -1,17 +1,16 @@
 import FilePack as fp
 
 
-def run(data):
+def run(data, cb):
+    res = {}
     if 'mail' in data:
         pass
     if 'net' in data:
         pass
     if 'file' in data:
-        ResArr = fp.FileFinder.find(data['file'])
-        for i in ResArr:
-            print(i)
-
-    if 'register' in data:
+        res['file'] = fp.FileFinder.find(data['file'])
+    if 'reg' in data:
         pass
     if 'ram' in data:
         pass
+    cb(res)
