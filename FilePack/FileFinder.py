@@ -1,4 +1,6 @@
 import os
+import ReadFile
+import Crypt
 
 
 # На Windows не проверял.
@@ -22,5 +24,5 @@ def find_all(name, path):
 
 nameG = input()
 pathG = input()
-
-print(find(nameG, pathG))
+md5 = Crypt.crypt_md5(ReadFile.file_get_contents(find(nameG, pathG)))
+print(md5)
