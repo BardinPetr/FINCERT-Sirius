@@ -12,5 +12,3 @@ def run(data):
         pass
     if 'ram' in data:
         pass
-    
-

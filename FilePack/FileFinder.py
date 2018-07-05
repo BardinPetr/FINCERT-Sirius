@@ -11,24 +11,25 @@ def find(data):
         :param path: Коренной путь поиска
         :return: путь
     """
-    root = '/'
+    root_start = '/'
     if platform.system() == 'Windows':
-        root = 'C:\\'
+        root_start = 'C:\\'
 
-    for root, dirs, files in os.walk(root):
+    for root, dirs, files in os.walk(root_start):
         for file in files:
 
             statinfo = os.stat(file)
             file_size = statinfo.st_size
             path = os.path.join(root, file)
+            file_text = ReadFile.file_get_contents(file)
+            result = dict()
 
             for t in data:
-                if t[0][0] == file:
-
                 if t[0][1] == file_size:
-                    if t[0][2]['MD5'] == Crypt.crypt_md5(ReadFile.file_get_contents(file)):
-
-                    if t[0][2]['SHA1'] == Crypt.
+                    if t[0][2]['MD5'] == Crypt.crypt_md5(file_text):
+                        if t[0][2]['SHA1'] == Crypt.crypt_sha1(file_text):
+                            if t[0][2]['SHA256'] == Crypt.crypt_sha256(file_text):
+                                result[file] = path
 
 
 """
