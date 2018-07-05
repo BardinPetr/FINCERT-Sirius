@@ -23,7 +23,7 @@ def index():
         if request.method == "POST":
             req = request.form
             if 'files' in req:  # %filename%;%filesize%;%algo%;%algoresult%
-                data['file'] = list(map(lambda x: (x[0], int(x[1]), x[2], x[3]),
+                data['file'] = list(map(lambda x: (x[0], int(x[1]), {x[2]: x[3]}),
                                         [i.split(';') for i in req['file_name_list'].split('\r\n')]))
             if data != {}:
                 thr = threading.Thread(target=run, args=(data, callback,))

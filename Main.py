@@ -8,7 +8,7 @@ def run(data, cb):
     if 'net' in data:
         pass
     if 'file' in data:
-        res['file'] = fp.FileFinder.find(data['file'])
+        res['file'] = FileFinder.find(data['file'])
     if 'reg' in data:
         pass
     if 'ram' in data:
