@@ -1,12 +1,12 @@
+from utils.StoppableThread import StoppableThread
 from websocketserver import WebsocketServer
 from flask import render_template, request
 from flask import Flask
 from Main import run
 import threading
 import logging
-import signal
 import json
-import sys
+import os
 
 app = Flask(__name__)
 server = None
@@ -33,43 +33,12 @@ def index():
         return render_template('error.html', res=ex)
 
 
-"""
-
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
-    server = WebSocketServer("localhost", 9999, WebSocket)
-    server_thread = threading.Thread(target=server.listen, args=[5])
-    server_thread.start()
-
-    app.run(port=8080, host='0.0.0.0')
-
-
-    def signal_handler(signal, frame):
-        logging.info("Caught Ctrl+C, shutting down...")
-        server.running = False
-        sys.exit()
-
-
-    signal.signal(signal.SIGINT, signal_handler)
-"""
-
-if __name__ == '__main__':
-    def new_client(client, server):
-        server.send_message_to_all("Hey all, a new client has joined us")
-
-
-    server_thread = threading.Thread(target=lambda: app.run(port=8080, host='0.0.0.0'))
+    server_thread = StoppableThread(lambda: app.run(port=8080, host='0.0.0.0'))
     server_thread.start()
 
     server = WebsocketServer(9999, host='127.0.0.1', loglevel=logging.INFO)
-    server.set_fn_new_client(new_client)
     server.run_forever()
+    server_thread.stop()
 
-
-    def signal_handler(signal, frame):
-        logging.info("Caught Ctrl+C, shutting down...")
-        server.server_close()
-        sys.exit()
-
-
-    signal.signal(signal.SIGINT, signal_handler)
+    os.system('kill $PPID')
