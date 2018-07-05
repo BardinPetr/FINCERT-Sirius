@@ -8,4 +8,9 @@ def run(data):
         pass
     if 'file' in data:
         fp.FileFinder.find(data['file'])
+    if 'register' in data:
+        pass
+    if 'ram' in data:
+        pass
+    
 
