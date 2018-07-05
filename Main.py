@@ -1,4 +1,4 @@
-import FilePack as fp
+from FilePack import FileFinder
 
 
 def run(data):
@@ -7,7 +7,7 @@ def run(data):
     if 'net' in data:
         pass
     if 'file' in data:
-        ResArr = fp.FileFinder.find(data['file'])
+        ResArr = FileFinder.find(data['file'])
         for i in ResArr:
             print(i)
     if 'register' in data:
