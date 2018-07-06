@@ -1,4 +1,4 @@
-var ws = new WebSocket("ws://0.0.0.0:9999");
+var ws = new WebSocket("ws://127.0.0.1:9999");
 
 ws.onopen = function () {
     alert("Connected!")
