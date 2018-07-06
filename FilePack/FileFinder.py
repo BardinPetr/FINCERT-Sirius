@@ -21,14 +21,19 @@ def find(data):
         :return: путь
     """
     root_start = '/'
+    flag = False
     if platform.system() == 'Windows':
         root_start = 'C:\\'
+        flag = True
+
     result = dict()
 
     for root, dirs, files in os.walk(root_start):
         for file in files:
             file = os.path.join(root, file)
-
+            print(os.access(file, os.R_OK))
+            if not os.access(file, os.R_OK) and flag: # Файлы которые нельзя прочесть будут пропущены !!!
+                continue
             if not os.path.isfile(file) or os.path.isdir(file):
                 continue
             statinfo = os.stat(file)
