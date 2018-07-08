@@ -3,8 +3,8 @@ import email
 import imaplib
 from email.parser import Parser
 from pprint import pprint as pp
-
-import tzlocal
+from utils.CosineTextDist import cosine_dist
+import re
 
 
 class MailRunner:
@@ -49,30 +49,34 @@ class MailRunner:
         """
         result, data = m.uid('fetch', u, '(RFC822)')  # Load email by UID
         raw_email = data[0][1]
-        email_message = email.message_from_string(raw_email.decode('utf-8'))  # Decode raw email to Message object
+        try:
+            email_message = email.message_from_string(raw_email.decode('utf-8'))  # Decode raw email to Message object
 
-        subj, txt = email.header.decode_header(
-            email_message.get('Subject', '<>')), '<>'  # Extract & decode mail subject
-        if len(subj) > 0:
-            try:
+            subj, txt = email.header.decode_header(
+                email_message.get('Subject', '<>')), '<>'  # Extract & decode mail subject
+            if len(subj) > 0:
                 subj = subj[0][0] if subj[0][1] is None else subj[0][0].decode(subj[0][1])  # Some magic
                 txt = MailRunner.decode_email(raw_email.decode())  # Decode mail body
-            except UnicodeDecodeError:  # email has non-utf8 symbols
-                return {"err": "UDE"}
-        # print(email_message.keys())
+            # print(email_message.keys())
 
-        date = email_message.get("Date", '<>')
-        if date.find('(') != -1:
-            datetime_object = datetime.datetime.strptime(date, '%a, %d %b %Y %H:%M:%S %z (%Z)')
-        else:
-            datetime_object = datetime.datetime.strptime(date, '%a, %d %b %Y %H:%M:%S %z')
+            date = email_message.get("Date", '<>')
 
-        return {"err": "NA",
-                "date": datetime_object,
-                "subj": subj,
-                "body": txt,
-                "to": email_message.get('Delivered-To', '<>'),
-                "from": email.utils.parseaddr(email_message['From'])[1]}
+            # if date.find('(') != -1:
+            #     try:
+            #         datetime_object = datetime.datetime.strptime(date, '%a %d %b %Y %H:%M:%S %z (%Z)')
+            #     except ValueError:
+            #         datetime_object = datetime.datetime.strptime(date[:-6], '%a %d %b %Y %H:%M:%S %z')
+            # else:
+            #     datetime_object = datetime.datetime.strptime(date, '%a %d %b %Y %H:%M:%S %z')
+
+            return {"err": "NA",
+                    "date": re.findall('^.*\d+:\d+:\d+', date)[0],
+                    "subj": subj,
+                    "body": txt,
+                    "to": email_message.get('Delivered-To', '<>'),
+                    "from": email.utils.parseaddr(email_message['From'])[1]}
+        except UnicodeDecodeError:  # email has non-utf8 symbols
+            return {"err": "UDE"}
 
     @staticmethod
     def decode_email(msg_str):
@@ -95,7 +99,7 @@ class MailRunner:
 def find(data, cb):
     mr = MailRunner((input("Your Gmail addr: "), input("Your Gmail pass: ")))
 
-    date = (datetime.date.today() - datetime.timedelta(1)).strftime(
+    date = (datetime.date.today() - datetime.timedelta(14)).strftime(
         "%d-%b-%Y")  # In timedelta choose amount of days ago.
 
     mails = mr.get_emails(None, '(SENTSINCE {date})'.format(
@@ -103,12 +107,17 @@ def find(data, cb):
     result = []
 
     for mail in mails:
-        if mail['from'] in data['email']:
+        if mail['err'] != 'NA':
+            continue
+        print(*map(lambda x: cosine_dist(x, mail['body']), data['text']))
+        if mail['from'] in data['email'] or \
+                any(filter(lambda x: x > 0.8, map(lambda x: cosine_dist(x, mail['body']), data['text']))):
             result.append({'from': mail['from'], 'date': mail['date'], 'subj': mail['subj']})
-
     return result
 
 
 if __name__ == '__main__':
-    a = {'email': ['notification+kjdp33_kh13d@facebookmail.com'], 'text': []}
+    a = {'email': ['do-not-reply@trello.com'], 'text': [''.join(open('/home/petr/a.dat', 'r').readlines())]}
     pp(find(a, None))
+# bardin.petr@gmail.com
+# 27042004

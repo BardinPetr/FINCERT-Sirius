@@ -1,4 +1,3 @@
 scapy
 flask
 cryptography
-tzlocal
