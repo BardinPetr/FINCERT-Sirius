@@ -1,9 +1,10 @@
-import datetime
-import email
-import imaplib
+from utils.CosineTextDist import cosine_dist
 from email.parser import Parser
 from pprint import pprint as pp
-from utils.CosineTextDist import cosine_dist
+from utils.storage import *
+import datetime
+import imaplib
+import email
 import re
 
 
@@ -88,9 +89,10 @@ class MailRunner:
 
 
 def find(data, cb):
-    mr = MailRunner((input("Your Gmail addr: "), input("Your Gmail pass: ")))
+    udata = get_cred()
+    mr = MailRunner(udata['cred'], imap=udata['imaphost'], port=udata['imapport'])
 
-    date = (datetime.date.today() - datetime.timedelta(14)).strftime(
+    date = (datetime.date.today() - datetime.timedelta(1)).strftime(
         "%d-%b-%Y")  # In timedelta choose amount of days ago.
 
     mails = mr.get_emails(None, '(SENTSINCE {date})'.format(
@@ -110,5 +112,10 @@ def find(data, cb):
 
 
 if __name__ == '__main__':
+    set_cred({
+        "cred": ("bardin.petr@gmail.com", "27042004"),
+        "imaphost": 0,
+        "imapport": 993
+    })
     a = {'email': ['do-not-reply@trello.com'], 'text': []}
     pp(find(a, None))
