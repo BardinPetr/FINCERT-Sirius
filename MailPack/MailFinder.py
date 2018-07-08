@@ -1,12 +1,10 @@
-from multiprocessing import Pool
-from pprint import pprint as pp
-from email.parser import Parser
-import imaplib
-import email
 import datetime
-import pytz
+import email
+import imaplib
+from email.parser import Parser
+from pprint import pprint as pp
+
 import tzlocal
-import re
 
 
 class MailRunner:
@@ -33,11 +31,6 @@ class MailRunner:
         """
         result, data = self.mail.uid('search', None, flt)  # List all emails by filter
         data = data[0].split()  # Some magic
-
-        # data = (data[::-1])[:10]  # Debug ONLY! --- get 10 first emails
-
-        # pool = Pool(processes=3)
-        # res = pool.map(lambda x: MailRunner.procmail(self.mail, x), data)
 
         xres = []
         for uid in data:
@@ -100,29 +93,22 @@ class MailRunner:
 
 
 def find(data, cb):
-    local_timezone = tzlocal.get_localzone()
-
-    # mr = MailRunner(("", ""))
     mr = MailRunner((input("Your Gmail addr: "), input("Your Gmail pass: ")))
-    # mr.get_emails(None, '(HEADER Received "no-reply@accounts.google.com")')
-    # return mr.get_emails(None)
 
-    date = (datetime.date.today() - datetime.timedelta(14)).strftime("%d-%b-%Y")
+    date = (datetime.date.today() - datetime.timedelta(1)).strftime(
+        "%d-%b-%Y")  # In timedelta choose amount of days ago.
 
-    # print(date)
-    # print(local_timezone)
     mails = mr.get_emails(None, '(SENTSINCE {date})'.format(
         date=date))
     result = []
 
     for mail in mails:
-        if mail['from'] in data['emails']:
-            result.append({'from': mail['from'], 'date': mail['date']})
+        if mail['from'] in data['email']:
+            result.append({'from': mail['from'], 'date': mail['date'], 'subj': mail['subj']})
 
-    return mails
+    return result
 
-
-# Sun, 8 Jul 2018 07:33:39 +0000 (UTC)
 
 if __name__ == '__main__':
-    pp(find({}, None))
+    a = {'email': ['notification+kjdp33_kh13d@facebookmail.com'], 'text': []}
+    pp(find(a, None))
