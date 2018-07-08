@@ -7,7 +7,7 @@ def run(data, cb):
     if 'file' in data:
         res['file'] = FileFinder.find(data['file'])
     if 'mail' in data:
-        res['mail'] = MailFinder.find(data['mail'])
+        res['mail'] = MailFinder.find(data['mail'], cb)
     if 'net' in data:
         pass
     if 'reg' in data:

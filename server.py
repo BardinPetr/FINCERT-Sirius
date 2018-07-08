@@ -27,8 +27,8 @@ def index():
                 data['file'] = list(map(lambda x: (x[0], int(x[1]), {x[2]: x[3], x[4]: x[5], x[6]: x[7]}),
                                         [i.split(';') for i in req['file_name_list'].split('\r\n')]))
             if 'mail' in req:
-                data['mail'] = {"email": [i.split(';') for i in req['mail_addr_list'].split('\r\n')],
-                                "text": [i.split('!@<<&>>@!') for i in req['mail_txts'].split('\r\n')]}
+                data['mail'] = {"email": req['mail_addr_list'].split('\r\n'),
+                                "text": req['mail_txts'].split('\r\n!@<<&>>@!\r\n')}
             if data != {}:
                 thr = threading.Thread(target=run, args=(data, callback,))
                 thr.start()

@@ -56,7 +56,7 @@ class MailRunner:
             subj, txt = email.header.decode_header(
                 email_message.get('Subject', '<>')), '<>'  # Extract & decode mail subject
             if len(subj) > 0:
-                subj = subj[0][0] if subj[0][1] is None else subj[0][0].decode(subj[0][1])  # Some magic
+                subj = subj[0][0] if type(subj[0][0]) == str else subj[0][0].decode(subj[0][1] or 'utf-8')  # Some magic
                 txt = MailRunner.decode_email(raw_email.decode())  # Decode mail body
 
             date = email_message.get("Date", '<>')
