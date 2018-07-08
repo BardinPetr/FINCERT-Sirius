@@ -1,8 +1,10 @@
-from multiprocessing import Pool
-from pprint import pprint as pp
-from email.parser import Parser
-import imaplib
+import datetime
 import email
+import imaplib
+from email.parser import Parser
+from pprint import pprint as pp
+
+import tzlocal
 
 
 class MailRunner:
@@ -13,7 +15,7 @@ class MailRunner:
         Initializes MailRunner class
         :param cred: tuple -> (email -> str, pass -> str)
         :param imap: int or str -> int for predeclared imaps(MailRunner.imaps); str for imap address
-        :param port: SSL port of imap (default: 933)
+        :param port: SSL port of imap (default: 993)
         """
         self.mail = imaplib.IMAP4_SSL(MailRunner.imaps[imap] if type(imap) == int else imap, port)
         self.mail.login(*cred)
@@ -29,11 +31,6 @@ class MailRunner:
         """
         result, data = self.mail.uid('search', None, flt)  # List all emails by filter
         data = data[0].split()  # Some magic
-
-        data = (data[::-1])[:10]  # Debug ONLY! --- get 10 first emails
-
-        # pool = Pool(processes=3)
-        # res = pool.map(lambda x: MailRunner.procmail(self.mail, x), data)
 
         xres = []
         for uid in data:
@@ -62,7 +59,16 @@ class MailRunner:
                 txt = MailRunner.decode_email(raw_email.decode())  # Decode mail body
             except UnicodeDecodeError:  # email has non-utf8 symbols
                 return {"err": "UDE"}
+        # print(email_message.keys())
+
+        date = email_message.get("Date", '<>')
+        if date.find('(') != -1:
+            datetime_object = datetime.datetime.strptime(date, '%a, %d %b %Y %H:%M:%S %z (%Z)')
+        else:
+            datetime_object = datetime.datetime.strptime(date, '%a, %d %b %Y %H:%M:%S %z')
+
         return {"err": "NA",
+                "date": datetime_object,
                 "subj": subj,
                 "body": txt,
                 "to": email_message.get('Delivered-To', '<>'),
@@ -87,10 +93,22 @@ class MailRunner:
 
 
 def find(data, cb):
-    # mr = MailRunner(("", ""))
     mr = MailRunner((input("Your Gmail addr: "), input("Your Gmail pass: ")))
-    return mr.get_emails(cb)
+
+    date = (datetime.date.today() - datetime.timedelta(1)).strftime(
+        "%d-%b-%Y")  # In timedelta choose amount of days ago.
+
+    mails = mr.get_emails(None, '(SENTSINCE {date})'.format(
+        date=date))
+    result = []
+
+    for mail in mails:
+        if mail['from'] in data['email']:
+            result.append({'from': mail['from'], 'date': mail['date'], 'subj': mail['subj']})
+
+    return result
 
 
 if __name__ == '__main__':
-    pp(find({}, None))
+    a = {'email': ['notification+kjdp33_kh13d@facebookmail.com'], 'text': []}
+    pp(find(a, None))
