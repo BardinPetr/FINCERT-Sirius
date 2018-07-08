@@ -1,6 +1,7 @@
 from utils.StoppableThread import StoppableThread
 from utils.websocketserver import WebsocketServer
 from flask import render_template, request
+from utils.storage import set_cred
 from flask import Flask
 from Main import run
 import threading
@@ -25,6 +26,9 @@ def index():
             if 'files' in req:  # %filename%;%filesize%;%algo%;%algoresult%
                 data['file'] = list(map(lambda x: (x[0], int(x[1]), {x[2]: x[3], x[4]: x[5], x[6]: x[7]}),
                                         [i.split(';') for i in req['file_name_list'].split('\r\n')]))
+            if 'mail' in req:
+                data['mail'] = {"email": [i.split(';') for i in req['mail_addr_list'].split('\r\n')],
+                                "text": [i.split('!@<<&>>@!') for i in req['mail_txts'].split('\r\n')]}
             if data != {}:
                 thr = threading.Thread(target=run, args=(data, callback,))
                 thr.start()
@@ -39,6 +43,11 @@ def settings():
         data = {}
         if request.method == "POST":
             req = request.form
+            set_cred({
+                "cred": (req['email'], req['password']),
+                "imaphost": 0,
+                "imapport": 993
+            })
         return render_template('settings.html')
     except Exception as ex:
         return render_template('error.html', res=ex)
