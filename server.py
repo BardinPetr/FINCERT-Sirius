@@ -1,5 +1,5 @@
 from utils.StoppableThread import StoppableThread
-from websocketserver import WebsocketServer
+from utils.websocketserver import WebsocketServer
 from flask import render_template, request
 from flask import Flask
 from Main import run
