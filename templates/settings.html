@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="well">Basic Well</div>
+<form method="POST" action="/">
+    <input type="checkbox" name="files">
+    <label>
+        <textarea rows="10" class="form-control" name="file_name_list"></textarea>
+    </label>
+    <button type="submit" class="btn btn-default">Authenticate!</button>
+</form>
+<button onclick='ws.send("!")'>!</button>
+</body>
+</html>

@@ -33,6 +33,17 @@ def index():
         return render_template('error.html', res=ex)
 
 
+@app.route('/settings', methods=['GET', 'POST'])
+def index():
+    try:
+        data = {}
+        if request.method == "POST":
+            req = request.form
+        return render_template('settings.html')
+    except Exception as ex:
+        return render_template('error.html', res=ex)
+
+
 if __name__ == '__main__':
     server_thread = StoppableThread(lambda: app.run(port=8080, host='0.0.0.0'))
     server_thread.start()
@@ -42,3 +53,4 @@ if __name__ == '__main__':
     server_thread.stop()
 
     os.system('kill $PPID')
+
