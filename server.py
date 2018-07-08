@@ -34,7 +34,7 @@ def index():
 
 
 @app.route('/settings', methods=['GET', 'POST'])
-def index():
+def settings():
     try:
         data = {}
         if request.method == "POST":
@@ -53,4 +53,3 @@ if __name__ == '__main__':
     server_thread.stop()
 
     os.system('kill $PPID')
-
