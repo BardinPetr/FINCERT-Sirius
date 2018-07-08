@@ -57,22 +57,13 @@ class MailRunner:
             if len(subj) > 0:
                 subj = subj[0][0] if subj[0][1] is None else subj[0][0].decode(subj[0][1])  # Some magic
                 txt = MailRunner.decode_email(raw_email.decode())  # Decode mail body
-            # print(email_message.keys())
 
             date = email_message.get("Date", '<>')
 
-            # if date.find('(') != -1:
-            #     try:
-            #         datetime_object = datetime.datetime.strptime(date, '%a %d %b %Y %H:%M:%S %z (%Z)')
-            #     except ValueError:
-            #         datetime_object = datetime.datetime.strptime(date[:-6], '%a %d %b %Y %H:%M:%S %z')
-            # else:
-            #     datetime_object = datetime.datetime.strptime(date, '%a %d %b %Y %H:%M:%S %z')
-
             return {"err": "NA",
-                    "date": re.findall('^.*\d+:\d+:\d+', date)[0],
-                    "subj": subj,
-                    "body": txt,
+                    "date": re.findall('^.*\d+:\d+:\d+', date)[0],  # Data when email was received
+                    "subj": subj,  # Subj of email
+                    "body": txt,  # email text
                     "to": email_message.get('Delivered-To', '<>'),
                     "from": email.utils.parseaddr(email_message['From'])[1]}
         except UnicodeDecodeError:  # email has non-utf8 symbols
@@ -103,21 +94,21 @@ def find(data, cb):
         "%d-%b-%Y")  # In timedelta choose amount of days ago.
 
     mails = mr.get_emails(None, '(SENTSINCE {date})'.format(
-        date=date))
+        date=date))  # Get all emails sorted for data
     result = []
 
     for mail in mails:
         if mail['err'] != 'NA':
             continue
-        print(*map(lambda x: cosine_dist(x, mail['body']), data['text']))
+        # print(*map(lambda x: cosine_dist(x, mail['body']), data['text']))
         if mail['from'] in data['email'] or \
                 any(filter(lambda x: x > 0.8, map(lambda x: cosine_dist(x, mail['body']), data['text']))):
-            result.append({'from': mail['from'], 'date': mail['date'], 'subj': mail['subj']})
+            result.append({'from': mail['from'], 'date': mail['date'],
+                           'subj': mail['subj']})  # Check FROM and TEXT in data from bulletin
+
     return result
 
 
 if __name__ == '__main__':
-    a = {'email': ['do-not-reply@trello.com'], 'text': [''.join(open('/home/petr/a.dat', 'r').readlines())]}
+    a = {'email': ['do-not-reply@trello.com'], 'text': []}
     pp(find(a, None))
-# bardin.petr@gmail.com
-# 27042004
