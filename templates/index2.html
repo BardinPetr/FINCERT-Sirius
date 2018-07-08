@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FinCert</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="">WebSiteName</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="">Link</a></li>
+            <li><a href="">Link</a></li>
+        </ul>
+        <button class="btn btn-danger navbar-btn">Button</button>
+    </div>
+</nav>
+<div class="row">
+    <div class="col-lg-2">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Module for parameters</div>
+            <div class="panel-body">
+                <div class="checkbox">
+                    <label><input type="checkbox" value="">Mail</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" value="">Logs</label>
+                </div>
+                <div class="checkbox ">
+                    <label><input type="checkbox" value="">Register</label>
+                </div>
+                <div class="checkbox ">
+                    <label><input type="checkbox" value="">Files</label>
+                </div>
+                <div class="checkbox ">
+                    <label><input type="checkbox" value="">Net</label>
+                </div>
+                <div class="checkbox ">
+                    <label><input type="checkbox" value="">RAM</label>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <div class="row" style="padding-bottom: 20px; margin-right: 30px; margin-left: 30px">
+                    <button type="button" class="btn btn-info btn-block">PDF</button>
+                </div>
+                <div class="row" style="padding-bottom: 20px; margin-right: 30px; margin-left: 30px">
+                    <button type="button" class="btn btn-info btn-block">Start</button>
+                </div>
+                <div class="row" style=" margin-right: 30px; margin-left: 30px">
+                    <button type="button" class="btn btn-info btn-block">Stop</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="panel panel-primary">
+            <div class="panel-heading">The parameters of the modules</div>
+            <div class="panel-body">
+                <div class="panel panel-info" style="margin-bottom: 2px">
+                    <div class="panel-heading">Mail</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="comment"></label>
+                            <textarea class="form-control" rows="1" id="comment"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-info" style="margin-bottom: 2px">
+                    <div class="panel-heading">Logs</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="comment"></label>
+                            <textarea class="form-control" rows="1" id="comment"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-info" style="margin-bottom: 2px">
+                    <div class="panel-heading">Register</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="comment"></label>
+                            <textarea class="form-control" rows="1" id="comment"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-info" style="margin-bottom: 2px">
+                    <div class="panel-heading">Files</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="comment"></label>
+                            <div class="form-group">
+                                <label for="usr">Name:</label>
+                                <input type="text" class="form-control" id="usr">
+                            </div>
+                            <div class="form-group">
+                                <label for="usr">MD5:</label>
+                                <input type="text" class="form-control" id="usr">
+                            </div>
+                            <div class="form-group">
+                                <label for="usr">SHA1:</label>
+                                <input type="text" class="form-control" id="usr">
+                            </div>
+                            <div class="form-group">
+                                <label for="usr">SHA256:</label>
+                                <input type="text" class="form-control" id="usr">
+                            </div>
+                            <div class="form-group">
+                                <label for="usr">Size:</label>
+                                <input type="text" class="form-control" id="usr">
+                                <div class="row" style="margin-top: 10px; margin-right: 20px; margin-left: 410px">
+                                    <button type="button" class="btn btn-info btn-block">Add compromise</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-info" style="margin-bottom: 2px">
+                    <div class="panel-heading">Net</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="comment"></label>
+                            <textarea class="form-control" rows="1" id="comment"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-info" style="margin-bottom: 2px">
+                    <div class="panel-heading">RAM</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="comment"></label>
+                            <textarea class="form-control" rows="1" id="comment"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="panel panel-primary" style="padding-left: 1px; padding-right: 1px">
+            <div class="panel-heading">Loos</div>
+            <div class="panel-body">
+                <label for="comment"></label>
+                <textarea class="form-control" rows="10" id="comment"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
