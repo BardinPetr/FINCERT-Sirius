@@ -1,54 +1,96 @@
+from multiprocessing import Pool
 from pprint import pprint as pp
-import urllib
+from email.parser import Parser
 import imaplib
-import base64
 import email
 
 
 class MailRunner:
     imaps = ['imap.gmail.com', 'imap.yandex.ru']
 
-    def __init__(self, imap, cred):
-        self.mail = imaplib.IMAP4_SSL(MailRunner.imaps[imap] if type(imap) == int else imap)
+    def __init__(self, cred, imap=imaps[0], port=imaplib.IMAP4_SSL_PORT):
+        """
+        Initializes MailRunner class
+        :param cred: tuple -> (email -> str, pass -> str)
+        :param imap: int or str -> int for predeclared imaps(MailRunner.imaps); str for imap address
+        :param port: SSL port of imap (default: 933)
+        """
+        self.mail = imaplib.IMAP4_SSL(MailRunner.imaps[imap] if type(imap) == int else imap, port)
         self.mail.login(*cred)
         self.mail.list()
-        self.mail.select("inbox")
+        self.mail.select("inbox")  # Open folder "INBOX"
 
     def get_emails(self, cb, flt="ALL"):
-        result, data = self.mail.uid('search', None, flt)
+        """
+        Process all emails from inbox using flt as filter
+        :param cb: Function to verify each email
+        :param flt: str -> IMAP filter
+        :return: list -> results of running %cb% on each mail
+        """
+        result, data = self.mail.uid('search', None, flt)  # List all emails by filter
+        data = data[0].split()  # Some magic
 
-        data = data[0].split()[:50:-1]
+        data = (data[::-1])[:10]  # Debug ONLY! --- get 10 first emails
 
+        # pool = Pool(processes=3)
+        # res = pool.map(lambda x: MailRunner.procmail(self.mail, x), data)
+
+        xres = []
         for uid in data:
-            result, data = self.mail.uid('fetch', uid, '(RFC822)')
-            raw_email = data[0][1]
-            email_message = email.message_from_string(raw_email.decode('utf-8'))
-
-            subj = email.header.decode_header(email_message.get('Subject', '<>'))[0]
-            subj =
-            subj = urllib.unquote(subj).decode('utf8')
-
-            res = {"to": email_message.get('Delivered-To', '<>'),
-                   "from": email.utils.parseaddr(email_message['From'])[1],
-                   "subj": subj[0].decode(subj[1]) if subj[1] is not None else "<>",
-                   "body": MailRunner.get_first_text_block(email_message)}
-            pp(res)
+            res = MailRunner.procmail(self.mail, uid)  # Preprocess each mail
+            res = cb(res) if cb else res  # Try to run Postprocess function
+            xres.append(res)
+        return xres
 
     @staticmethod
-    def get_first_text_block(email_message_instance):
-        maintype = email_message_instance.get_content_maintype()
-        if maintype == 'multipart':
-            for part in email_message_instance.get_payload():
-                if part.get_content_maintype() == 'text':
-                    return part.get_payload()
-        elif maintype == 'text':
-            return email_message_instance.get_payload()
+    def procmail(m, u):
+        """
+        Preprocess each mail
+        :param m: mail object (self.mail in MailRunner)
+        :param u: int -> email uid
+        :return: dict
+        """
+        result, data = m.uid('fetch', u, '(RFC822)')  # Load email by UID
+        raw_email = data[0][1]
+        email_message = email.message_from_string(raw_email.decode('utf-8'))  # Decode raw email to Message object
+
+        subj, txt = email.header.decode_header(
+            email_message.get('Subject', '<>')), '<>'  # Extract & decode mail subject
+        if len(subj) > 0:
+            try:
+                subj = subj[0][0] if subj[0][1] is None else subj[0][0].decode(subj[0][1])  # Some magic
+                txt = MailRunner.decode_email(raw_email.decode())  # Decode mail body
+            except UnicodeDecodeError:  # email has non-utf8 symbols
+                return {"err": "UDE"}
+        return {"err": "NA",
+                "subj": subj,
+                "body": txt,
+                "to": email_message.get('Delivered-To', '<>'),
+                "from": email.utils.parseaddr(email_message['From'])[1]}
+
+    @staticmethod
+    def decode_email(msg_str):
+        """
+        Decode mail body
+        :param msg_str: mail body
+        :return: decoded mail body
+        """
+        p = Parser()
+        message = p.parsestr(msg_str)
+        decoded_message = ''
+        for part in message.walk():
+            charset = part.get_content_charset()
+            if part.get_content_type() == 'text/plain':
+                part_str = part.get_payload(decode=1)
+                decoded_message += part_str.decode(charset)
+        return decoded_message
 
 
 def find(data, cb):
-    mr = MailRunner(0, ("mail", "pass"))
-    mr.get_emails(None)
+    # mr = MailRunner(("", ""))
+    mr = MailRunner((input("Your Gmail addr: "), input("Your Gmail pass: ")))
+    return mr.get_emails(cb)
 
 
 if __name__ == '__main__':
-    find({}, None)
+    pp(find({}, None))
