@@ -109,13 +109,3 @@ def find(data, cb):
                            'subj': mail['subj']})  # Check FROM and TEXT in data from bulletin
 
     return result
-
-
-if __name__ == '__main__':
-    set_cred({
-        "cred": ("bardin.petr@gmail.com", "27042004"),
-        "imaphost": 0,
-        "imapport": 993
-    })
-    a = {'email': ['do-not-reply@trello.com'], 'text': []}
-    pp(find(a, None))
