@@ -63,20 +63,34 @@
     <div class="col-lg-5">
         <div class="panel panel-primary">
             <div class="panel-heading">The parameters of the modules</div>
-            <div class="panel-body">
-                <div class="panel panel-info" style="margin-bottom: 2px">
-                    <div class="panel-heading">Mail</div>
-                    <div class="form-group">
-                        <label for="comment">E-mails:</label>
-                        <textarea class="form-control" rows="5" id="comment"></textarea>
+            <div class="panel panel-info" style="margin-bottom: 2px">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#collapse-group" href="#el1">Mail:</a>
+                        </h4>
                     </div>
-                    <div class="form-group">
-                        <label for="comment">Text:</label>
-                        <textarea class="form-control" rows="5" id="comment"></textarea>
+                    <div id="el1" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="comment">E-mails:</label>
+                                <textarea class="form-control" rows="5" id="comment"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="comment">Text:</label>
+                                <textarea class="form-control" rows="5" id="comment"></textarea>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="panel panel-info" style="margin-bottom: 2px">
-                    <div class="panel-heading">Logs</div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#collapse-group" href="#el2">Logs</a>
+                    </h4>
+                </div>
+                <div id="el2" class="panel-collapse collapse">
                     <div class="panel-body">
                         <div class="form-group">
                             <label for="comment"></label>
@@ -84,70 +98,109 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-info" style="margin-bottom: 2px">
-                    <div class="panel-heading">Register</div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#collapse-group" href="#el3">Register</a>
+                    </h4>
+                </div>
+                <div id="el3" class="panel-collapse collapse">
                     <div class="form-group">
                         <label for="usr">Register keys:</label>
                         <div class="form-group"><input type="text" class="form-control" id="usr"></div>
                         <div class="form-group"><input type="text" class="form-control" id="usr"></div>
                         <div class="form-group"><input type="text" class="form-control" id="usr"></div>
                         <div class="form-group"><input type="text" class="form-control" id="usr"></div>
-
+                    </div>
+                    <div class="panel-body">
                     </div>
                 </div>
             </div>
             <div class="panel panel-info" style="margin-bottom: 2px">
-                <div class="panel-heading">Files</div>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <label for="comment"></label>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#collapse-group" href="#el4">Files</a>
+                        </h4>
+                    </div>
+                    <div id="el4" class="panel-collapse collapse">
                         <div class="form-group">
-                            <label for="usr">Name:</label>
-                            <input type="text" class="form-control" id="usr">
-                        </div>
-                        <div class="form-group">
-                            <label for="usr">MD5:</label>
-                            <input type="text" class="form-control" id="usr">
-                        </div>
-                        <div class="form-group">
-                            <label for="usr">SHA1:</label>
-                            <input type="text" class="form-control" id="usr">
-                        </div>
-                        <div class="form-group">
-                            <label for="usr">SHA256:</label>
-                            <input type="text" class="form-control" id="usr">
-                        </div>
-                        <div class="form-group">
-                            <label for="usr">Size:</label>
-                            <input type="text" class="form-control" id="usr">
-                            <div class="row" style="margin-top: 10px; margin-right: 20px; margin-left: 410px">
-                                <button type="button" class="btn btn-info btn-block">Add compromise</button>
+                            <label for="comment"></label>
+                            <div class="form-group">
+                                <label for="usr">Name:</label>
+                                <input type="text" class="form-control" id="usr">
+                            </div>
+                            <div class="form-group">
+                                <label for="usr">MD5:</label>
+                                <input type="text" class="form-control" id="usr">
+                            </div>
+                            <div class="form-group">
+                                <label for="usr">SHA1:</label>
+                                <input type="text" class="form-control" id="usr">
+                            </div>
+                            <div class="form-group">
+                                <label for="usr">SHA256:</label>
+                                <input type="text" class="form-control" id="usr">
+                            </div>
+                            <div class="form-group">
+                                <label for="usr">Size:</label>
+                                <input type="text" class="form-control" id="usr">
+                                <div class="row" style="margin-top: 10px; margin-right: 20px; margin-left: 410px">
+                                    <button type="button" class="btn btn-info btn-block">Add compromise</button>
+                                </div>
                             </div>
                         </div>
+                        <div class="panel-body">
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="panel panel-info" style="margin-bottom: 2px">
-                <div class="panel-heading">Net</div>
-                <div class="form-group">
-                    <label for="comment">IP:</label>
-                    <textarea class="form-control" rows="5" id="comment"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="comment">URLs:</label>
-                    <textarea class="form-control" rows="5" id="comment"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="comment">POST/GET:</label>
-                    <textarea class="form-control" rows="5" id="comment"></textarea>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#collapse-group" href="#el5">Net</a>
+                        </h4>
+                    </div>
+                    <div id="el5" class="panel-collapse collapse">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="comment">IP:</label>
+                                <textarea class="form-control" rows="5" id="comment"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="comment">URLs:</label>
+                                <textarea class="form-control" rows="5" id="comment"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="comment">POST/GET:</label>
+                                <textarea class="form-control" rows="5" id="comment"></textarea>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="panel panel-info" style="margin-bottom: 2px">
-                <div class="panel-heading">RAM</div>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <label for="comment"></label>
-                        <textarea class="form-control" rows="1" id="comment"></textarea>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#collapse-group" href="#el6">RAM</a>
+                        </h4>
+                    </div>
+                    <div id="el6" class="panel-collapse collapse">
+                        <div class="form-group">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="comment"></label>
+                                    <textarea class="form-control" rows="1" id="comment"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -162,7 +215,7 @@
                 <label for="comment"></label>
                 <textarea class="form-control" rows="10" id="comment"></textarea>
                 -->
-                 <p></p>    
+                <p></p>
             </div>
         </div>
     </div>
