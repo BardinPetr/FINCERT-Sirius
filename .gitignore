@@ -115,6 +115,7 @@ __pycache__/
 
 # C extensions
 *.so
+!storage.so
 
 # Distribution / packaging
 .Python
