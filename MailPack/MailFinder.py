@@ -1,7 +1,6 @@
 from utils.CosineTextDist import cosine_dist
 from email.parser import Parser
-from pprint import pprint as pp
-from utils.storage import *
+from utils.encryption import *
 import datetime
 import imaplib
 import email
