@@ -50,3 +50,6 @@ def pkt_callback(pkt, data):
 data = {'ip_get': []}
 sniff(prn=lambda x: pkt_callback(x, data), store=0)
 print(result)
+
+
+
