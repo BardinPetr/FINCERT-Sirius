@@ -1,20 +1,52 @@
+"""
+This code was verified on Ubuntu 17.10, Windows 10(English), Mac OSX
+"""
+
+from scapy.all import *
 import datetime
-from cryptography.fernet import Fernet
-import base64
 
-import base64
-import hashlib
-from Crypto import Random
-from Crypto.Cipher import AES
+result = []
+"""
+    src = 95.142.205.117
+    dst = 10.10.200.213
+
+    src = 10.10.200.213
+    dst = 95.142.205.117
+    
+    src = 163.172.173.40
+    dst = 10.10.200.213
+    
+    src = 173.194.222.189
+    dst = 10.10.200.213
+    
+    
+    data = {'ip_get': ['95.142.205.117', '10.10.200.213', '163.172.173.40', '173.194.222.189'], 'ip_post': ['10.10.200.213', '95.142.205.117', '10.10.200.213', '10.10.200.213']}
+"""
 
 
-def gen_k(k=0):
-    a = datetime.datetime.now()
-    key = "Something always goes wrong at: {}/{}/{} @ {}:{}".format(a.day, a.month, a.year, a.hour, a.minute + k)
-    return key
+def pkt_callback(pkt, data):
+    pkt.show()
+    # for pack in pkt:
+    #
+    #     ip_source = pack[IP].src
+    #     ip_destination = pack[IP].dst
+    #
+    #     tm = pack[IP].time
+    #     value = datetime.datetime.fromtimestamp(tm)
+    #     tm = value.strftime('%Y-%m-%d %H:%M:%S')
+    #
+    #     if ip_source in data['ip_get']:
+    #         result.append({'ip': ip_source, 'time': tm, 'type': 'GET'})
+    #
+    #     if ip_destination in data['ip_post']:
+    #         result.append({'ip': ip_destination, 'time': tm, 'type': 'POST'})
 
 
-from cryptography.fernet import Fernet
+# В iface указывать имя своего WI-FI модуля.
+# sniff(iface="en0", prn=pkt_callback, filter="tcp", store=0)
 
-f = Fernet(base64.b64encode('9/7/2018@#11:509/7/2018@#11:509/'.encode()))
-print(f.decrypt(b"gAAAAABbQygdBLV_pRSvdDFU1XuuKtMBBFVgbOrnzZM0MP-ieKKrHBcqjEfasF6gGhugshDzx2mtbQlEaIJ5C7nn7vY8qCp-Vw=="))
+
+# sniff(prn=pkt_callback, filter="tcp", store=0) # Windows-style
+data = {'ip_get': []}
+sniff(prn=lambda x: pkt_callback(x, data), store=0)
+print(result)

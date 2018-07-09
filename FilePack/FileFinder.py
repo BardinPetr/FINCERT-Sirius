@@ -20,7 +20,7 @@ def find(data):
         :param path: Коренной путь поиска
         :return: путь
     """
-    root_start = '/' # Стартовый корень от которого мы начинаем поиск.
+    root_start = '/'  # Стартовый корень от которого мы начинаем поиск.
     flag = False
     if platform.system() == 'Windows':
         root_start = 'C:\\'
@@ -35,7 +35,7 @@ def find(data):
             if not os.access(file, os.R_OK) and flag:  # Файлы, которые нельзя, прочесть будут пропущены !!!
                 continue
 
-            if not os.path.isfile(file) or os.path.isdir(file): # Является ли file  файлом или директорией.
+            if not os.path.isfile(file) or os.path.isdir(file):  # Является ли file  файлом или директорией.
                 continue
 
             statinfo = os.stat(file)
