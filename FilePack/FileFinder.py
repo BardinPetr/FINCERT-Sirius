@@ -13,7 +13,7 @@ def days_from_modifed(s):  # Подсчет дней с последней мо�
     return (datetime.today().utcnow().date() - modified.date()).days
 
 
-def find(data):
+def find(data, cb):
     """
         Поиск полного пути до файла.
         :param name: Имя целевого файла
@@ -54,6 +54,7 @@ def find(data):
                         if t[2]['SHA1'] == Crypt.crypt_sha1(file_text):
                             if t[2]['SHA256'] == Crypt.crypt_sha256(file_text):
                                 result[file] = path
+                                cb(result[file])
 
     return result
 

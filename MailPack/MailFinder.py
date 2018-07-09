@@ -104,7 +104,8 @@ def find(data, cb):
         # print(*map(lambda x: cosine_dist(x, mail['body']), data['text']))
         if mail['from'] in data['email'] or \
                 any(filter(lambda x: x > 0.8, map(lambda x: cosine_dist(x, mail['body']), data['text']))):
+
             result.append({'from': mail['from'], 'date': mail['date'],
                            'subj': mail['subj']})  # Check FROM and TEXT in data from bulletin
-
+            cb('At:{} with subject:{} from:{}'.format(mail['date'], mail['subj'], mail['from']))
     return result
