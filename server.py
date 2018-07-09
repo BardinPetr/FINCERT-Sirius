@@ -1,6 +1,7 @@
 from utils.StoppableThread import StoppableThread
 from utils.websocketserver import WebsocketServer
 from flask import render_template, request
+from utils.nocache import nocache
 from utils.encryption import *
 from flask import Flask
 from Main import run
@@ -8,7 +9,6 @@ import threading
 import logging
 import json
 import os
-
 
 enc = EncryptedWay()
 app = Flask(__name__)
@@ -20,12 +20,13 @@ def callback(res):
 
 
 @app.route('/', methods=['GET', 'POST'])
+@nocache
 def index():
     try:
         data = {}
         if request.method == "POST":
             req = request.form
-            if 'files' in req:  # %filename%;%filesize%;%algo%;%algoresult%
+            if 'files' in req:
                 data['file'] = list(map(lambda x: (x[0], int(x[1]), {x[2]: x[3], x[4]: x[5], x[6]: x[7]}),
                                         [i.split(';') for i in req['file_name_list'].split('\r\n')]))
             if 'mail' in req:
@@ -40,6 +41,7 @@ def index():
 
 
 @app.route('/settings', methods=['GET', 'POST'])
+@nocache
 def settings():
     try:
         data = {}

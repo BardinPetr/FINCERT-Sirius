@@ -8,6 +8,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+<form method="post" id="main" action="/"></form>
 <nav class="navbar navbar-light" style="background-color: #337ab7;">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -53,7 +54,7 @@
                     <button type="button" class="btn btn-info btn-block">PDF</button>
                 </div>
                 <div class="row" style="padding-bottom: 20px; margin-right: 30px; margin-left: 30px">
-                    <button type="button" class="btn btn-info btn-block">Start</button>
+                    <button type="submit" form="main" class="btn btn-info btn-block">Start</button>
                 </div>
                 <div class="row" style=" margin-right: 30px; margin-left: 30px">
                     <button type="button" class="btn btn-info btn-block">Stop</button>
@@ -77,23 +78,23 @@
                             <label for="comment"></label>
                             <div class="form-group">
                                 <label for="usr">Name:</label>
-                                <input type="text" class="form-control" id="usr">
+                                <input type="text" name="name_file" form="main" class="form-control" id="usr">
                             </div>
                             <div class="form-group">
                                 <label for="usr">MD5:</label>
-                                <input type="text" class="form-control" id="usr">
+                                <input type="text" name="MD5" form="main" class="form-control" id="usr">
                             </div>
                             <div class="form-group">
                                 <label for="usr">SHA1:</label>
-                                <input type="text" class="form-control" id="usr">
+                                <input type="text" name="SHA1" form="main" class="form-control" id="usr">
                             </div>
                             <div class="form-group">
                                 <label for="usr">SHA256:</label>
-                                <input type="text" class="form-control" id="usr">
+                                <input type="text" name="SHA256" form="main" class="form-control" id="usr">
                             </div>
                             <div class="form-group">
                                 <label for="usr">Size:</label>
-                                <input type="text" class="form-control" id="usr">
+                                <input type="text" name="size" form="main" class="form-control" id="usr">
                                 <div class="row" style="margin-top: 10px; margin-right: 20px; margin-left: 410px">
                                     <button type="button" class="btn btn-info btn-block">Add compromise</button>
                                 </div>
@@ -116,11 +117,11 @@
                         <div class="panel-body">
                             <div class="form-group">
                                 <label for="comment">E-mails:</label>
-                                <textarea class="form-control" rows="5" id="comment"></textarea>
+                                <textarea class="form-control" type="input" form="main" name="mail" rows="5" id="comment"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="comment">Text:</label>
-                                <textarea class="form-control" rows="5" id="comment"></textarea>
+                                <textarea class="form-control" type="input" form="main" name="text_mail" rows="5" id="comment"></textarea>
                             </div>
                         </div>
                     </div>
@@ -138,15 +139,15 @@
                         <div class="form-group">
                             <div class="form-group">
                                 <label for="comment">IP:</label>
-                                <textarea class="form-control" rows="5" id="comment"></textarea>
+                                <textarea class="form-control" type="input" form="main" name="ip" rows="5" id="comment"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="comment">URLs:</label>
-                                <textarea class="form-control" rows="5" id="comment"></textarea>
+                                <textarea class="form-control" type="input" form="main" name="URLs" rows="5" id="comment"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="comment">POST/GET:</label>
-                                <textarea class="form-control" rows="5" id="comment"></textarea>
+                                <textarea class="form-control" type="input" form="main" name="post_get" rows="5" id="comment"></textarea>
                             </div>
                         </div>
                         <div class="panel-body">
