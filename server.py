@@ -34,7 +34,7 @@ def index():
             if data != {}:
                 thr = threading.Thread(target=run, args=(data, callback,))
                 thr.start()
-        return render_template('index.html')
+        return render_template('index2.html')
     except Exception as ex:
         return render_template('error.html', res=ex)
 
