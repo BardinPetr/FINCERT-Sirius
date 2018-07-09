@@ -11,17 +11,47 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-<div class="well">Basic Well</div>
+<nav class="navbar navbar-light" style="background-color: #337ab7;">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" style="color: #FFFFFF"
+               href="http://localhost:63342/FinCert2/FINCERT-Sirius/templates/index2.html?_ijt=tjcbicpqdhl70c4triar7mqatc">WebSiteName</a>
+        </div>
+    </div>
+</nav>
 <form>
-    <div class="input-group">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-        <input id="email" type="text" class="form-control" name="email" placeholder="Email">
+    <div class="col-lg-5">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Введите ваши учетные данные почты для анализа</div>
+            <div class="panel-body">
+                <div class="input-group">
+                    <span class="input-group-addon">imap</span>
+                    <input id="msg" type="text" class="form-control" name="msg" placeholder="server">
+                    <input id="msg" type="text" class="form-control" name="msg" placeholder="port">
+                </div>
+                <p></p>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input id="email" type="text" class="form-control" name="email" placeholder="Email">
+                </div>
+                <p></p>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input id="password" type="password" class="form-control" name="password" placeholder="Password">
+                </div>
+                <p></p>
+                <button type="button" class="btn btn-info" style="background-color: #337ab7;">Authenticate!</button>
+            </div>
+        </div>
     </div>
-    <div class="input-group">
-        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-        <input id="password" type="password" class="form-control" name="password" placeholder="Password">
+    <div class="col-lg-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Время анализа</div>
+            <div class="panel-body">
+                <input id="mnt" type="text" class="form-control" name="mnt" placeholder="Введите время в минутах">
+            </div>
+        </div>
     </div>
-    <button type="submit" class="btn btn-default">Authenticate!</button>
 </form>
 </body>
 </html>
