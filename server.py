@@ -1,7 +1,7 @@
 from utils.StoppableThread import StoppableThread
 from utils.websocketserver import WebsocketServer
 from flask import render_template, request
-from utils.storage import set_cred
+from utils.encryption import *
 from flask import Flask
 from Main import run
 import threading
@@ -9,6 +9,8 @@ import logging
 import json
 import os
 
+
+enc = EncryptedWay()
 app = Flask(__name__)
 server = None
 
@@ -53,11 +55,18 @@ def settings():
         return render_template('error.html', res=ex)
 
 
+def ws_receive(meta, wss, txt):
+    data = enc.decrypt(bytes(txt, 'utf-8', ""))
+    print("Received by WS:", data)
+    set_cred(data)
+
+
 if __name__ == '__main__':
     server_thread = StoppableThread(lambda: app.run(port=8080, host='0.0.0.0'))
     server_thread.start()
 
     server = WebsocketServer(9999, host='127.0.0.1', loglevel=logging.INFO)
+    server.set_fn_message_received(ws_receive)
     server.run_forever()
     server_thread.stop()
 
