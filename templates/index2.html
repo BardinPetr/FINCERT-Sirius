@@ -3,25 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>FinCert</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
-          integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="static/node_modules/js-base64/base64.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/lib/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/lib/fontawesome.css">
+    <!--integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+    crossorigin="anonymous">-->
+    <script src="/static/lib/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/node_modules/js-base64/base64.js"></script>
+    <script src="/static/lib/bootstrap.min.js"></script>
     <script src="/static/js/index.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-light" style="background-color: #337ab7;">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" style="color: #FFFFFF" href="#"><!--<img src="static/images/dellogo.png">-->FinCERT</a>
+            <a class="navbar-brand" style="color: #FFFFFF" href="#"><!--<img src="static/images/dellogo.png">-->
+                FinCERT</a>
         </div>
         <div class="navbar-header">
             <a class="navbar-brand" style="color: #FFFFFF" href="#">Главная</a>
         </div>
         <div class="navbar-header">
-            <a class="navbar-brand" class="navbar-brand" style="color: #FFFFFF"
+            <a class="navbar-brand" style="color: #FFFFFF"
                href="/settings">Настройки</a>
         </div>
     </div>
@@ -68,16 +70,16 @@
     <div class="col-lg-5 col-md-5">
         <div class="panel panel-primary">
             <div class="panel-heading">Параметры для модулей</div>
-            <div id="panel_files" class="panel panel-info">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#collapse-group" href="#el4">Files:</a>
-                    </h4>
-                </div>
-                <div id="el4" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div class="container-fluid">
-                            <div class="well" style="text-align: right">
+            <div class="panel-body">
+                <div id="panel_files" class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#collapse-group" href="#el4">Files:</a>
+                        </h4>
+                    </div>
+                    <div id="el4" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="container-fluid">
                                 <p style="text-align: left">
                                     Enter data about file and push "ADD" button to create new target
                                 </p>
@@ -101,150 +103,154 @@
                                     <span class="input-group-addon">SHA256</span>
                                     <input id="file_md5" type="text" class="form-control" placeholder="MD5">
                                 </div>
-                                <button id="file_add" type="button" class="btn btn-success .btn-success"
+                                <button id="file_add" type="button" class="btn btn-default.btn-success"
                                         style="margin-top: 5px; width: 100%">
                                     <i class="fas fa-plus"></i>
                                 </button>
+                                <ul class="list-group" id="file_list"></ul>
                             </div>
-                            <ul class="list-group" id="file_list"></ul>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id="panel_mail" class="panel panel-info">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#collapse-group" href="#el1">Mail:</a>
-                    </h4>
-                </div>
-                <div id="el1" class="panel-collapse collapse ">
-                    <div class="panel-body">
-                        <div class="container-fluid">
-                            <p>Target EMail addresses:</p>
-                            <div class="input-group">
-                                <input id="mail_addr_inp" type="text" class="form-control" placeholder="EMail address">
-                                <div class="input-group-btn">
-                                    <button id="mail_addr_add" class="btn btn-default">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
+                <div id="panel_mail" class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#collapse-group" href="#el1">Mail:</a>
+                        </h4>
+                    </div>
+                    <div id="el1" class="panel-collapse collapse ">
+                        <div class="panel-body">
+                            <div class="container-fluid">
+                                <p>Target EMail addresses:</p>
+                                <div class="input-group">
+                                    <input id="mail_addr_inp" type="text" class="form-control"
+                                           placeholder="EMail address">
+                                    <div class="input-group-btn">
+                                        <button id="mail_addr_add" class="btn btn-default">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                            <ul class="list-group" id="mail_addr_list"></ul>
+                                <ul class="list-group" id="mail_addr_list"></ul>
 
-                            <p>Target EMail texts:</p>
-                            <textarea class="form-control" name="mail_text" rows="5" id="mail_txt_inp"
-                                      style="width: 100%; resize: vertical;"></textarea>
-                            <button id="mail_txt_add" type="button" class="btn btn-success .btn-success"
-                                    style="width: 100%; margin-top: 3px;">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                            <ul class="list-group" id="mail_txt_list"></ul>
+                                <p>Target EMail texts:</p>
+                                <textarea class="form-control" name="mail_text" rows="5" id="mail_txt_inp"
+                                          style="width: 100%; resize: vertical;"></textarea>
+                                <button id="mail_txt_add" type="button" class="btn btn-default.btn-success"
+                                        style="width: 100%; margin-top: 3px;">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <ul class="list-group" id="mail_txt_list"></ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id="panel_net" class="panel panel-info">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#collapse-group" href="#el5">Net:</a>
-                    </h4>
-                </div>
-                <div id="el5" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div class="container-fluid col-lg-6 col-md-6">
-                            <p>Target IPs:</p>
-                            <div class="input-group">
-                                <input id="net_ip_inp" type="text" class="form-control" placeholder="IP">
-                                <div class="input-group-btn">
-                                    <button id="net_ip_add" class="btn btn-default">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
+                <div id="panel_net" class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#collapse-group" href="#el5">Net:</a>
+                        </h4>
+                    </div>
+                    <div id="el5" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="container-fluid col-lg-6 col-md-6">
+                                <p>Target IPs:</p>
+                                <div class="input-group">
+                                    <input id="net_ip_inp" type="text" class="form-control" placeholder="IP">
+                                    <div class="input-group-btn">
+                                        <button id="net_ip_add" class="btn btn-default">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
                                 </div>
+                                <ul class="list-group" id="net_ip_list"></ul>
                             </div>
-                            <ul class="list-group" id="net_ip_list"></ul>
-                        </div>
-                        <div class="container-fluid col-lg-6 col-md-6">
-                            <p>Target URLs</p>
-                            <div class="input-group">
-                                <input id="net_url_inp" type="text" class="form-control" placeholder="URL">
-                                <div class="input-group-btn">
-                                    <button id="net_url_add" class="btn btn-default">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
+                            <div class="container-fluid col-lg-6 col-md-6">
+                                <p>Target URLs</p>
+                                <div class="input-group">
+                                    <input id="net_url_inp" type="text" class="form-control" placeholder="URL">
+                                    <div class="input-group-btn">
+                                        <button id="net_url_add" class="btn btn-default">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
                                 </div>
+                                <ul class="list-group" id="net_url_list"></ul>
                             </div>
-                            <ul class="list-group" id="net_url_list"></ul>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id="panel_reg" class="panel panel-info">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#collapse-group" href="#el3">Register:</a>
-                    </h4>
-                </div>
-                <div id="el3" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div class="container-fluid">
-                            <p>Target register records:</p>
-                            <div class="input-group">
-                                <input id="reg_inp" type="text" class="form-control" placeholder="REG KEY">
-                                <div class="input-group-btn">
-                                    <button id="reg_add" class="btn btn-default">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
+                <div id="panel_reg" class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#collapse-group" href="#el3">Register:</a>
+                        </h4>
+                    </div>
+                    <div id="el3" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="container-fluid">
+                                <p>Target register records:</p>
+                                <div class="input-group">
+                                    <input id="reg_inp" type="text" class="form-control" placeholder="REG KEY">
+                                    <div class="input-group-btn">
+                                        <button id="reg_add" class="btn btn-default">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
                                 </div>
+                                <ul class="list-group" id="reg_list"></ul>
                             </div>
-                            <ul class="list-group" id="reg_list"></ul>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id="panel_ram" class="panel panel-info">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#collapse-group" href="#el6">RAM:</a>
-                    </h4>
-                </div>
-                <div id="el6" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div class="container-fluid">
-                            <p>Target processes:</p>
-                            <div class="input-group">
-                                <input id="ram_inp" type="text" class="form-control" placeholder="Process name">
-                                <div class="input-group-btn">
-                                    <button id="ram_add" class="btn btn-default">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
+                <div id="panel_ram" class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#collapse-group" href="#el6">RAM:</a>
+                        </h4>
+                    </div>
+                    <div id="el6" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="container-fluid">
+                                <p>Target processes:</p>
+                                <div class="input-group">
+                                    <input id="ram_inp" type="text" class="form-control" placeholder="Process name">
+                                    <div class="input-group-btn">
+                                        <button id="ram_add" class="btn btn-default">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
                                 </div>
+                                <ul class="list-group" id="ram_list"></ul>
                             </div>
-                            <ul class="list-group" id="ram_list"></ul>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id="panel_log" class="panel panel-info">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#collapse-group" href="#el2">Logs:</a>
-                    </h4>
-                </div>
-                <div id="el2" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div class="container-fluid">
-                            <p>Target logs:</p>
-                            <div class="input-group">
-                                <input id="log_inp" type="text" class="form-control" placeholder="Log text">
-                                <div class="input-group-btn">
-                                    <button id="log_add" class="btn btn-default">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
+                <div id="panel_log" class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#collapse-group" href="#el2">Logs:</a>
+                        </h4>
+                    </div>
+                    <div id="el2" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="container-fluid">
+                                <p>Target logs:</p>
+                                <div class="input-group">
+                                    <input id="log_inp" type="text" class="form-control" placeholder="Log text">
+                                    <div class="input-group-btn">
+                                        <button id="log_add" class="btn btn-default">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
                                 </div>
+                                <ul class="list-group" id="log_list"></ul>
                             </div>
-                            <ul class="list-group" id="log_list"></ul>
                         </div>
                     </div>
+                </div>
+                <div id="zeropanel" class="well container-fluid" style="text-align: center">
+                    <h4>To change settings, select something from left corner</h4>
                 </div>
             </div>
         </div>
