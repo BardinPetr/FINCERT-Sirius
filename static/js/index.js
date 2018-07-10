@@ -1,6 +1,8 @@
 const ws = new WebSocket("ws://127.0.0.1:9999"),
     log = console.log;
 
+let format_data = {used: []};
+
 let mailaddrs = [];
 let mailtxts = [];
 let net_urls = [];
@@ -10,6 +12,17 @@ let files = [];
 let procs = [];
 let logs = [];
 
+
+Array.prototype.remove = function () {
+    let what, a = arguments, L = a.length, ax;
+    while (L && this.length) {
+        what = a[--L];
+        while ((ax = this.indexOf(what)) !== -1) {
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+};
 
 ws.onopen = function () {
 };
@@ -39,7 +52,6 @@ function del_elem(name, id, type) {
         case 2:
             mailtxts = x;
             break;
-            regkeys
         case 3:
             net_ips = x;
             break;
@@ -156,4 +168,19 @@ $(document).ready(function () {
             $('#log_list').prepend(file_item_tmpl(cur, logs.length - 1, 7));
         }
     });
+
+    let cbs = ["files", "mail", "net", "reg", "ram", "log"];
+    cbs.map((x, n, a) => {
+        $(`#panel_${x}`).fadeOut(100);
+        $(`#${x}_cb`).on('click', function () {
+            if ($(`#${x}_cb`).prop('checked')) {
+                format_data.used = format_data.used.concat(x);
+                $(`#panel_${x}`).fadeIn(1000);
+            } else {
+                format_data.used = format_data.used.remove(x);
+                $(`#panel_${x}`).fadeOut(1000);
+            }
+        });
+    });
 });
+
