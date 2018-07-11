@@ -12,6 +12,7 @@ import os
 
 enc = EncryptedWay()
 app = Flask(__name__)
+mainthread = None
 server = None
 
 
@@ -32,9 +33,6 @@ def index():
             if 'mail' in req:
                 data['mail'] = {"email": req['mail_addr_list'].split('\r\n'),
                                 "text": req['mail_txts'].split('\r\n!@<<&>>@!\r\n')}
-            if data != {}:
-                thr = threading.Thread(target=run, args=(data, callback,))
-                thr.start()
         return render_template('index2.html')
     except Exception as ex:
         return render_template('error.html', res=ex)
@@ -58,9 +56,34 @@ def settings():
 
 
 def ws_receive(meta, wss, txt):
-    data = enc.decrypt(bytes(txt, 'utf-8', ""))
-    print("Received by WS:", data)
-    set_cred(data)
+    global mainthread
+    print("Received by WS:", txt)
+    if txt.startswith("NOTENC"):
+        data = txt.split(':::')[1:]
+        try:
+            if data[0] == "START":
+                data = json.loads(data[1])
+                res = {}
+                for name in data['used']:
+                    i = data[name]
+                    if type(i) == list:
+                        res[name] = list(map(lambda x: x['norm'] if 'norm' in x else x, i))
+                    else:
+                        res[name] = {}
+                        for x, y in i.items():
+                            res[name][x] = list(map(lambda j: j['norm'] if 'norm' in j else j, y))
+                    if res[name] == {} or res[name] == []:
+                        res.pop(name)
+                mainthread = StoppableThread(lambda: run(res, callback))
+                mainthread.start()
+            elif data[0] == "STOP":
+                server.send_message_to_all("[SCAN] Stopped by user")
+                mainthread.stop()
+        except Exception as e:
+            print(e)
+    else:
+        data = enc.decrypt(bytes(txt, 'utf-8', ""))
+        set_cred(data)
 
 
 if __name__ == '__main__':

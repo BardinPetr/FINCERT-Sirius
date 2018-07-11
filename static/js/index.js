@@ -3,16 +3,27 @@ const ws = new WebSocket("ws://127.0.0.1:9999"),
 
 let format_data = {
     used: [],
-    mailaddrs: [],
-    mailtxts: [],
-    net_urls: [],
-    net_ips: [],
-    regkeys: [],
+    mail: {
+        email: [],
+        text: []
+    },
+    net: {
+        ip: [],
+        url: []
+    },
+    reg: {
+        keys: []
+    },
     files: [],
-    procs: [],
-    logs: []
+    ram: {
+        procs: []
+    },
+    log: []
 };
 
+const append_log = data => {
+    $("#logs").html($("#logs").html() + data + "<br>")
+};
 
 Array.prototype.remove = function () {
     let what, a = arguments, L = a.length, ax;
@@ -29,7 +40,8 @@ ws.onopen = function () {
 };
 
 ws.onmessage = function (evt) {
-    alert(evt.data);
+    log(1)
+    append_log(evt.data.toString())
 };
 
 ws.onclose = function () {
@@ -42,31 +54,31 @@ const format_litxt = (type, name) => {
 function del_elem(name, id, type) {
     type = parseInt(type);
     $("#" + format_litxt(type, name)).remove();
-    x = [format_data.files, format_data.mailaddrs, format_data.mailtxts, format_data.net_ips, format_data.net_urls, format_data.regkeys, format_data.procs, format_data.logs][type].filter(y => y.disp !== name);
+    x = [format_data.files, format_data.mail.email, format_data.mail.text, format_data.net.ip, format_data.net.url, format_data.reg.keys, format_data.ram.procs, format_data.log][type].filter(y => y.disp !== name);
     switch (type) {
         case 0:
             format_data.files = x;
             break;
         case 1:
-            format_data.mailaddrs = x;
+            format_data.mail.email = x;
             break;
         case 2:
-            format_data.mailtxts = x;
+            format_data.mail.text = x;
             break;
         case 3:
-            format_data.net_ips = x;
+            format_data.net.ip = x;
             break;
         case 4:
-            format_data.net_urls = x;
+            format_data.net.url = x;
             break;
         case 5:
-            format_data.regkeys = x;
+            format_data.reg.keys = x;
             break;
         case 6:
-            format_data.procs = x;
+            format_data.ram.procs = x;
             break;
         case 7:
-            format_data.logs = x;
+            format_data.log = x;
             break;
     }
 }
@@ -104,8 +116,8 @@ $(document).ready(function () {
         let cur = c.val();
         c.val('');
         if (cur) {
-            format_data.mailaddrs = format_data.mailaddrs.concat({disp: cur, norm: cur});
-            $('#mail_addr_list').prepend(file_item_tmpl(cur, format_data.mailaddrs.length - 1, 1));
+            format_data.mail.email = format_data.mail.email.concat({disp: cur, norm: cur});
+            $('#mail_addr_list').prepend(file_item_tmpl(cur, format_data.mail.email.length - 1, 1));
         }
     });
 
@@ -115,8 +127,8 @@ $(document).ready(function () {
         c.val('');
         if (cur) {
             let displaytxt = cur.slice(0, 8) + '...';
-            format_data.mailtxts = format_data.mailtxts.concat({disp: displaytxt, norm: cur});
-            $('#mail_txt_list').prepend(file_item_tmpl(displaytxt, format_data.mailtxts.length - 1, 2));
+            format_data.mail.text = format_data.mail.text.concat({disp: displaytxt, norm: cur});
+            $('#mail_txt_list').prepend(file_item_tmpl(displaytxt, format_data.mail.text.length - 1, 2));
         }
     });
 
@@ -125,8 +137,8 @@ $(document).ready(function () {
         let cur = c.val();
         c.val('');
         if (cur) {
-            format_data.net_ips = format_data.net_ips.concat({disp: cur, norm: cur});
-            $('#net_ip_list').prepend(file_item_tmpl(cur, format_data.net_ips.length - 1, 3));
+            format_data.net.ip = format_data.net.ip.concat({disp: cur, norm: cur});
+            $('#net_ip_list').prepend(file_item_tmpl(cur, format_data.net.ip.length - 1, 3));
         }
     });
 
@@ -135,8 +147,8 @@ $(document).ready(function () {
         let cur = c.val();
         c.val('');
         if (cur) {
-            format_data.net_urls = format_data.net_urls.concat({disp: cur, norm: cur});
-            $('#net_url_list').prepend(file_item_tmpl(cur, format_data.net_urls.length - 1, 4));
+            format_data.net.url = format_data.net.url.concat({disp: cur, norm: cur});
+            $('#net_url_list').prepend(file_item_tmpl(cur, format_data.net.url.length - 1, 4));
         }
     });
 
@@ -145,8 +157,8 @@ $(document).ready(function () {
         let cur = c.val();
         c.val('');
         if (cur) {
-            format_data.regkeys = format_data.regkeys.concat({disp: cur, norm: cur});
-            $('#reg_list').prepend(file_item_tmpl(cur, format_data.regkeys.length - 1, 5));
+            format_data.reg.keys = format_data.reg.keys.concat({disp: cur, norm: cur});
+            $('#reg_list').prepend(file_item_tmpl(cur, format_data.reg.keys.length - 1, 5));
         }
     });
 
@@ -155,8 +167,8 @@ $(document).ready(function () {
         let cur = c.val();
         c.val('');
         if (cur) {
-            format_data.procs = format_data.procs.concat({disp: cur, norm: cur});
-            $('#ram_list').prepend(file_item_tmpl(cur, format_data.procs.length - 1, 6));
+            format_data.ram.procs = format_data.ram.procs.concat({disp: cur, norm: cur});
+            $('#ram_list').prepend(file_item_tmpl(cur, format_data.ram.procs.length - 1, 6));
         }
     });
 
@@ -165,12 +177,12 @@ $(document).ready(function () {
         let cur = c.val();
         c.val('');
         if (cur) {
-            format_data.logs = format_data.logs.concat({disp: cur, norm: cur});
-            $('#log_list').prepend(file_item_tmpl(cur, format_data.logs.length - 1, 7));
+            format_data.log = format_data.log.concat({disp: cur, norm: cur});
+            $('#log_list').prepend(file_item_tmpl(cur, format_data.log.length - 1, 7));
         }
     });
 
-    let cbs = ["format_data.files", "mail", "net", "reg", "ram", "log"];
+    let cbs = ["files", "mail", "net", "reg", "ram", "log"];
     cbs.map((x, n, a) => {
         $(`#panel_${x}`).hide();
         $(`#${x}_cb`).on('click', function () {
@@ -188,7 +200,18 @@ $(document).ready(function () {
         });
 
     });
+
+    $('#btn_pdf').click(() => {
+
+    });
+
+    $('#btn_start').click(() => {
+        ws.send("NOTENC:::START:::" + JSON.stringify(format_data));
+    });
+
+    $('#btn_stop').click(() => {
+        ws.send("NOTENC:::STOP")
+    });
+
+    append_log('[SYSTEM] Init finished')
 });
-
-
-const gen_std_datapack = () => format_data;

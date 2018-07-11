@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <title>FinCert</title>
     <link rel="stylesheet" href="/static/lib/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/lib/fontawesome.css">
-    <!--integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
-    crossorigin="anonymous">-->
+    <link rel="stylesheet" href="/static/node_modules/@fortawesome/fontawesome-free/css/all.css">
     <script src="/static/lib/jquery.min.js"></script>
     <script type="text/javascript" src="/static/node_modules/js-base64/base64.js"></script>
     <script src="/static/lib/bootstrap.min.js"></script>
@@ -28,7 +26,7 @@
         </div>
     </div>
 </nav>
-<div class="row">
+<div class="container-fluid">
     <div class="col-lg-2 col-md-2">
         <div class="panel panel-primary">
             <div class="panel-heading">Выберете модули</div>
@@ -56,13 +54,13 @@
         <div class="panel panel-primary">
             <div class="panel-body">
                 <div class="row" style="padding-bottom: 20px; margin-right: 30px; margin-left: 30px">
-                    <button type="button" class="btn btn-info btn-block">PDF</button>
+                    <button id="btn_pdf" class="btn btn-info btn-block">PDF</button>
                 </div>
                 <div class="row" style="padding-bottom: 20px; margin-right: 30px; margin-left: 30px">
-                    <button type="submit" class="btn btn-info btn-block">Start</button>
+                    <button id="btn_start" class="btn btn-info btn-block">Start</button>
                 </div>
                 <div class="row" style=" margin-right: 30px; margin-left: 30px">
-                    <button type="button" class="btn btn-info btn-block">Stop</button>
+                    <button id="btn_stop" class="btn btn-info btn-block">Stop</button>
                 </div>
             </div>
         </div>
@@ -259,7 +257,7 @@
         <div class="panel panel-primary" style="padding-left: 1px; padding-right: 1px">
             <div class="panel-heading">Logs</div>
             <div class="panel-body">
-                <p></p>
+                <p id="logs"></p>
             </div>
         </div>
     </div>
