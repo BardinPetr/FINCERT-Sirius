@@ -89,7 +89,7 @@ class MailRunner:
 
 
 def find(data, cb):
-    # locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')
+
     udata = get_cred()
     mr = MailRunner(udata['cred'], imap=udata['imaphost'], port=udata['imapport'])
 
@@ -101,15 +101,14 @@ def find(data, cb):
     result = []
 
     for mail in mails:
+
         if mail['err'] != 'NA':
             continue
-        # print(*map(lambda x: cosine_dist(x, mail['body']), data['text']))
+
         if mail['from'] in data['email'] or \
                 any(filter(lambda x: x > 0.8, map(lambda x: cosine_dist(x, mail['body']), data['text']))):
 
             result.append({'from': mail['from'], 'date': mail['date'],
                            'subj': mail['subj']})  # Check FROM and TEXT in data from bulletin
-            cb('At :{} with subject:{} from:{} + \n'.format(mail['date'], mail['subj'], mail['from']))
-
-            print('At :{} with subject:{} from:{}'.format(mail['date'], mail['subj'], mail['from']), '\n')
+            cb('Дата получения: {} с темой: {} Исходил от: {}\n'.format(mail['date'], mail['subj'], mail['from']))
     return result

@@ -4,11 +4,8 @@ from NetPack import NetFinder
 
 
 def run(data, cb):
-    print("PIZDA V MAIN")
-    print(data)
     res = {}
     if 'files' in data:
-        print("DAROVA")
         res['file'] = FileFinder.find(data['files'], cb)
     if 'mail' in data:
         res['mail'] = MailFinder.find(data['mail'], cb)
