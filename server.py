@@ -1,4 +1,3 @@
-from flask import Flask, request, redirect, url_for
 from utils.StoppableThread import StoppableThread
 from utils.websocketserver import WebsocketServer
 from werkzeug.utils import secure_filename
