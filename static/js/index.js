@@ -97,7 +97,7 @@ $(document).ready(function () {
     $('#file_add').click(function () {
         let cur = {
             name: file_objs[0].val(),
-            size: file_objs[1].val(),
+            size: parseInt(file_objs[1].val()),
             sha1: file_objs[2].val(),
             sha256: file_objs[3].val(),
             md5: file_objs[4].val()

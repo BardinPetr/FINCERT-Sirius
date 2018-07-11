@@ -20,6 +20,7 @@ def find(data, cb):
         :param path: Коренной путь поиска
         :return: путь
     """
+
     root_start = '/'  # Стартовый корень от которого мы начинаем поиск.
     flag = False
     if platform.system() == 'Windows':
@@ -30,6 +31,7 @@ def find(data, cb):
 
     for root, dirs, files in os.walk(root_start):
         for file in files:
+            file_inf = file # Изначальное имя файла
             file = os.path.join(root, file)
 
             if not os.access(file, os.R_OK) and flag:  # Файлы, которые нельзя, прочесть будут пропущены !!!
@@ -49,12 +51,12 @@ def find(data, cb):
             file_text = ReadFile.file_get_contents(file)  # Содержимое файла
 
             for t in data:  # Обход данных из бюллетени
-                if t[1] == file_size:
-                    if t[2]['MD5'] == Crypt.crypt_md5(file_text):
-                        if t[2]['SHA1'] == Crypt.crypt_sha1(file_text):
-                            if t[2]['SHA256'] == Crypt.crypt_sha256(file_text):
-                                result[file] = path
-                                cb(result[file])
+                if int(t['size']) == file_size:
+                    if t['md5'] == Crypt.crypt_md5(file_text):
+                        if t['sha1'] == Crypt.crypt_sha1(file_text):
+                            if t['sha256'] == Crypt.crypt_sha256(file_text):
+                                result[file_inf] = path
+                                cb(result[file_inf])
 
     return result
 
