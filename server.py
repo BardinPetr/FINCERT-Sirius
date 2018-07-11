@@ -22,7 +22,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 def callback(res):
-    server.send_message_to_all(json.dumps(res))
+    server.send_message_to_all(json.dumps(res, ensure_ascii=False))
 
 
 def allowed_file(filename):

@@ -5,6 +5,7 @@ import datetime
 import imaplib
 import email
 import re
+import locale
 
 
 class MailRunner:
@@ -88,6 +89,7 @@ class MailRunner:
 
 
 def find(data, cb):
+    # locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')
     udata = get_cred()
     mr = MailRunner(udata['cred'], imap=udata['imaphost'], port=udata['imapport'])
 
@@ -107,5 +109,7 @@ def find(data, cb):
 
             result.append({'from': mail['from'], 'date': mail['date'],
                            'subj': mail['subj']})  # Check FROM and TEXT in data from bulletin
-            cb('At:{} with subject:{} from:{}'.format(mail['date'], mail['subj'], mail['from']))
+            cb('At :{} with subject:{} from:{} + \n'.format(mail['date'], mail['subj'], mail['from']))
+
+            print('At :{} with subject:{} from:{}'.format(mail['date'], mail['subj'], mail['from']), '\n')
     return result

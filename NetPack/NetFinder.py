@@ -54,9 +54,10 @@ def find(data, cb):
     dt = ({'ip': data['ip'], 'time': get_cred()['snifftime'], 'ip_url': {}})
 
     for i in data['url']:
-        dt['ip_url'][socket.gethostbyname(i)] = i  # Get ip by host name
-
+        try:
+            dt['ip_url'][socket.gethostbyname(i)] = i  # Get ip by host name
+        except socket.gaierror:
+            continue
     sniff(prn=lambda x: pkt_callback(x, dt, cb), store=0,
-          timeout=dt[
-                      'time'] * 60)  # Dt - database, Cb - callback, store=0 means that we won't store our res, timeout in seconds
+          timeout=int(dt['time']) * 60)  # Dt - database, Cb - callback, store=0 means that we won't store our res
     return res

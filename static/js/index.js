@@ -40,7 +40,7 @@ ws.onopen = function () {
 };
 
 ws.onmessage = function (evt) {
-    append_log(unescape(evt.data.toString()))
+    append_log(decodeURIComponent(JSON.parse(evt.data.toString())))
 };
 
 ws.onclose = function () {
