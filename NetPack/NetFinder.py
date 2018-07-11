@@ -2,6 +2,7 @@
 This code was verified on Ubuntu 17.10, Windows 10(English), Mac OSX
 """
 
+from utils.encryption import get_cred
 from scapy.all import *
 import datetime
 import socket
@@ -21,7 +22,7 @@ def pkt_callback(pkt, data, cb):
 
         tm = pack[IP].time
         value = datetime.datetime.fromtimestamp(tm)
-        tm = value.strftime('%Y-%m-%d %H:%M:%S') # Time when packet came
+        tm = value.strftime('%Y-%m-%d %H:%M:%S')  # Time when packet came
         tp = table[int(pkt[IP].proto)].lower()
 
         if ip_source in data['ip']:
@@ -50,7 +51,7 @@ def pkt_callback(pkt, data, cb):
 
 
 def find(data, cb):
-    dt = ({'ip': data['ip'], 'time': data['time'], 'ip_url': {}})
+    dt = ({'ip': data['ip'], 'time': get_cred()['snifftime'], 'ip_url': {}})
 
     for i in data['url']:
         dt['ip_url'][socket.gethostbyname(i)] = i  # Get ip by host name

@@ -33,7 +33,6 @@ Array.prototype.remove = function () {
             this.splice(ax, 1);
         }
     }
-    cbs
     return this;
 };
 
@@ -41,7 +40,6 @@ ws.onopen = function () {
 };
 
 ws.onmessage = function (evt) {
-    log(1)
     append_log(evt.data.toString())
 };
 

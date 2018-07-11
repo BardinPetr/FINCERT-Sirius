@@ -7,7 +7,6 @@ from utils.nocache import nocache
 from utils.encryption import *
 from flask import Flask
 from Main import run
-import threading
 import logging
 import json
 import os
@@ -90,6 +89,15 @@ def ws_receive(meta, wss, txt):
     else:
         data = enc.decrypt(bytes(txt, 'utf-8', ""))
         set_cred(data)
+
+
+@app.errorhandler(500)
+@app.errorhandler(410)
+@app.errorhandler(404)
+@app.errorhandler(403)
+@app.errorhandler(400)
+def page_not_found(e):
+    return render_template('error.html', res="%d - %s" % (e.code, e.name)), e.code
 
 
 if __name__ == '__main__':
