@@ -2,3 +2,4 @@ scapy
 flask
 cryptography
 yara-python
+winreg
