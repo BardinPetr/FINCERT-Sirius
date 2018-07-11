@@ -33,6 +33,7 @@ Array.prototype.remove = function () {
             this.splice(ax, 1);
         }
     }
+    cbs
     return this;
 };
 
@@ -54,7 +55,8 @@ const format_litxt = (type, name) => {
 function del_elem(name, id, type) {
     type = parseInt(type);
     $("#" + format_litxt(type, name)).remove();
-    x = [format_data.files, format_data.mail.email, format_data.mail.text, format_data.net.ip, format_data.net.url, format_data.reg.keys, format_data.ram.procs, format_data.log][type].filter(y => y.disp !== name);
+    let x = [format_data.files, format_data.mail.email, format_data.mail.text, format_data.net.ip, format_data.net.url,
+        format_data.reg.keys, format_data.ram.procs, format_data.log][type].filter(y => y.disp !== name);
     switch (type) {
         case 0:
             format_data.files = x;
@@ -182,17 +184,17 @@ $(document).ready(function () {
         }
     });
 
-    let cbs = ["files", "mail", "net", "reg", "ram", "log"];
-    cbs.map((x, n, a) => {
-        $(`#panel_${x}`).hide();
-        $(`#${x}_cb`).on('click', function () {
-            if ($(`#${x}_cb`).prop('checked')) {
+    let panel_names = ["files", "mail", "net", "reg", "ram", "log"];
+    panel_names.map((name, index, arr) => {
+        $(`#panel_${name}`).hide();
+        $(`#${name}_cb`).on('click', function () {
+            if ($(`#${name}_cb`).prop('checked')) {
                 $('#zeropanel').fadeOut(500);
-                format_data.used = format_data.used.concat(x);
-                $(`#panel_${x}`).fadeIn(1000);
+                format_data.used = format_data.used.concat(name);
+                $(`#panel_${name}`).fadeIn(1000);
             } else {
-                format_data.used = format_data.used.remove(x);
-                $(`#panel_${x}`).fadeOut(1000);
+                format_data.used = format_data.used.remove(name);
+                $(`#panel_${name}`).fadeOut(1000);
                 if (format_data.used.length === 0) {
                     $('#zeropanel').fadeIn(500);
                 }

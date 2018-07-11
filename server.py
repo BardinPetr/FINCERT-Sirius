@@ -1,5 +1,7 @@
+from flask import Flask, request, redirect, url_for
 from utils.StoppableThread import StoppableThread
 from utils.websocketserver import WebsocketServer
+from werkzeug.utils import secure_filename
 from flask import render_template, request
 from utils.nocache import nocache
 from utils.encryption import *
@@ -10,30 +12,42 @@ import logging
 import json
 import os
 
-enc = EncryptedWay()
+UPLOAD_FOLDER = os.path.join(os.getcwd(), 'temp')
+ALLOWED_EXTENSIONS = {'pdf'}
+
 app = Flask(__name__)
+enc = EncryptedWay()
 mainthread = None
 server = None
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 def callback(res):
     server.send_message_to_all(json.dumps(res))
 
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
 @app.route('/', methods=['GET', 'POST'])
 @nocache
 def index():
     try:
-        data = {}
-        if request.method == "POST":
-            req = request.form
-            if 'files' in req:
-                data['file'] = list(map(lambda x: (x[0], int(x[1]), {x[2]: x[3], x[4]: x[5], x[6]: x[7]}),
-                                        [i.split(';') for i in req['file_name_list'].split('\r\n')]))
-            if 'mail' in req:
-                data['mail'] = {"email": req['mail_addr_list'].split('\r\n'),
-                                "text": req['mail_txts'].split('\r\n!@<<&>>@!\r\n')}
-        return render_template('index2.html')
+        if request.method == 'POST':
+            if 'file' not in request.files:
+                raise Exception("No file in request")
+            file = request.files['file']
+            if file.filename == '':
+                raise Exception("File is not a file...")
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                raise Exception("NOT IMPLEMENTED YET")
+        else:
+            return render_template('index2.html')
     except Exception as ex:
         return render_template('error.html', res=ex)
 
@@ -42,14 +56,6 @@ def index():
 @nocache
 def settings():
     try:
-        data = {}
-        if request.method == "POST":
-            req = request.form
-            set_cred({
-                "cred": (req['email'], req['password']),
-                "imaphost": 0,
-                "imapport": 993
-            })
         return render_template('settings.html')
     except Exception as ex:
         return render_template('error.html', res=ex)
@@ -65,12 +71,12 @@ def ws_receive(meta, wss, txt):
                 data = json.loads(data[1])
                 res = {}
                 for name in data['used']:
-                    i = data[name]
-                    if type(i) == list:
-                        res[name] = list(map(lambda x: x['norm'] if 'norm' in x else x, i))
+                    cur = data[name]
+                    if type(cur) == list:
+                        res[name] = list(map(lambda x: x['norm'] if 'norm' in x else x, cur))
                     else:
                         res[name] = {}
-                        for x, y in i.items():
+                        for x, y in cur.items():
                             res[name][x] = list(map(lambda j: j['norm'] if 'norm' in j else j, y))
                     if res[name] == {} or res[name] == []:
                         res.pop(name)
