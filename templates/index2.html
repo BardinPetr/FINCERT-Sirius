@@ -15,8 +15,9 @@
 <nav class="navbar navbar-light" style="background-color: #337ab7;">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" style="color: #FFFFFF" href="#"><img src="/static/images/FinCERT.png" style="height: 100%">
-                </a>
+            <a class="navbar-brand" style="color: #FFFFFF" href="#"><img src="/static/images/FinCERT.png"
+                                                                         style="height: 100%">
+            </a>
         </div>
         <div class="navbar-header">
             <a class="navbar-brand" style="color: #FFFFFF" href="#">Главная</a>
@@ -202,13 +203,17 @@
                             <div class="container-fluid">
                                 <p>Целевые записи реестра:</p>
                                 <div class="input-group">
-                                    <input id="reg_inp" type="text" class="form-control" placeholder="Ключ реестра">
-                                    <div class="input-group-btn">
-                                        <button id="reg_add" class="btn btn-info">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
+                                    <span class="input-group-addon"><i class="fas fa-key"></i></span>
+                                    <input id="reg_key" type="text" class="form-control" placeholder="Key">
                                 </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fas fa-asterisk"></i></span>
+                                    <input id="reg_val" type="text" class="form-control" placeholder="Value">
+                                </div>
+                                <button id="reg_add" type="button" class="btn btn-primary"
+                                        style="margin-top: 5px; width: 100%">
+                                    <i class="fas fa-plus"></i>
+                                </button>
                                 <ul class="list-group" id="reg_list"></ul>
                             </div>
                         </div>

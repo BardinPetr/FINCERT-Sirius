@@ -153,12 +153,15 @@ $(document).ready(function () {
     });
 
     $('#reg_add').click(function () {
-        let c = $("#reg_inp");
-        let cur = c.val();
-        c.val('');
-        if (cur) {
-            format_data.reg.keys = format_data.reg.keys.concat({disp: cur, norm: cur});
-            $('#reg_list').prepend(file_item_tmpl(cur, format_data.reg.keys.length - 1, 5));
+        let k = $("#reg_key"),
+            v = $("#reg_val");
+        let cur = {key: k.val(), val: v.val()};
+        k.val('');
+        v.val('');
+        if (cur.key && cur.val) {
+            let disp = cur.key.split(0, 30) + '...';
+            format_data.reg.keys = format_data.reg.keys.concat({disp: disp, norm: cur});
+            $('#reg_list').prepend(file_item_tmpl(disp, format_data.reg.keys.length - 1, 5));
         }
     });
 
