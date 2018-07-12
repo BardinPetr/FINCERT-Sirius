@@ -42,7 +42,7 @@ def find(data, cb):
     for root, dirs, files in os.walk(root_start):
         for file in files:
 
-            if count_indicators == len(data): # Если все индикаторы были найдены.
+            if count_indicators == len(data):  # Если все индикаторы были найдены.
                 return result
 
             if file_count == 10000:
@@ -66,6 +66,7 @@ def find(data, cb):
                 continue
             if not os.path.isfile(file) or os.path.isdir(file):  # Является ли file  файлом или директорией.
                 continue
+
             statinfo = os.stat(file)
             file_size = statinfo.st_size  # Размер файла в байтах
 
@@ -81,7 +82,11 @@ def find(data, cb):
                 overall_file_size += file_size
 
             path = os.path.join(root, file)
-            file_text = ReadFile.file_get_contents(file)  # Содержимое файла
+
+            try:
+                file_text = ReadFile.file_get_contents(file)  # Содержимое файла
+            except MemoryError:
+                continue
 
             for t in data:  # Обход данных из бюллетени
                 if int(t['size']) == file_size:

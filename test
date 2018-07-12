@@ -88,3 +88,15 @@ IP
 URL
 https://siriusproject.ml/
 http://stavlider.ru/
+
+
+
+File finder
+
+
+            try:
+                file_text = ReadFile.file_get_contents(file)  # Содержимое файла
+            except MemoryError:
+                continue
+
+
