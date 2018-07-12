@@ -21,6 +21,7 @@ def find(data, cb):
         :param path: Коренной путь поиска
         :return: путь
     """
+
     print('In file finder')
     start_time = time.time()
     buf_time = time.time()
@@ -45,19 +46,15 @@ def find(data, cb):
             if count_indicators == len(data):  # Если все индикаторы были найдены.
                 return result
 
-            if file_count == 10000:
-                print('Time: ', time.time() - start_time)
-                print('Overall size', overall_file_size)
-
-            if time.time() - buf_time >= 300:
+            if time.time() - buf_time >= 10:
+                print('Time from start: ', time.time() - start_time)
                 print('Overall amount of files: ', file_count_sys)
                 print('Overall files size: ', overall_file_size_sys)
-                buf_time = time.time()
 
-            if overall_file_size > 10737418240:
-                print('Amount of files in 10 Gb: ', file_count)
-                print('10 Gb check time: ', time.time() - start_time)
-                return
+                print('\n OPENED FILES: ', file_count)
+                print('Residual count: ', file_count_sys - file_count)
+                print('Residual size: ', overall_file_size_sys - overall_file_size)
+                buf_time = time.time()
 
             file_inf = file  # Изначальное имя файла
             file = os.path.join(root, file)
@@ -86,6 +83,8 @@ def find(data, cb):
             try:
                 file_text = ReadFile.file_get_contents(file)  # Содержимое файла
             except MemoryError:
+                continue
+            except PermissionError:
                 continue
 
             for t in data:  # Обход данных из бюллетени
