@@ -123,3 +123,12 @@ a {
     border-top-left-radius: 1px;
     border-top-right-radius: 1px;
 }
+
+.panel-info {
+    border-style: none;
+
+}
+
+.panel > .panel-heading {
+    border-radius: 4px;
+}
