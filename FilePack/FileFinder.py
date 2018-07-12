@@ -37,9 +37,14 @@ def find(data, cb):
     overall_file_size = 0
     file_count_sys = 0
     overall_file_size_sys = 0
+    count_indicators = 0
 
     for root, dirs, files in os.walk(root_start):
         for file in files:
+
+            if count_indicators == len(data): # Если все индикаторы были найдены.
+                return result
+
             if file_count == 10000:
                 print('Time: ', time.time() - start_time)
                 print('Overall size', overall_file_size)
@@ -83,6 +88,7 @@ def find(data, cb):
                     if t['md5'] == Crypt.crypt_md5(file_text):
                         if t['sha1'] == Crypt.crypt_sha1(file_text):
                             if t['sha256'] == Crypt.crypt_sha256(file_text):
+                                count_indicators += 1
                                 result[file_inf] = path
                                 cb(result[file_inf] + '\n')
 
