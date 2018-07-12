@@ -21,7 +21,18 @@ server = None
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
-def callback(res):
+def callback(data, cbt=0):
+    """
+    Callback to send data to front by WS
+    :param data: data to send
+    :param cbt: type of callback -> 0: append to log, 1: send notify, 2: results modal
+    :return:
+    """
+    res = {'xtype': cbt}
+    if type(data) == dict:
+        res.update(data)
+    else:
+        res['data'] = data
     server.send_message_to_all(json.dumps(res, ensure_ascii=False))
 
 
@@ -81,7 +92,7 @@ def ws_receive(meta, wss, txt):
                 mainthread = StoppableThread(lambda: run(res, callback))
                 mainthread.start()
             elif data[0] == "STOP":
-                server.send_message_to_all("[SCAN] Stopped by user")
+                callback({"text": "Scan stopped by user", "title": "SCAN", "color": "error"}, 1)
                 mainthread.stop()
         except Exception as e:
             print(e)

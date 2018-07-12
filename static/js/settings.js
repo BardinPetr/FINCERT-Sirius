@@ -39,5 +39,6 @@ $(document).ready(function () {
             cred: [$("#email").val(), $("#password").val()],
             snifftime: $("#time").val()
         });
+        toastr.success("Settings saved on you local computer", "Settings")
     });
 });

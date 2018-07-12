@@ -58,6 +58,10 @@ def find(data, cb):
             dt['ip_url'][socket.gethostbyname(i)] = i  # Get ip by host name
         except socket.gaierror:
             continue
-    sniff(prn=lambda x: pkt_callback(x, dt, cb), store=0,
-          timeout=int(dt['time']) * 60)  # Dt - database, Cb - callback, store=0 means that we won't store our res
+
+    try:
+        sniff(prn=lambda x: pkt_callback(x, dt, cb), store=0,
+              timeout=int(dt['time']) * 60)  # Dt - database, Cb - callback, store=0 means that we won't store our res
+    except PermissionError:
+        cb({"text": "Permission not granted for network sniffing", "title": "SYSTEM ERROR", "color": "error"}, 1)
     return res
