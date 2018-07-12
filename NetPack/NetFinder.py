@@ -46,7 +46,7 @@ def pkt_callback(pkt, data, cb):
         if ip_destination in data['ip_url']:
             res['non_format'].append({'ip': ip_source, 'time': tm, 'type': tp + ' from'})
             s = 'At {} -- [{}] {}'.format(tm, tp, data['ip_url'][ip_destination])
-            res['format'].append('At {} -- [{}] {}'.format(tm, tp, data['ip_url'][ip_destination]))
+            res['format'].append('At {} -- [{}] {}\n'.format(tm, tp, data['ip_url'][ip_destination]))
             cb(s)
 
 

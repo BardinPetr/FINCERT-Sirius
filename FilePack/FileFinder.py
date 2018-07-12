@@ -56,7 +56,7 @@ def find(data, cb):
                         if t['sha1'] == Crypt.crypt_sha1(file_text):
                             if t['sha256'] == Crypt.crypt_sha256(file_text):
                                 result[file_inf] = path
-                                cb(result[file_inf])
+                                cb(result[file_inf] + '\n')
 
     return result
 
