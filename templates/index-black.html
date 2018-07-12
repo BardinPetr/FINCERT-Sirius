@@ -4,24 +4,46 @@
     <meta charset="UTF-8">
     <title>FinCert</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="/static/node_modules/@fortawesome/fontawesome-free/css/all.css">
     <link rel="stylesheet" href="/static/css/style-black.css">
     <script type="text/javascript" src="/static/node_modules/js-base64/base64.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="/static/js/index.js"></script>
 </head>
 <body>
+<div class="modal fade" id="results_modal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="fas fa-times"></i></button>
+                <h4 class="modal-title">Scan results</h4>
+            </div>
+            <div id="rmodal-body" class="modal-body" style="word-wrap: break-word;">
+                <div id="yay" class="alert alert-success">
+                    <strong>YAY!</strong> There isn't any IOCs in your system!!!
+                </div>
+            </div>
+            <div class="modal-footer">
+                <label class="control-label">
+                    You cannot click outside of this modal to close it.
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
 <nav class="navbar navbar-light" style="background-color: #333333;">
     <div class="container-fluid">
         <div class="navbar-header" style="margin-top: -5px; margin-bottom: auto">
-            <a class="navbar-brand" href="#"><img src="/static/images/owl2.png" style="height: 150%"></a>
+            <a class="navbar-brand" href="/"><img src="/static/images/owl2.png" style="height: 150%"></a>
         </div>
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">ФинЦЕРТ</a>
+            <a class="navbar-brand" href="/">ФинЦЕРТ</a>
         </div>
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Главная</a>
+            <a class="navbar-brand" href="/">Главная</a>
         </div>
         <div class="navbar-header">
             <a class="navbar-brand"
@@ -31,7 +53,7 @@
 </nav>
 <div class="container-fluid">
     <div class="col-lg-2 col-md-2">
-        <div class="panel panel-primary" >
+        <div class="panel panel-primary">
             <div class="panel-heading">Выберете модули</div>
             <div class="panel-body">
                 <div class="checkbox">
@@ -106,16 +128,16 @@
                                     <input id="file_size" type="text" class="form-control" placeholder="Размер">
                                 </div>
                                 <div class="input-group">
-                                    <span class="input-group-addon">SHA256</span>
-                                    <input id="file_sha256" type="text" class="form-control" placeholder="SHA256">
+                                    <span class="input-group-addon">MD5</span>
+                                    <input id="file_md5" type="text" class="form-control" placeholder="MD5">
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-addon">SHA1</span>
                                     <input id="file_sha1" type="text" class="form-control" placeholder="SHA1">
                                 </div>
                                 <div class="input-group">
-                                    <span class="input-group-addon">MD5</span>
-                                    <input id="file_md5" type="text" class="form-control" placeholder="MD5">
+                                    <span class="input-group-addon">SHA256</span>
+                                    <input id="file_sha256" type="text" class="form-control" placeholder="SHA256">
                                 </div>
                                 <button id="file_add" type="button" class="btn btn-default"
                                         style="margin-top: 5px; width: 100%">
@@ -219,7 +241,7 @@
                 <div id="panel_ram" class="panel panel-info">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#collapse-group" href="#el6">Оперативная память:</a>
+                            <a data-toggle="collapse" data-parent="#collapse-group" href="#el6">ОЗУ:</a>
                         </h4>
                     </div>
                     <div id="el6" class="panel-collapse collapse">
