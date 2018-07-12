@@ -6,6 +6,7 @@ import imaplib
 import email
 import re
 import locale
+import time
 
 
 class MailRunner:
@@ -34,7 +35,7 @@ class MailRunner:
         data = data[0].split()  # Some magic
 
         xres = []
-        for uid in data:
+        for uid in data[:100]:  # 100 mails
             res = MailRunner.procmail(self.mail, uid)  # Preprocess each mail
             res = cb(res) if cb else res  # Try to run Postprocess function
             xres.append(res)
@@ -89,17 +90,17 @@ class MailRunner:
 
 
 def find(data, cb):
-
     udata = get_cred()
     mr = MailRunner(udata['cred'], imap=udata['imaphost'], port=udata['imapport'])
 
     date = (datetime.date.today() - datetime.timedelta(1)).strftime(
         "%d-%b-%Y")  # In timedelta choose amount of days ago.
 
-    mails = mr.get_emails(None, '(SENTSINCE {date})'.format(
-        date=date))  # Get all emails sorted for data
+    # mails = mr.get_emails(None, '(SENTSINCE {date})'.format(
+    #     date=date))  # Get all emails sorted for data
+    mails = mr.get_emails(None)
     result = []
-
+    start_time = time.time()
     for mail in mails:
 
         if mail['err'] != 'NA':
@@ -107,8 +108,8 @@ def find(data, cb):
 
         if mail['from'] in data['email'] or \
                 any(filter(lambda x: x > 0.8, map(lambda x: cosine_dist(x, mail['body']), data['text']))):
-
             result.append({'from': mail['from'], 'date': mail['date'],
                            'subj': mail['subj']})  # Check FROM and TEXT in data from bulletin
             cb('Дата получения: {} с темой: {} Исходил от: {}\n'.format(mail['date'], mail['subj'], mail['from']))
+    print('Mail analyze time: ', time.time() - start_time)
     return result
