@@ -94,7 +94,7 @@ def find(data, cb):
     mr = MailRunner(udata['cred'], imap=udata['imaphost'], port=udata['imapport'])
 
     date = (datetime.date.today() - datetime.timedelta(7)).strftime(
-        "%d-%b-%Y")  # In timedelta choose amount of days ago.
+        "%d-%b-%Y")  # In timedelta choose amount of days ago, one week .
 
     mails = mr.get_emails(None, '(SENTSINCE {date})'.format(
         date=date))  # Get all emails sorted for data

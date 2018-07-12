@@ -48,7 +48,12 @@ def find(data, cb):
                 continue
 
             path = os.path.join(root, file)
-            file_text = ReadFile.file_get_contents(file)  # Содержимое файла
+            try:
+                file_text = ReadFile.file_get_contents(file)  # Содержимое файла
+            except MemoryError:
+                continue
+            except PermissionError:
+                continue
 
             for t in data:  # Обход данных из бюллетени
                 if int(t['size']) == file_size:
