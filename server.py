@@ -45,7 +45,7 @@ def index():
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 raise Exception("NOT IMPLEMENTED YET")
         else:
-            return render_template('index2.html')
+            return render_template('index-black.html')
     except Exception as ex:
         return render_template('error.html', res=ex)
 
@@ -54,7 +54,7 @@ def index():
 @nocache
 def settings():
     try:
-        return render_template('settings.html')
+        return render_template('settings-black.html')
     except Exception as ex:
         return render_template('error.html', res=ex)
 

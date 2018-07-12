@@ -1,0 +1,125 @@
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  background: red;
+  cursor: inherit;
+  display: block;
+}
+
+
+input[readonly] {
+  background-color: white !important;
+  cursor: text !important;
+}
+
+.navbar {
+  border-radius: 0px; //Сбросить флажок
+}
+
+.panel-primary > .panel-heading {
+    background-color: #333333;
+    border-color: #333333;
+}
+
+.panel {
+    background-color: #eeeeee;
+}
+
+.panel-primary {
+    border-color: #333333;
+}
+
+.btn-default {
+    background-color: #333333;
+    border-color: #333333;
+}
+
+.body {
+    color: #333333;
+}
+
+.btn-default:hover {
+    background-color: #999999;
+    border-color: #999999;
+}
+
+a:focus, a:hover {
+    color: #FFFFFF;
+}
+
+a {
+    color: #FFFFFF;
+}
+
+.panel-primary > .panel-heading {
+    background-color: #333333;
+    border-color: #333333;
+}
+
+.panel-primary {
+    color: #333333;
+}
+
+.btn-info {
+    border-color: #333333;
+}
+
+.btn-info:hover {
+    border-color: #333333;
+}
+
+.panel-info > .panel-heading {
+    border-color: #333333;
+    color: #ffffff;
+    background-color: #333333;
+}
+
+.panel-info {
+    border-color: #333333;
+}
+
+.btn-info {
+    background-color: #333333;
+}
+
+.btn-default {
+    background-color: #999999;
+}
+
+.btn-default.focus, .btn-default:focus {
+    background-color: #333333;
+}
+
+.btn-default.focus, .btn-default:focus {
+    color: #FFFFFF;
+}
+
+.btn-default:hover {
+    color: #ffffff;
+    background-color: #999999;
+    border-color: #999999;
+}
+
+.btn-default {
+    background-color: #333333;
+}
+
+.btn-default {
+    color: #FFFFFF;
+}
+
+.panel-heading {
+    border-top-left-radius: 1px;
+    border-top-right-radius: 1px;
+}
