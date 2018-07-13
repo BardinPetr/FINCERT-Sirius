@@ -51,8 +51,12 @@ def pkt_callback(pkt, data, cb):
 
 
 def find(data, cb):
-    res = {'format': [], 'non_format': []}
+
     dt = ({'ip': data['ip'], 'time': get_cred()['snifftime'], 'ip_url': {}})
+
+    if not dt['time'].isdecimal():
+        cb({"text": "Time is not configured in settings", "title": "NETWORKSCAN ERROR", "color": "error"}, 1)
+        return
 
     for i in data['url']:
         try:
