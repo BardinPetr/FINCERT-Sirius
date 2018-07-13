@@ -50,7 +50,7 @@ ws.onmessage = function (evt) {
         if (Object.keys(a).indexOf('file') !== -1) {
             if (Object.keys(a.file).length !== 0) {
                 yay++;
-                apnd += `<div class="panel panel-default"><div class="panel-heading">Found files: </div><div class="panel-body"><ul class="list-group">`;
+                apnd += `<div class="panel panel-default"><div class="panel-heading">Найденные индикаторы файлов: </div><div class="panel-body"><ul class="list-group">`;
                 Object.keys(a.file).forEach(function (key) {
                     apnd += `<li class="list-group-item list-group-item-danger">${key} at ${a.file[key]}</li>`;
                 });
@@ -60,7 +60,7 @@ ws.onmessage = function (evt) {
         if (Object.keys(a).indexOf('mail') !== -1) {
             if (a.mail.length !== 0) {
                 yay++;
-                apnd += `<div class="panel panel-default"><div class="panel-heading">Found mails: </div><div class="panel-body"><ul class="list-group">`;
+                apnd += `<div class="panel panel-default"><div class="panel-heading">Найденные индикаторы в почте: </div><div class="panel-body"><ul class="list-group">`;
                 a.mail.forEach(function (mail) {
                     apnd += `<li class="list-group-item list-group-item-danger">Mail from ${mail.from} at ${mail.date}</li>`;
                 });
@@ -70,7 +70,7 @@ ws.onmessage = function (evt) {
         if (Object.keys(a).indexOf('net') !== -1) {
             if (a.net['format'].length !== 0) {
                 yay++;
-                apnd += `<div class="panel panel-default"><div class="panel-heading">Found network requests: </div><div class="panel-body"><ul class="list-group">`;
+                apnd += `<div class="panel panel-default"><div class="panel-heading">Найденные индикаторы в сети: </div><div class="panel-body"><ul class="list-group">`;
                 a.net['format'].forEach(function (elem) {
                     apnd += `<li class="list-group-item list-group-item-danger">${elem}</li>`;
                 });
@@ -80,7 +80,7 @@ ws.onmessage = function (evt) {
         if (Object.keys(a).indexOf('reg') !== -1) {
             if (a.reg.length !== 0) {
                 yay++;
-                apnd += `<div class="panel panel-default"><div class="panel-heading">Found registry records: </div><div class="panel-body"><ul class="list-group">`;
+                apnd += `<div class="panel panel-default"><div class="panel-heading">Найденные индикаторы в реестре: </div><div class="panel-body"><ul class="list-group">`;
                 a.reg.forEach(function (elem) {
                     apnd += `<li class="list-group-item list-group-item-danger">${elem}</li>`;
                 });
@@ -90,7 +90,7 @@ ws.onmessage = function (evt) {
         if (Object.keys(a).indexOf('ram') !== -1) {
             if (a.ram.length !== 0) {
                 yay++;
-                apnd += `<div class="panel panel-default"><div class="panel-heading">Found running processes: </div><div class="panel-body"><ul class="list-group">`;
+                apnd += `<div class="panel panel-default"><div class="panel-heading">Найденные запущенные процессы: </div><div class="panel-body"><ul class="list-group">`;
                 a.ram.forEach(function (elem) {
                     apnd += `<li class="list-group-item list-group-item-danger">${elem}</li>`;
                 });
@@ -103,7 +103,7 @@ ws.onmessage = function (evt) {
             $("#yay").hide();
             text_block.append(`
                     <div id="yay" class="alert alert-success">
-                        <strong>YAY!</strong> There isn't any IOCs in your system!!!
+                        В вашей системе не найдены индикаторы компрометации!!!
                     </div>`);
             $("#yay").fadeIn(1000);
         }
@@ -184,9 +184,9 @@ $(document).ready(function () {
                 x.val('')
             });
             $('#file_list').prepend(file_item_tmpl(cur.name, format_data.files.length - 1, 0));
-            toastr.info("Added successfully", "PARAMS");
+            toastr.info("Успешно добавлено", "PARAMS");
         } else {
-            toastr.warning("Not all fields are carefully entered", "PARAMS");
+            toastr.warning("Не все поля заполнены корректно", "PARAMS");
         }
     });
 
@@ -197,9 +197,9 @@ $(document).ready(function () {
         if (cur) {
             format_data.mail.email = format_data.mail.email.concat({disp: cur, norm: cur});
             $('#mail_addr_list').prepend(file_item_tmpl(cur, format_data.mail.email.length - 1, 1));
-            toastr.info("Added successfully", "PARAMS");
+            toastr.info("Успешно добавлено", "PARAMS");
         } else {
-            toastr.warning("Not all fields are carefully entered", "PARAMS");
+            toastr.warning("Не все поля заполнены корректно", "PARAMS");
         }
     });
 
@@ -211,9 +211,9 @@ $(document).ready(function () {
             let displaytxt = cur.slice(0, 8) + '...';
             format_data.mail.text = format_data.mail.text.concat({disp: displaytxt, norm: cur});
             $('#mail_txt_list').prepend(file_item_tmpl(displaytxt, format_data.mail.text.length - 1, 2));
-            toastr.info("Added successfully", "PARAMS");
+            toastr.info("Успешно добавлено", "PARAMS");
         } else {
-            toastr.warning("Not all fields are carefully entered", "PARAMS");
+            toastr.warning("Не все поля заполнены корректно", "PARAMS");
         }
     });
 
@@ -224,9 +224,9 @@ $(document).ready(function () {
         if (cur) {
             format_data.net.ip = format_data.net.ip.concat({disp: cur, norm: cur});
             $('#net_ip_list').prepend(file_item_tmpl(cur, format_data.net.ip.length - 1, 3));
-            toastr.info("Added successfully", "PARAMS");
+            toastr.info("Успешно добавлено", "PARAMS");
         } else {
-            toastr.warning("Not all fields are carefully entered", "PARAMS");
+            toastr.warning("Не все поля заполнены корректно", "PARAMS");
         }
     });
 
@@ -237,9 +237,9 @@ $(document).ready(function () {
         if (cur) {
             format_data.net.url = format_data.net.url.concat({disp: cur, norm: cur});
             $('#net_url_list').prepend(file_item_tmpl(cur, format_data.net.url.length - 1, 4));
-            toastr.info("Added successfully", "PARAMS");
+            toastr.info("Успешно добавлено", "PARAMS");
         } else {
-            toastr.warning("Not all fields are carefully entered", "PARAMS");
+            toastr.warning("Не все поля заполнены корректно", "PARAMS");
         }
     });
 
@@ -253,9 +253,9 @@ $(document).ready(function () {
             let disp = cur.key.split(0, 30) + '...';
             format_data.reg.keys = format_data.reg.keys.concat({disp: disp, norm: cur});
             $('#reg_list').prepend(file_item_tmpl(disp, format_data.reg.keys.length - 1, 5));
-            toastr.info("Added successfully", "PARAMS");
+            toastr.info("Успешно добавлено", "PARAMS");
         } else {
-            toastr.warning("Not all fields are carefully entered", "PARAMS");
+            toastr.warning("Не все поля заполнены корректно", "PARAMS");
         }
     });
 
@@ -266,9 +266,9 @@ $(document).ready(function () {
         if (cur) {
             format_data.ram.procs = format_data.ram.procs.concat({disp: cur, norm: cur});
             $('#ram_list').prepend(file_item_tmpl(cur, format_data.ram.procs.length - 1, 6));
-            toastr.info("Added successfully", "PARAMS");
+            toastr.info("Успешно добавлено", "PARAMS");
         } else {
-            toastr.warning("Not all fields are carefully entered", "PARAMS");
+            toastr.warning("Не все поля заполнены корректно", "PARAMS");
         }
     });
 
@@ -279,9 +279,9 @@ $(document).ready(function () {
         if (cur) {
             format_data.log = format_data.log.concat({disp: cur, norm: cur});
             $('#log_list').prepend(file_item_tmpl(cur, format_data.log.length - 1, 7));
-            toastr.info("Added successfully", "PARAMS");
+            toastr.info("Успешно добавлено", "PARAMS");
         } else {
-            toastr.warning("Not all fields are carefully entered", "PARAMS");
+            toastr.warning("Не все поля заполнены корректно", "PARAMS");
         }
     });
 
@@ -305,7 +305,7 @@ $(document).ready(function () {
 
     start_btn.click(() => {
         if (format_data.used.length === 0) {
-            toastr.warning("No modules selected", "SCAN");
+            toastr.warning("Ни один из модулей поиска не выбран", "SCAN");
         } else {
             ws.send("NOTENC:::START:::" + JSON.stringify(format_data));
         }

@@ -132,3 +132,45 @@ a {
 .panel > .panel-heading {
     border-radius: 4px;
 }
+
+body {
+    color: #FFFFFF;
+}
+
+.modal-content {
+    background-color: #333333;
+}
+
+.modal-header {
+    border-bottom: 1px solid #333333;
+}
+
+.panel-default > .panel-heading {
+    background-color: #eeeeee;
+    border-color: #000000;
+    color: #000000;
+}
+
+.panel {
+    background-color: #eeeeee;
+}
+
+.close:focus, .close:hover {
+    color: #FFFFFF;
+}
+
+button.close {
+    color: #FFFFFF;
+}
+
+.close:focus, .close:hover {
+    color: #FFFFFF;
+}
+
+.modal-footer {
+    border-top: 1px solid #333333;
+}
+
+.btn {
+    font-size: 20px;
+}

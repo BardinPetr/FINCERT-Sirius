@@ -31,38 +31,40 @@
     </div>
 </nav>
 <form>
-    <div class="col-lg-5">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Введите ваши учетные данные почты для анализа</div>
-            <div class="panel-body">
-                <div class="input-group">
-                    <span class="input-group-addon">imap</span>
-                    <input id="iserver" type="text" class="form-control" name="msg" placeholder="Сервер">
-                    <input id="iport" type="text" class="form-control" name="msg" placeholder="Порт">
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Введите ваши учетные данные почты для анализа</div>
+                <div class="panel-body">
+                    <div class="input-group">
+                        <span class="input-group-addon">imap</span>
+                        <input id="iserver" type="text" class="form-control" name="msg" placeholder="Сервер">
+                        <input id="iport" type="text" class="form-control" name="msg" placeholder="Порт">
+                    </div>
+                    <p></p>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input id="email" type="text" class="form-control" name="email" placeholder="Email">
+                    </div>
+                    <p></p>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input id="password" type="password" class="form-control" name="password" placeholder="Пароль">
+                    </div>
                 </div>
-                <p></p>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                    <input id="email" type="text" class="form-control" name="email" placeholder="Email">
-                </div>
-                <p></p>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                    <input id="password" type="password" class="form-control" name="password" placeholder="Пароль">
-                </div>
-                <p></p>
-                <button id="save" type="button" class="btn btn-default">Сохранить
-                </button>
             </div>
-        </div>
-    </div>
-    <div class="col-lg-4">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Время анализа</div>
-            <div class="panel-body">
-                <input id="time" type="text" class="form-control" name="mnt" placeholder="Введите время в минутах">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Время анализа</div>
+                <div class="panel-body">
+                    <input id="time" type="text" class="form-control" name="mnt"
+                           placeholder="Введите время в минутах">
+                </div>
             </div>
+            <button id="save" type="button" class="btn btn-default btn-block"><strong>Сохранить</strong>
+            </button>
         </div>
+        <div class="col-lg-2"></div>
     </div>
 </form>
 </body>
