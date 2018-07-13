@@ -51,6 +51,7 @@ def pkt_callback(pkt, data, cb):
 
 
 def find(data, cb):
+    res = {'format': [], 'non_format': []}
     dt = ({'ip': data['ip'], 'time': get_cred()['snifftime'], 'ip_url': {}})
 
     for i in data['url']:
