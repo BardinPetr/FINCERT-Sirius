@@ -50,8 +50,12 @@ def pkt_callback(pkt, data, cb):
             cb(s)
 
 
-def find(data, cb):
+def clear():
+    res['format'] = []
+    res['non_format'] = []
 
+
+def find(data, cb):
     dt = ({'ip': data['ip'], 'time': get_cred()['snifftime'], 'ip_url': {}})
 
     if not dt['time'].isdecimal():

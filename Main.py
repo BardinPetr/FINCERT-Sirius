@@ -14,6 +14,7 @@ def run(data, cb):
     if 'mail' in data:
         res['mail'] = MailFinder.find(data['mail'], cb)
     if 'net' in data:
+        NetFinder.clear()
         res['net'] = NetFinder.find(data['net'], cb)
     if 'reg' in data:
         ps = platform.system()
