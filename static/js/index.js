@@ -95,9 +95,14 @@ ws.onmessage = function (evt) {
                 apnd += `</ul></div></div>`;
             }
         }
-        text_block.append(apnd);
-        $("#results_modal").modal({backdrop: "static"});
+        text_block.html(apnd);
+        $("#results_modal").modal();
         if (yay === 0) {
+            $("#yay").hide();
+            text_block.append(`
+                    <div id="yay" class="alert alert-success">
+                        <strong>YAY!</strong> There isn't any IOCs in your system!!!
+                    </div>`);
             $("#yay").fadeIn(1000);
         }
     } else if (a.xtype === 1) {
@@ -106,6 +111,7 @@ ws.onmessage = function (evt) {
     } else if (a.xtype === 0) {
         append_log(a.data);
     }
+    a = {};
 };
 
 ws.onclose = function () {
@@ -304,6 +310,5 @@ $(document).ready(function () {
         ws.send("NOTENC:::STOP")
     });
 
-    $("#yay").hide();
     append_log('[SYSTEM] WEB init finished');
 });
