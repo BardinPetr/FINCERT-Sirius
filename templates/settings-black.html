@@ -9,6 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
     <script src="{{ url_for('static', filename='js/settings.js') }}"></script>
     <link rel="stylesheet" href="/static/css/style-black.css">
 </head>
@@ -30,38 +31,52 @@
         </div>
     </div>
 </nav>
-<form>
+<form id="f1" data-toggle="validator" role="form">
     <div class="row">
         <div class="col-lg-2"></div>
         <div class="col-lg-8">
             <div class="panel panel-primary">
-                <div class="panel-heading">Введите ваши учетные данные почты для анализа</div>
+                <div class="panel-heading">Введите Ваши учетные данные почты для анализа</div>
                 <div class="panel-body">
                     <div class="input-group">
                         <span class="input-group-addon">imap</span>
-                        <input id="iserver" type="text" class="form-control" name="msg" placeholder="Сервер">
-                        <input id="iport" type="text" class="form-control" name="msg" placeholder="Порт">
+                        <div class="form-group has-feedback">
+                            <input pattern="^[_A-z0-9\.]{2,}$" id="iserver" type="text" class="form-control" name="msg"
+                                   placeholder="Сервер" required>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <input id="iport" type="number" class="form-control" name="msg"
+                                   placeholder="Порт (993)" required>
+                        </div>
                     </div>
-                    <p></p>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        <input id="email" type="text" class="form-control" name="email" placeholder="Email">
+                        <div class="form-group has-feedback">
+                            <input data-error="Этот EMail невалиден" id="email" type="email" class="form-control"
+                                   name="email"
+                                   placeholder="Email" required>
+                        </div>
                     </div>
-                    <p></p>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                        <input id="password" type="password" class="form-control" name="password" placeholder="Пароль">
+                        <div class="form-group has-feedback">
+                            <input id="password" type="password" class="form-control" name="password"
+                                   placeholder="Пароль" required>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="panel panel-primary">
                 <div class="panel-heading">Время анализа</div>
                 <div class="panel-body">
-                    <input id="time" type="text" class="form-control" name="mnt"
-                           placeholder="Введите время в минутах">
+                    <div class="form-group has-feedback">
+                        <input pattern="^[1-9]+[0-9]*$" id="time" type="text" class="form-control" name="mnt"
+                               placeholder="Введите время в минутах" required>
+                    </div>
                 </div>
             </div>
-            <button id="save" type="button" class="btn btn-default btn-block"><strong>Сохранить</strong>
+            <button id="save" type="button" class="btn btn-default btn-block" style="font-size: 20px;">
+                <strong>Сохранить</strong>
             </button>
         </div>
         <div class="col-lg-2"></div>

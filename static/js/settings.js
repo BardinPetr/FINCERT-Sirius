@@ -32,6 +32,8 @@ let send = function (a) {
 };
 
 $(document).ready(function () {
+    $('#f1').validator();
+
     $("#save").click(() => {
         let data = {
             imaphost: $("#iserver").val(),
