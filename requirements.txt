@@ -3,3 +3,4 @@ flask
 cryptography
 yara-python
 winreg
+Werkzeug
