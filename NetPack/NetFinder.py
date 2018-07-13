@@ -65,4 +65,6 @@ def find(data, cb):
               timeout=int(dt['time']) * 60)  # Dt - database, Cb - callback, store=0 means that we won't store our res
     except PermissionError:
         cb({"text": "Permission not granted for network sniffing", "title": "SYSTEM ERROR", "color": "error"}, 1)
+    except Exception as ex:
+        cb({"text": ex, "title": "NETWORKSCAN ERROR", "color": "error"}, 1)
     return res

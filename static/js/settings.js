@@ -33,12 +33,13 @@ let send = function (a) {
 
 $(document).ready(function () {
     $("#save").click(() => {
-        send({
+        let data = {
             imaphost: $("#iserver").val(),
             imapport: $("#iport").val(),
             cred: [$("#email").val(), $("#password").val()],
             snifftime: $("#time").val()
-        });
+        };
+        send(data);
         toastr.success("Settings saved on you local computer", "Settings")
     });
 });

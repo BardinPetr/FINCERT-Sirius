@@ -42,6 +42,8 @@ ws.onopen = function () {
 ws.onmessage = function (evt) {
     let a = JSON.parse(evt.data.toString());
     if (a.xtype === 2) {
+        $("#btn_start").prop("disabled", false);
+        $("#btn_stop").prop("disabled", true);
         const text_block = $("#rmodal-body");
         let apnd = "",
             yay = 0;
@@ -161,6 +163,9 @@ const file_item_tmpl = (name, id, type) => {
 };
 
 $(document).ready(function () {
+    const start_btn = $('#btn_start'),
+        stop_btn = $('#btn_stop');
+
     const file_objs = ['name', 'size', 'sha1', 'sha256', 'md5'].map((x, i, a) => {
         return $("#file_" + x)
     });
@@ -298,16 +303,21 @@ $(document).ready(function () {
         });
     });
 
-    $('#btn_start').click(() => {
+    start_btn.click(() => {
         if (format_data.used.length === 0) {
             toastr.warning("No modules selected", "SCAN");
         } else {
             ws.send("NOTENC:::START:::" + JSON.stringify(format_data));
         }
+        start_btn.prop("disabled", true);
+        stop_btn.prop("disabled", false);
     });
 
-    $('#btn_stop').click(() => {
-        ws.send("NOTENC:::STOP")
+    stop_btn.prop("disabled", true);
+    stop_btn.click(() => {
+        ws.send("NOTENC:::STOP");
+        stop_btn.prop("disabled", true);
+        start_btn.prop("disabled", false);
     });
 
     append_log('[SYSTEM] WEB init finished');
