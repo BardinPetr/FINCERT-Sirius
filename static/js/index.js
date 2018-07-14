@@ -184,9 +184,9 @@ $(document).ready(function () {
                 x.val('')
             });
             $('#file_list').prepend(file_item_tmpl(cur.name, format_data.files.length - 1, 0));
-            toastr.info("Успешно добавлено", "PARAMS");
+            toastr.info("Успешно добавлен", "Параметр");
         } else {
-            toastr.warning("Не все поля заполнены корректно", "PARAMS");
+            toastr.warning("Не все поля заполнены корректно", "Параметр");
         }
     });
 
@@ -197,9 +197,9 @@ $(document).ready(function () {
         if (cur) {
             format_data.mail.email = format_data.mail.email.concat({disp: cur, norm: cur});
             $('#mail_addr_list').prepend(file_item_tmpl(cur, format_data.mail.email.length - 1, 1));
-            toastr.info("Успешно добавлено", "PARAMS");
+            toastr.info("Успешно добавлен", "Параметр");
         } else {
-            toastr.warning("Не все поля заполнены корректно", "PARAMS");
+            toastr.warning("Не все поля заполнены корректно", "Параметр");
         }
     });
 
@@ -211,9 +211,9 @@ $(document).ready(function () {
             let displaytxt = cur.slice(0, 8) + '...';
             format_data.mail.text = format_data.mail.text.concat({disp: displaytxt, norm: cur});
             $('#mail_txt_list').prepend(file_item_tmpl(displaytxt, format_data.mail.text.length - 1, 2));
-            toastr.info("Успешно добавлено", "PARAMS");
+            toastr.info("Успешно добавлен", "Параметр");
         } else {
-            toastr.warning("Не все поля заполнены корректно", "PARAMS");
+            toastr.warning("Не все поля заполнены корректно", "Параметр");
         }
     });
 
@@ -224,9 +224,9 @@ $(document).ready(function () {
         if (cur) {
             format_data.net.ip = format_data.net.ip.concat({disp: cur, norm: cur});
             $('#net_ip_list').prepend(file_item_tmpl(cur, format_data.net.ip.length - 1, 3));
-            toastr.info("Успешно добавлено", "PARAMS");
+            toastr.info("Успешно добавлен", "Параметр");
         } else {
-            toastr.warning("Не все поля заполнены корректно", "PARAMS");
+            toastr.warning("Не все поля заполнены корректно", "Параметр");
         }
     });
 
@@ -237,9 +237,9 @@ $(document).ready(function () {
         if (cur) {
             format_data.net.url = format_data.net.url.concat({disp: cur, norm: cur});
             $('#net_url_list').prepend(file_item_tmpl(cur, format_data.net.url.length - 1, 4));
-            toastr.info("Успешно добавлено", "PARAMS");
+            toastr.info("Успешно добавлен", "Параметр");
         } else {
-            toastr.warning("Не все поля заполнены корректно", "PARAMS");
+            toastr.warning("Не все поля заполнены корректно", "Параметр");
         }
     });
 
@@ -253,9 +253,9 @@ $(document).ready(function () {
             let disp = cur.key.split(0, 30) + '...';
             format_data.reg.keys = format_data.reg.keys.concat({disp: disp, norm: cur});
             $('#reg_list').prepend(file_item_tmpl(disp, format_data.reg.keys.length - 1, 5));
-            toastr.info("Успешно добавлено", "PARAMS");
+            toastr.info("Успешно добавлен", "Параметр");
         } else {
-            toastr.warning("Не все поля заполнены корректно", "PARAMS");
+            toastr.warning("Не все поля заполнены корректно", "Параметр");
         }
     });
 
@@ -266,9 +266,9 @@ $(document).ready(function () {
         if (cur) {
             format_data.ram.procs = format_data.ram.procs.concat({disp: cur, norm: cur});
             $('#ram_list').prepend(file_item_tmpl(cur, format_data.ram.procs.length - 1, 6));
-            toastr.info("Успешно добавлено", "PARAMS");
+            toastr.info("Успешно добавлен", "Параметр");
         } else {
-            toastr.warning("Не все поля заполнены корректно", "PARAMS");
+            toastr.warning("Не все поля заполнены корректно", "Параметр");
         }
     });
 
@@ -279,9 +279,9 @@ $(document).ready(function () {
         if (cur) {
             format_data.log = format_data.log.concat({disp: cur, norm: cur});
             $('#log_list').prepend(file_item_tmpl(cur, format_data.log.length - 1, 7));
-            toastr.info("Успешно добавлено", "PARAMS");
+            toastr.info("Успешно добавлен", "Параметр");
         } else {
-            toastr.warning("Не все поля заполнены корректно", "PARAMS");
+            toastr.warning("Не все поля заполнены корректно", "Параметр");
         }
     });
 
@@ -305,7 +305,7 @@ $(document).ready(function () {
 
     start_btn.click(() => {
         if (format_data.used.length === 0) {
-            toastr.warning("Ни один из модулей поиска не выбран", "SCAN");
+            toastr.warning("Ни один из модулей поиска не выбран", "Сканирование");
         } else {
             ws.send("NOTENC:::START:::" + JSON.stringify(format_data));
         }
@@ -320,5 +320,5 @@ $(document).ready(function () {
         start_btn.prop("disabled", false);
     });
 
-    append_log('[SYSTEM] WEB init finished');
+    append_log('Системный анализ:');
 });

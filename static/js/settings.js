@@ -42,6 +42,6 @@ $(document).ready(function () {
             snifftime: $("#time").val()
         };
         send(data);
-        toastr.success("Settings saved on you local computer", "Settings")
+        toastr.success("Настройки были сохранены на ваш компьютер", "Настройки")
     });
 });
