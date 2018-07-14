@@ -20,9 +20,14 @@ def set_cred(cred):
 
 
 def get_cred():
-    key = Fernet(base64.urlsafe_b64encode((10 * home)[:32].encode('utf-8'))).decrypt(
-        open(path.join(home, '.xkstorage'), 'r').read().encode('utf-8'))
-    return json.loads(Fernet(key).decrypt(open(path.join(home, '.xstorage'), 'r').read().encode('utf-8')))
+    try:
+        key = Fernet(base64.urlsafe_b64encode((10 * home)[:32].encode('utf-8'))).decrypt(
+            open(path.join(home, '.xkstorage'), 'r').read().encode('utf-8'))
+        x = json.loads(Fernet(key).decrypt(open(path.join(home, '.xstorage'), 'r').read().encode('utf-8')))
+        x['data'] = True
+        return x
+    except FileNotFoundError:
+        return {"data": False}
 
 
 class EncryptedWay:

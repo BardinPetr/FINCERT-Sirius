@@ -32,8 +32,6 @@ let send = function (a) {
 };
 
 $(document).ready(function () {
-    $('#f1').validator();
-
     $("#save").click(() => {
         let data = {
             imaphost: $("#iserver").val(),
@@ -41,7 +39,15 @@ $(document).ready(function () {
             cred: [$("#email").val(), $("#password").val()],
             snifftime: $("#time").val()
         };
-        send(data);
-        toastr.success("Настройки были сохранены на ваш компьютер", "Настройки")
+        let ihost_re = new RegExp(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/);
+        let email_re = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+        let pass_re = new RegExp(/^.{6,}$/g);
+        if (ihost_re.test(data.imaphost) && email_re.test(data.cred[0]) && pass_re.test(data.cred[1]) &&
+            !isNaN(parseInt(data.imapport)) && !isNaN(parseInt(data.snifftime))) {
+            send(data);
+            toastr.success("Settings saved on you local computer", "Settings")
+        } else {
+            toastr.error("You didn't enter data correctly", "Settings")
+        }
     });
 });

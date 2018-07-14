@@ -65,7 +65,7 @@ def index():
 @nocache
 def settings():
     try:
-        return render_template('settings-black.html')
+        return render_template('settings-black.html', cred=get_cred())
     except Exception as ex:
         return render_template('error.html', res=ex)
 
