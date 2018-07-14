@@ -27,26 +27,26 @@ def pkt_callback(pkt, data, cb):
 
         if ip_source in data['ip']:
             res['non_format'].append({'ip': ip_source, 'time': tm, 'type': tp + ' to'})
-            s = 'At {} -- [{}] {} -> {} '.format(tm, tp, ip_source, ip_destination)
+            s = 'Дата: {} -- [{}] {} -> {} '.format(tm, tp, ip_source, ip_destination)
             res['format'].append(s)
             cb(s)
 
         if ip_destination in data['ip']:
             res['non_format'].append({'ip': ip_destination, 'time': tm, 'type': tp + ' from'})
-            s = 'At {} -- [{}] {} -> {} '.format(tm, tp, ip_source, ip_destination)
+            s = 'Дата: {} -- [{}] {} -> {} '.format(tm, tp, ip_source, ip_destination)
             res['format'].append(s)
             cb(s)
 
         if ip_source in data['ip_url']:
             res['non_format'].append({'ip': ip_source, 'time': tm, 'type': tp + ' to'})
-            s = 'At {} -- [{}] {}'.format(tm, tp, data['ip_url'][ip_source])
-            res['format'].append('At {} -- [{}] {}'.format(tm, tp, data['ip_url'][ip_source]))
+            s = 'Дата: {} -- [{}] {}'.format(tm, tp, data['ip_url'][ip_source])
+            res['format'].append(s)
             cb(s)
 
         if ip_destination in data['ip_url']:
             res['non_format'].append({'ip': ip_source, 'time': tm, 'type': tp + ' from'})
-            s = 'At {} -- [{}] {}'.format(tm, tp, data['ip_url'][ip_destination])
-            res['format'].append('At {} -- [{}] {}\n'.format(tm, tp, data['ip_url'][ip_destination]))
+            s = 'Дата: {} -- [{}] {}'.format(tm, tp, data['ip_url'][ip_destination])
+            res['format'].append(s)
             cb(s)
 
 
@@ -59,7 +59,7 @@ def find(data, cb):
     dt = ({'ip': data['ip'], 'time': get_cred()['snifftime'], 'ip_url': {}})
 
     if not dt['time'].isdecimal():
-        cb({"text": "Time is not configured in settings", "title": "NETWORKSCAN ERROR", "color": "error"}, 1)
+        cb({"text": "Времея не настроено в разделе НАСТРОЙКИ", "title": "Ошибка анализа сети", "color": "error"}, 1)
         return
 
     for i in data['url']:
@@ -72,7 +72,7 @@ def find(data, cb):
         sniff(prn=lambda x: pkt_callback(x, dt, cb), store=0,
               timeout=int(dt['time']) * 60)  # Dt - database, Cb - callback, store=0 means that we won't store our res
     except PermissionError:
-        cb({"text": "Permission not granted for network sniffing", "title": "SYSTEM ERROR", "color": "error"}, 1)
+        cb({"text": "Анализ сети не разрешен", "title": "Системная ошибка", "color": "error"}, 1)
     except Exception as ex:
-        cb({"text": ex, "title": "NETWORKSCAN ERROR", "color": "error"}, 1)
+        cb({"text": ex, "title": "Ошибка анализа сети", "color": "error"}, 1)
     return res

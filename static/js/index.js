@@ -320,5 +320,5 @@ $(document).ready(function () {
         start_btn.prop("disabled", false);
     });
 
-    append_log('Системный анализ:');
+    append_log('[СИСТЕМА] Системный анализ:');
 });

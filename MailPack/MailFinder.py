@@ -110,5 +110,5 @@ def find(data, cb):
 
             result.append({'from': mail['from'], 'date': mail['date'],
                            'subj': mail['subj']})  # Check FROM and TEXT in data from bulletin
-            cb('Дата получения: {} с темой: {} Исходил от: {}\n'.format(mail['date'], mail['subj'], mail['from']))
+            cb('Дата получения: {} с темой: {} Исходило от: {}'.format(mail['date'], mail['subj'], mail['from']))
     return result

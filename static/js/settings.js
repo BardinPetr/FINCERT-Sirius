@@ -45,9 +45,9 @@ $(document).ready(function () {
         if (ihost_re.test(data.imaphost) && email_re.test(data.cred[0]) && pass_re.test(data.cred[1]) &&
             !isNaN(parseInt(data.imapport)) && !isNaN(parseInt(data.snifftime))) {
             send(data);
-            toastr.success("Settings saved on you local computer", "Settings")
+            toastr.success("Настройки сохранены на ваш компьютер", "Настройки")
         } else {
-            toastr.error("You didn't enter data correctly", "Settings")
+            toastr.error("Данные неверно введены", "Настройки")
         }
     });
 });

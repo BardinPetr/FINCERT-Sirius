@@ -6,7 +6,7 @@ import platform
 
 
 def run(data, cb):
-    cb({"text": "Scan started", "title": "SCAN", "color": "success"}, 1)
+    cb({"text": "Начато сканирование", "title": "Сканирование", "color": "success"}, 1)
     sleep(0.5)
     res = {}
     if 'files' in data:
@@ -22,10 +22,10 @@ def run(data, cb):
             from RegPack import RegistryFinder
             res['reg'] = RegistryFinder.find(data['reg'], cb)
         else:
-            cb({"text": "Scanning registry isn't allowed on %s" % ps, "title": "SYSTEM", "color": "warning"}, 1)
+            cb({"text": "Сканирование реестра не разрешено на %s" % ps, "title": "Система", "color": "warning"}, 1)
     if 'ram' in data:
         pass
     sleep(0.5)
-    cb({"text": "Scan finished", "title": "SCAN", "color": "success"}, 1)
+    cb({"text": "Сканирование окончено", "title": "Сканирование", "color": "success"}, 1)
     sleep(0.5)
     cb(res, 2)
