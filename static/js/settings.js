@@ -42,8 +42,8 @@ $(document).ready(function () {
         let ihost_re = new RegExp(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/);
         let email_re = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
         let pass_re = new RegExp(/^.{6,}$/g);
-        if (ihost_re.test(data.imaphost) && email_re.test(data.cred[0]) && pass_re.test(data.cred[1]) &&
-            !isNaN(parseInt(data.imapport)) && !isNaN(parseInt(data.snifftime))) {
+        if ((ihost_re.test(data.imaphost) && email_re.test(data.cred[0]) && pass_re.test(data.cred[1]) &&
+            !isNaN(parseInt(data.imapport))) || !isNaN(parseInt(data.snifftime))) {
             send(data);
             toastr.success("Настройки сохранены на ваш компьютер", "Настройки")
         } else {
