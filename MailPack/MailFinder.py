@@ -18,10 +18,20 @@ class MailRunner:
         :param imap: int or str -> int for predeclared imaps(MailRunner.imaps); str for imap address
         :param port: SSL port of imap (default: 993)
         """
-        self.mail = imaplib.IMAP4_SSL(MailRunner.imaps[imap] if type(imap) == int else imap, port)
-        self.mail.login(*cred)
-        self.mail.list()
-        self.mail.select("inbox")  # Open folder "INBOX"
+        self.mail = None
+        self.cred = cred
+        self.imap = MailRunner.imaps[imap] if type(imap) == int else imap
+        self.port = port
+
+    def init(self):
+        try:
+            self.mail = imaplib.IMAP4_SSL(self.imap, self.port)
+            self.mail.login(*self.cred)
+            self.mail.list()
+            self.mail.select("inbox")  # Open folder "INBOX"
+        except Exception as ex:
+            return ex
+        return None
 
     def get_emails(self, cb, flt="ALL"):
         """
@@ -89,26 +99,34 @@ class MailRunner:
 
 
 def find(data, cb):
-
-    udata = get_cred()
-    mr = MailRunner(udata['cred'], imap=udata['imaphost'], port=udata['imapport'])
-
-    date = (datetime.date.today() - datetime.timedelta(7)).strftime(
-        "%d-%b-%Y")  # In timedelta choose amount of days ago, one week .
-
-    mails = mr.get_emails(None, '(SENTSINCE {date})'.format(
-        date=date))  # Get all emails sorted for data
     result = []
 
-    for mail in mails:
+    udata = get_cred()
+    if not udata['data']:
+        cb({"text": "Параметры почты не настроены в разделе НАСТРОЙКИ", "title": "Ошибка анализа почты",
+            "color": "error"}, 1)
+        return result
 
-        if mail['err'] != 'NA':
-            continue
+    mr = MailRunner(udata['cred'], imap=udata['imaphost'], port=udata['imapport'])
 
-        if mail['from'] in data['email'] or \
-                any(filter(lambda x: x > 0.8, map(lambda x: cosine_dist(x, mail['body']), data['text']))):
+    preres = mr.init()
+    if preres:
+        cb({"text": "Параметры почты неверны (imap/email/pass)", "title": "Ошибка анализа почты", "color": "error"}, 1)
+    else:
+        date = (datetime.date.today() - datetime.timedelta(7)).strftime(
+            "%d-%b-%Y")  # In timedelta choose amount of days ago, one week .
 
-            result.append({'from': mail['from'], 'date': mail['date'],
-                           'subj': mail['subj']})  # Check FROM and TEXT in data from bulletin
-            cb('Дата получения: {} с темой: {} Исходило от: {}'.format(mail['date'], mail['subj'], mail['from']))
+        mails = mr.get_emails(None, '(SENTSINCE {date})'.format(
+            date=date))  # Get all emails sorted for data
+
+        for mail in mails:
+
+            if mail['err'] != 'NA':
+                continue
+
+            if mail['from'] in data['email'] or \
+                    any(filter(lambda x: x > 0.8, map(lambda x: cosine_dist(x, mail['body']), data['text']))):
+                result.append({'from': mail['from'], 'date': mail['date'],
+                               'subj': mail['subj']})  # Check FROM and TEXT in data from bulletin
+                cb('Дата получения: {} с темой: {} Исходило от: {}'.format(mail['date'], mail['subj'], mail['from']))
     return result

@@ -56,23 +56,23 @@ def clear():
 
 
 def find(data, cb):
-    dt = ({'ip': data['ip'], 'time': get_cred()['snifftime'], 'ip_url': {}})
+    udata = get_cred()
+    if not udata['data']:
+        cb({"text": "Время не настроено в разделе НАСТРОЙКИ", "title": "Ошибка анализа сети", "color": "error"}, 1)
+    else:
+        dt = ({'ip': data['ip'], 'time': udata['snifftime'], 'ip_url': {}})
+        for i in data['url']:
+            try:
+                dt['ip_url'][socket.gethostbyname(i)] = i  # Get ip by host name
+            except socket.gaierror:
+                continue
 
-    if not dt['time'].isdecimal():
-        cb({"text": "Времея не настроено в разделе НАСТРОЙКИ", "title": "Ошибка анализа сети", "color": "error"}, 1)
-        return
-
-    for i in data['url']:
         try:
-            dt['ip_url'][socket.gethostbyname(i)] = i  # Get ip by host name
-        except socket.gaierror:
-            continue
-
-    try:
-        sniff(prn=lambda x: pkt_callback(x, dt, cb), store=0,
-              timeout=int(dt['time']) * 60)  # Dt - database, Cb - callback, store=0 means that we won't store our res
-    except PermissionError:
-        cb({"text": "Анализ сети не разрешен", "title": "Системная ошибка", "color": "error"}, 1)
-    except Exception as ex:
-        cb({"text": ex, "title": "Ошибка анализа сети", "color": "error"}, 1)
+            sniff(prn=lambda x: pkt_callback(x, dt, cb), store=0,
+                  timeout=int(
+                      dt['time']) * 60)  # Dt - database, Cb - callback, store=0 means that we won't store our res
+        except PermissionError:
+            cb({"text": "Анализ сети не разрешен", "title": "Системная ошибка", "color": "error"}, 1)
+        except Exception as ex:
+            cb({"text": ex, "title": "Ошибка анализа сети", "color": "error"}, 1)
     return res
