@@ -4,7 +4,6 @@ import platform
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-
 def days_from_modifed(s):  # Подсчет дней с последней модификации файла
     path = Path(s)
     statResult = path.stat()
@@ -64,13 +63,3 @@ def find(data, cb):
                                 cb('Найден файл: ', result[file_inf])
 
     return result
-
-
-"""
-def find_all(name, path):
-    result = []
-    for root, dirs, files in os.walk(path):
-        if name in files:
-            result.append(os.path.join(root, name))
-    return result
-"""
