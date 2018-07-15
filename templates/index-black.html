@@ -19,7 +19,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><i class="fas fa-times"></i></button>
-                <h4 class="modal-title" >Результат сканирования</h4>
+                <h4 class="modal-title">Результат сканирования</h4>
             </div>
             <div id="rmodal-body" class="modal-body" style="word-wrap: break-word;"></div>
         </div>
@@ -60,7 +60,7 @@
                     <label><input id="reg_cb" type="checkbox" value="">Реестр</label>
                 </div>
                 <div class="checkbox ">
-                    <label><input id="ram_cb" type="checkbox" value="">Оперативная память</label>
+                    <label><input id="ram_cb" type="checkbox" value="">ОЗУ</label>
                 </div>
                 <div class="checkbox ">
                     <label><input id="log_cb" type="checkbox" value="">Логи</label>
@@ -88,8 +88,11 @@
                 <div class="row" style="padding-bottom: 20px; margin-right: 30px; margin-left: 30px">
                     <button id="btn_start" class="btn btn-default btn-block">Старт</button>
                 </div>
-                <div class="row" style=" margin-right: 30px; margin-left: 30px">
+                <div class="row" style="padding-bottom: 20px; margin-right: 30px; margin-left: 30px">
                     <button id="btn_stop" class="btn btn-default btn-block">Стоп</button>
+                </div>
+                <div class="row" style=" margin-right: 30px; margin-left: 30px">
+                    <button id="btn_clear" class="btn btn-default btn-block" onclick="location.reload();">Сброс</button>
                 </div>
             </div>
         </div>
@@ -217,13 +220,17 @@
                             <div class="container-fluid">
                                 <p>Целевые записи реестра:</p>
                                 <div class="input-group">
-                                    <input id="reg_inp" type="text" class="form-control" placeholder="Ключ реестра">
-                                    <div class="input-group-btn">
-                                        <button id="reg_add" class="btn btn-default">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
+                                    <span class="input-group-addon"><i class="fas fa-key"></i></span>
+                                    <input id="reg_key" type="text" class="form-control" placeholder="Key">
                                 </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fas fa-asterisk"></i></span>
+                                    <input id="reg_val" type="text" class="form-control" placeholder="Value">
+                                </div>
+                                <button id="reg_add" type="button" class="btn btn-primary"
+                                        style="margin-top: 5px; width: 100%">
+                                    <i class="fas fa-plus"></i>
+                                </button>
                                 <ul class="list-group" id="reg_list"></ul>
                             </div>
                         </div>

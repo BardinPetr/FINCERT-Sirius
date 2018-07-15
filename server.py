@@ -2,6 +2,7 @@ from utils.StoppableThread import StoppableThread
 from utils.websocketserver import WebsocketServer
 from werkzeug.utils import secure_filename
 from flask import render_template, request
+from STIX2Parse.Parse import parse_stix
 from utils.nocache import nocache
 from utils.encryption import *
 from flask import Flask
@@ -16,6 +17,7 @@ ALLOWED_EXTENSIONS = {'json'}
 app = Flask(__name__)
 enc = EncryptedWay()
 mainthread = None
+pre_stix = None
 server = None
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -44,6 +46,7 @@ def allowed_file(filename):
 @app.route('/', methods=['GET', 'POST'])
 @nocache
 def index():
+    global pre_stix
     try:
         if request.method == 'POST':
             if 'file' not in request.files:
@@ -52,11 +55,11 @@ def index():
             if file.filename == '':
                 raise Exception("File is not a file...")
             if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                raise Exception("NOT IMPLEMENTED YET")
-        else:
-            return render_template('index-black.html')
+                filename = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(file.filename))
+                file.save(filename)
+                file.close()
+                pre_stix = parse_stix(open(filename, 'r'))
+        return render_template('index-black.html')
     except Exception as ex:
         return render_template('error.html', res=ex)
 
@@ -71,7 +74,7 @@ def settings():
 
 
 def ws_receive(meta, wss, txt):
-    global mainthread
+    global mainthread, pre_stix
     print("Received by WS:", txt)
     if txt.startswith("NOTENC"):
         data = txt.split(':::')[1:]
@@ -94,6 +97,10 @@ def ws_receive(meta, wss, txt):
             elif data[0] == "STOP":
                 callback({"text": "Scan stopped by user", "title": "SCAN", "color": "error"}, 1)
                 mainthread.stop()
+            elif data[0] == "GETSTIX":
+                if pre_stix:
+                    callback(pre_stix, 3)
+                pre_stix = None
         except Exception as e:
             print(e)
     else:
@@ -107,7 +114,10 @@ def ws_receive(meta, wss, txt):
 @app.errorhandler(403)
 @app.errorhandler(400)
 def page_not_found(e):
-    return render_template('error.html', res="%d - %s" % (e.code, e.name)), e.code
+    try:
+        return render_template('error.html', res="%d - %s" % (e.code, e.name)), e.code
+    except Exception as ex:
+        return render_template('error.html', res=ex), ex
 
 
 if __name__ == '__main__':

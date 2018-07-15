@@ -33,23 +33,25 @@ def parse_stix(path):
                                                                                                                    '')
                 for x in re.split('\s(?:AND|OR|and|or)\s', obj.pattern[1:-1])}
             if label in qtable['files']:
+                res['used'].add('files')
                 res['files'].append({
-                    "name": patterns.get('file:name', "<N/A>"),
-                    "sha1": patterns.get("file:hashes.sha1", "<N/A>"),
-                    "sha256": patterns.get("file:hashes.sha256", "<N/A>"),
-                    "md5": patterns.get("file:hashes.md5", "<N/A>")
+                    "name": patterns.get('file:name', ""),
+                    "sha1": patterns.get("file:hashes.sha1", ""),
+                    "sha256": patterns.get("file:hashes.sha256", ""),
+                    "md5": patterns.get("file:hashes.md5", "")
                 })
             elif label == 'ip-dst':
+                res['used'].add('net')
                 res['net']['ip'] += [patterns.get('network-traffic:dst_ref.value')] \
                     if 'network-traffic:dst_ref.value' in patterns else []
             elif label == 'hostname':
+                res['used'].add('net')
                 res['net']['url'] += [patterns.get('domain-name:value')] \
                     if 'domain-name:value' in patterns else []
             elif label == 'email-src':
+                res['used'].add('mail')
                 res['mail']['email'] += [patterns.get('email-message:from_ref')] \
                     if 'email-message:from_ref' in patterns else []
-            print(label, patterns)
-
     res['used'] = list(res['used'])
     return res
 
