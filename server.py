@@ -11,7 +11,7 @@ import json
 import os
 
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'temp')
-ALLOWED_EXTENSIONS = {'pdf'}
+ALLOWED_EXTENSIONS = {'json'}
 
 app = Flask(__name__)
 enc = EncryptedWay()
