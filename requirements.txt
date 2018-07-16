@@ -3,4 +3,8 @@ flask
 cryptography
 yara-python
 winreg
+<<<<<<< Updated upstream
 Werkzeug
+=======
+wincap
+>>>>>>> Stashed changes

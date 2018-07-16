@@ -54,10 +54,6 @@ input[readonly] {
     border-color: #999999;
 }
 
-a:focus, a:hover {
-    color: #FFFFFF;
-}
-
 a {
     color: #FFFFFF;
 }
@@ -153,6 +149,8 @@ body {
 
 .panel {
     background-color: #eeeeee;
+    border-radius: 5px;
+    border: 1px solid transparent;
 }
 
 .close:focus, .close:hover {
@@ -169,4 +167,12 @@ button.close {
 
 .modal-footer {
     border-top: 1px solid #333333;
+}
+
+.btn {
+    font-size: 14px;
+}
+
+a:focus, a:hover {
+    color: #00b8f4;
 }
