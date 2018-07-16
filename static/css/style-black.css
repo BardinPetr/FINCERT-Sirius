@@ -176,3 +176,18 @@ button.close {
 a:focus, a:hover {
     color: #00b8f4;
 }
+
+.btn-primary.focus, .btn-primary:focus {
+    background-color: #333333;
+    border-color: #333333;
+}
+
+.btn-primary:hover {
+     background-color: #999999;
+     border-color: #999999;
+}
+
+.btn-primary {
+    background-color: #333333;
+    border-color: #333333;
+}
