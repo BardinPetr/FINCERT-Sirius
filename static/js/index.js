@@ -21,6 +21,7 @@ let format_data = {
     log: []
 };
 
+
 const append_log = data => {
     $("#logs").html(data + "<br>" + $("#logs").html())
 };
@@ -36,12 +37,83 @@ Array.prototype.remove = function () {
     return this;
 };
 
+const addh_file = (cur) => {
+    let disp = cur.name || cur.sha256 || cur.sha1 || cur.md5 || cur.size;
+    disp = disp.slice(0, 30) + '...';
+    format_data.files = format_data.files.concat({disp: disp, norm: cur});
+    $('#file_list').prepend(file_item_tmpl(disp, format_data.files.length - 1, 0));
+};
+const addh_mail_a = (cur) => {
+    format_data.mail.email = format_data.mail.email.concat({disp: cur, norm: cur});
+    $('#mail_addr_list').prepend(file_item_tmpl(cur, format_data.mail.email.length - 1, 1));
+};
+const addh_mail_t = (cur) => {
+    let displaytxt = cur.slice(0, 20) + '...';
+    format_data.mail.text = format_data.mail.text.concat({disp: displaytxt, norm: cur});
+    $('#mail_txt_list').prepend(file_item_tmpl(displaytxt, format_data.mail.text.length - 1, 2));
+};
+const addh_net_i = (cur) => {
+    format_data.net.ip = format_data.net.ip.concat({disp: cur, norm: cur});
+    $('#net_ip_list').prepend(file_item_tmpl(cur, format_data.net.ip.length - 1, 3));
+};
+const addh_net_u = (cur) => {
+    format_data.net.url = format_data.net.url.concat({disp: cur, norm: cur});
+    $('#net_url_list').prepend(file_item_tmpl(cur, format_data.net.url.length - 1, 4));
+};
+const addh_reg = (cur) => {
+    let disp = cur.key.split(0, 20) + '...';
+    format_data.reg.keys = format_data.reg.keys.concat({disp: disp, norm: cur});
+    $('#reg_list').prepend(file_item_tmpl(disp, format_data.reg.keys.length - 1, 5));
+};
+const addh_ram_p = (cur) => {
+    format_data.ram.procs = format_data.ram.procs.concat({disp: cur, norm: cur});
+    $('#ram_list').prepend(file_item_tmpl(cur, format_data.ram.procs.length - 1, 6));
+};
+const addh_log = (cur) => {
+    format_data.log = format_data.log.concat({disp: cur, norm: cur});
+    $('#log_list').prepend(file_item_tmpl(cur, format_data.log.length - 1, 7));
+};
+
+
 ws.onopen = function () {
+    ws.send("NOTENC:::GETSTIX");
 };
 
 ws.onmessage = function (evt) {
     let a = JSON.parse(evt.data.toString());
-    if (a.xtype === 2) {
+    if (a.xtype === 3) {
+        if (a.used.length !== 0) {
+            format_data.used = a.used;
+            $('#zeropanel').fadeOut(500);
+            a.used.forEach((elem, x, y) => {
+                $(`#panel_${elem}`).show();
+                $(`#${elem}_cb`).prop("checked", true);
+                switch (elem) {
+                    case 'files': {
+                        a.files.forEach((i, x0, z0) => {
+                            addh_file(i);
+                        });
+                        break;
+                    }
+                    case 'net': {
+                        a.net.ip.forEach((i, x0, z0) => {
+                            addh_net_i(i);
+                        });
+                        a.net.url.forEach((i, x0, z0) => {
+                            addh_net_u(i);
+                        });
+                        break;
+                    }
+                    case 'mail': {
+                        a.mail.email.forEach((i, x0, z0) => {
+                            addh_mail_a(i);
+                        });
+                        break;
+                    }
+                }
+            });
+        }
+    } else if (a.xtype === 2) {
         $("#btn_start").prop("disabled", false);
         $("#btn_stop").prop("disabled", true);
         const text_block = $("#rmodal-body");
@@ -179,14 +251,13 @@ $(document).ready(function () {
             md5: file_objs[4].val()
         };
         if (cur.name && cur.size && cur.md5 && cur.sha1 && cur.sha256) {
-            format_data.files = format_data.files.concat({disp: cur.name, norm: cur});
             file_objs.map((x, i, a) => {
                 x.val('')
             });
-            $('#file_list').prepend(file_item_tmpl(cur.name, format_data.files.length - 1, 0));
-            toastr.info("Успешно добавлен", "Параметр");
+            addh_file(cur);
+            toastr.info("Успешно добавлен", "Параметры");
         } else {
-            toastr.warning("Не все поля заполнены корректно", "Параметр");
+            toastr.warning("Не все поля заполнены корректно", "Параметры");
         }
     });
 
@@ -195,11 +266,10 @@ $(document).ready(function () {
         let cur = c.val();
         c.val('');
         if (cur) {
-            format_data.mail.email = format_data.mail.email.concat({disp: cur, norm: cur});
-            $('#mail_addr_list').prepend(file_item_tmpl(cur, format_data.mail.email.length - 1, 1));
-            toastr.info("Успешно добавлен", "Параметр");
+            addh_mail_a(cur);
+            toastr.info("Успешно добавлен", "Параметры");
         } else {
-            toastr.warning("Не все поля заполнены корректно", "Параметр");
+            toastr.warning("Не все поля заполнены корректно", "Параметры");
         }
     });
 
@@ -208,12 +278,10 @@ $(document).ready(function () {
         let cur = c.val();
         c.val('');
         if (cur) {
-            let displaytxt = cur.slice(0, 8) + '...';
-            format_data.mail.text = format_data.mail.text.concat({disp: displaytxt, norm: cur});
-            $('#mail_txt_list').prepend(file_item_tmpl(displaytxt, format_data.mail.text.length - 1, 2));
-            toastr.info("Успешно добавлен", "Параметр");
+            addh_mail_t(cur);
+            toastr.info("Успешно добавлен", "Параметры");
         } else {
-            toastr.warning("Не все поля заполнены корректно", "Параметр");
+            toastr.warning("Не все поля заполнены корректно", "Параметры");
         }
     });
 
@@ -222,11 +290,10 @@ $(document).ready(function () {
         let cur = c.val();
         c.val('');
         if (cur) {
-            format_data.net.ip = format_data.net.ip.concat({disp: cur, norm: cur});
-            $('#net_ip_list').prepend(file_item_tmpl(cur, format_data.net.ip.length - 1, 3));
-            toastr.info("Успешно добавлен", "Параметр");
+            addh_net_i(cur);
+            toastr.info("Успешно добавлен", "Параметры");
         } else {
-            toastr.warning("Не все поля заполнены корректно", "Параметр");
+            toastr.warning("Не все поля заполнены корректно", "Параметры");
         }
     });
 
@@ -235,11 +302,10 @@ $(document).ready(function () {
         let cur = c.val();
         c.val('');
         if (cur) {
-            format_data.net.url = format_data.net.url.concat({disp: cur, norm: cur});
-            $('#net_url_list').prepend(file_item_tmpl(cur, format_data.net.url.length - 1, 4));
-            toastr.info("Успешно добавлен", "Параметр");
+            addh_net_u(cur);
+            toastr.info("Успешно добавлен", "Параметры");
         } else {
-            toastr.warning("Не все поля заполнены корректно", "Параметр");
+            toastr.warning("Не все поля заполнены корректно", "Параметры");
         }
     });
 
@@ -250,12 +316,10 @@ $(document).ready(function () {
         k.val('');
         v.val('');
         if (cur.key && cur.val) {
-            let disp = cur.key.split(0, 30) + '...';
-            format_data.reg.keys = format_data.reg.keys.concat({disp: disp, norm: cur});
-            $('#reg_list').prepend(file_item_tmpl(disp, format_data.reg.keys.length - 1, 5));
-            toastr.info("Успешно добавлен", "Параметр");
+            addh_reg(cur);
+            toastr.info("Успешно добавлен", "Параметры");
         } else {
-            toastr.warning("Не все поля заполнены корректно", "Параметр");
+            toastr.warning("Не все поля заполнены корректно", "Параметры");
         }
     });
 
@@ -264,11 +328,10 @@ $(document).ready(function () {
         let cur = c.val();
         c.val('');
         if (cur) {
-            format_data.ram.procs = format_data.ram.procs.concat({disp: cur, norm: cur});
-            $('#ram_list').prepend(file_item_tmpl(cur, format_data.ram.procs.length - 1, 6));
-            toastr.info("Успешно добавлен", "Параметр");
+            addh_ram_p(cur);
+            toastr.info("Успешно добавлен", "Параметры");
         } else {
-            toastr.warning("Не все поля заполнены корректно", "Параметр");
+            toastr.warning("Не все поля заполнены корректно", "Параметры");
         }
     });
 
@@ -277,11 +340,10 @@ $(document).ready(function () {
         let cur = c.val();
         c.val('');
         if (cur) {
-            format_data.log = format_data.log.concat({disp: cur, norm: cur});
-            $('#log_list').prepend(file_item_tmpl(cur, format_data.log.length - 1, 7));
-            toastr.info("Успешно добавлен", "Параметр");
+            addh_log(cur);
+            toastr.info("Успешно добавлен", "Параметры");
         } else {
-            toastr.warning("Не все поля заполнены корректно", "Параметр");
+            toastr.warning("Не все поля заполнены корректно", "Параметры");
         }
     });
 
@@ -320,5 +382,5 @@ $(document).ready(function () {
         start_btn.prop("disabled", false);
     });
 
-    append_log('[СИСТЕМА] Системный анализ:');
+    append_log('[СИСТЕМА] ВЕБ-часть загружена');
 });

@@ -1,7 +1,7 @@
 scapy
 flask
 cryptography
-yara-python
+stix2
 winreg
 <<<<<<< Updated upstream
 Werkzeug
