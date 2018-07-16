@@ -3,8 +3,5 @@ flask
 cryptography
 stix2
 winreg
-<<<<<<< Updated upstream
 Werkzeug
-=======
 wincap
->>>>>>> Stashed changes

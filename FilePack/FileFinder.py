@@ -21,8 +21,7 @@ def find(data, cb):
         :param path: Коренной путь поиска
         :return: путь
     """
-    print(data)
-    root_start = '/'  # Стартовый корень от которого мы начинаем поиск.
+    root_start = '/Users/maximgran/'  # Стартовый корень от которого мы начинаем поиск.
     flag = False
     if platform.system() == 'Windows':
         root_start = 'C:\\'
@@ -36,7 +35,7 @@ def find(data, cb):
             file_inf = file  # Изначальное имя файла
             file = os.path.join(root, file)
 
-            if not os.access(file, os.R_OK) and flag:  # Файлы, которые нельзя, прочесть будут пропущены !!!
+            if flag and not os.access(file, os.R_OK):  # Файлы, которые нельзя, прочесть будут пропущены !!!
                 continue
 
             if not os.path.isfile(file) or os.path.isdir(file):  # Является ли file  файлом или директорией.
@@ -49,9 +48,7 @@ def find(data, cb):
             check_name = False
 
             for t in data:
-                for t_name in t['name']:
-                    print(t_name)
-                    check_name = t_name == file_inf or check_name
+                check_name = t['name'] == file_inf or check_name
 
             if check_name:
                 statinfo = os.stat(file)
@@ -70,12 +67,9 @@ def find(data, cb):
                         if t['md5'] == Crypt.crypt_md5(file_text):
                             if t['sha1'] == Crypt.crypt_sha1(file_text):
                                 if t['sha256'] == Crypt.crypt_sha256(file_text):
-                                    print('file found: ', time.time() - start_time)
                                     result[file_inf] = path
                                     cb('Найден файл: ', result[file_inf])
-                print('time: ', time.time() - start_time)
-                print('in: ', path)
 
-    print("Full work time: ", time.time() - start_time)
+    # print("Full work time: ", time.time() - start_time)
 
     return result

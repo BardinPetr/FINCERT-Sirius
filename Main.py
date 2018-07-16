@@ -61,8 +61,9 @@ def run(data, cb):
 
         # Проверка на заполнение поля ОЗУ.
         flag = False
-        for i in data['ram']:
-            flag = len(data['ram'][i]) or flag
+        if 'ram' in data:
+            for i in data['ram']:
+                flag = len(data['ram'][i]) or flag
 
         if flag and 'ram' in data:
             pass

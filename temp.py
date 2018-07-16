@@ -16,4 +16,4 @@ def run():
     print(time.time() - start_time)
 
 
-run() 
+run()
