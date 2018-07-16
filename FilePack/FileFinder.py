@@ -3,6 +3,8 @@ import os
 import platform
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+import time
+
 
 def days_from_modifed(s):  # Подсчет дней с последней модификации файла
     path = Path(s)
@@ -19,7 +21,7 @@ def find(data, cb):
         :param path: Коренной путь поиска
         :return: путь
     """
-
+    print(data)
     root_start = '/'  # Стартовый корень от которого мы начинаем поиск.
     flag = False
     if platform.system() == 'Windows':
@@ -27,10 +29,11 @@ def find(data, cb):
         flag = True
 
     result = dict()  # Результат нашей проверки.
+    start_time = time.time()
 
     for root, dirs, files in os.walk(root_start):
         for file in files:
-            file_inf = file # Изначальное имя файла
+            file_inf = file  # Изначальное имя файла
             file = os.path.join(root, file)
 
             if not os.access(file, os.R_OK) and flag:  # Файлы, которые нельзя, прочесть будут пропущены !!!
@@ -39,27 +42,40 @@ def find(data, cb):
             if not os.path.isfile(file) or os.path.isdir(file):  # Является ли file  файлом или директорией.
                 continue
 
-            statinfo = os.stat(file)
-            file_size = statinfo.st_size  # Размер файла
-
             if days_from_modifed(
                     file) > 10:  # Сколько времени прошло с последнего изменения файла. Если более 10 дней, то пропустим
                 continue
 
-            path = os.path.join(root, file)
-            try:
-                file_text = ReadFile.file_get_contents(file)  # Содержимое файла
-            except MemoryError:
-                continue
-            except PermissionError:
-                continue
+            check_name = False
 
-            for t in data:  # Обход данных из бюллетени
-                if int(t['size']) == file_size:
-                    if t['md5'] == Crypt.crypt_md5(file_text):
-                        if t['sha1'] == Crypt.crypt_sha1(file_text):
-                            if t['sha256'] == Crypt.crypt_sha256(file_text):
-                                result[file_inf] = path
-                                cb('Найден файл: ', result[file_inf])
+            for t in data:
+                for t_name in t['name']:
+                    print(t_name)
+                    check_name = t_name == file_inf or check_name
+
+            if check_name:
+                statinfo = os.stat(file)
+                file_size = statinfo.st_size  # Размер файла
+                path = os.path.join(root, file)
+
+                try:
+                    file_text = ReadFile.file_get_contents(file)  # Содержимое файла
+                except MemoryError:
+                    continue
+                except PermissionError:
+                    continue
+
+                for t in data:  # Обход данных из бюллетени
+                    if int(t['size']) == file_size:
+                        if t['md5'] == Crypt.crypt_md5(file_text):
+                            if t['sha1'] == Crypt.crypt_sha1(file_text):
+                                if t['sha256'] == Crypt.crypt_sha256(file_text):
+                                    print('file found: ', time.time() - start_time)
+                                    result[file_inf] = path
+                                    cb('Найден файл: ', result[file_inf])
+                print('time: ', time.time() - start_time)
+                print('in: ', path)
+
+    print("Full work time: ", time.time() - start_time)
 
     return result

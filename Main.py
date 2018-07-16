@@ -9,8 +9,14 @@ def run(data, cb):
     print(data)
     flag = False
     for i in data:
-        for j in data[i]:
-            flag = len(data[i][j]) or flag
+        if i == 'files':
+            for j in data[i]:
+                for k in j:
+                    if k != 'size':
+                        flag = len(j[k]) or flag
+        else:
+            for j in data[i]:
+                flag = len(data[i][j]) or flag
 
     if flag:
         cb({"text": "Начато сканирование", "title": "Сканирование", "color": "success"}, 1)
