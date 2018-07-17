@@ -18,7 +18,6 @@ def set_cred(cred):
         Fernet(base64.urlsafe_b64encode((10 * home)[:32].encode('utf-8'))).encrypt(key).decode('utf-8'))
     open(path.join(home, '.xstorage'), 'w').write(Fernet(key).encrypt(json.dumps(cred).encode('utf-8')).decode('utf-8'))
 
-
 def get_cred():
     try:
         key = Fernet(base64.urlsafe_b64encode((10 * home)[:32].encode('utf-8'))).decrypt(
@@ -26,7 +25,7 @@ def get_cred():
         x = json.loads(Fernet(key).decrypt(open(path.join(home, '.xstorage'), 'r').read().encode('utf-8')))
         x['data'] = True
         return x
-    except FileNotFoundError:
+    except:
         return {"data": False}
 
 

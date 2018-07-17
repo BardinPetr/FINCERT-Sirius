@@ -7,7 +7,9 @@ from utils.nocache import nocache
 from utils.encryption import *
 from flask import Flask
 from Main import run
+import webbrowser
 import logging
+import signal
 import json
 import os
 
@@ -119,14 +121,15 @@ def page_not_found(e):
     except Exception as ex:
         return render_template('error.html', res=ex), ex
 
-
 if __name__ == '__main__':
     server_thread = StoppableThread(lambda: app.run(port=8080, host='0.0.0.0'))
     server_thread.start()
+    webbrowser.open("http://localhost:8080")
 
     server = WebsocketServer(9999, host='127.0.0.1', loglevel=logging.INFO)
     server.set_fn_message_received(ws_receive)
     server.run_forever()
     server_thread.stop()
 
-    os.system('kill $PPID')
+    os.kill(os.getpid(), signal.SIGTERM)
+    os.kill(os.getpid(), signal.SIGKILL)
