@@ -28,7 +28,6 @@ def find(data, cb):
         flag = True
 
     result = dict()  # Результат нашей проверки.
-    start_time = time.time()
 
     for root, dirs, files in os.walk(root_start):
         for file in files:
@@ -69,7 +68,5 @@ def find(data, cb):
                                 if t['sha256'] == Crypt.crypt_sha256(file_text):
                                     result[file_inf] = path
                                     cb('Найден файл: ', result[file_inf])
-
-    # print("Full work time: ", time.time() - start_time)
 
     return result
