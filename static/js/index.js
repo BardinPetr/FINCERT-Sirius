@@ -114,12 +114,14 @@ ws.onmessage = function (evt) {
             });
         }
     } else if (a.xtype === 2) {
+        document.getElementById('loading_gif').style.visibility = 'hidden';p
         $("#btn_start").prop("disabled", false);
         $("#btn_stop").prop("disabled", true);
         const text_block = $("#rmodal-body");
         let apnd = "",
             yay = 0;
         if (Object.keys(a).indexOf('file') !== -1) {
+
             if (Object.keys(a.file).length !== 0) {
                 yay++;
                 apnd += `<div class="panel panel-default"><div class="panel-heading">Найденные индикаторы файлов: </div><div class="panel-body"><ul class="list-group">`;
@@ -365,7 +367,9 @@ $(document).ready(function () {
         });
     });
 
+
     start_btn.click(() => {
+        document.getElementById('loading_gif').style.visibility = 'visible';
         if (format_data.used.length === 0) {
             toastr.warning("Ни один из модулей поиска не выбран", "Сканирование");
         } else {
@@ -377,6 +381,7 @@ $(document).ready(function () {
 
     stop_btn.prop("disabled", true);
     stop_btn.click(() => {
+        document.getElementById('loading_gif').style.visibility = 'hidden';
         ws.send("NOTENC:::STOP");
         stop_btn.prop("disabled", true);
         start_btn.prop("disabled", false);
