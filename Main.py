@@ -21,9 +21,10 @@ def run(data, cb):
                 is_valid_data = len(data[i][j]) or is_valid_data
 
     if is_valid_data:
-        cb({"text": "Начато сканирование", "title": "Сканирование", "color": "success"}, 1)
-        sleep(0.5)
         res = {}
+        cb("", 4)
+        sleep(0.5)
+        cb({"text": "Начато сканирование", "title": "Сканирование", "color": "success"}, 1)
 
         is_valid_data = False
         if 'files' in data:
@@ -50,14 +51,12 @@ def run(data, cb):
         # Проверка на заполнение поля Реестра.
 
         if 'reg' in data:
-            is_valid_data = False
-            for i in data['reg']:
-                is_valid_data = len(data['reg'][i]) or is_valid_data
+            is_valid_data = bool(len(data['reg']['keys']))
 
         if is_valid_data and 'reg' in data:
-            from RegPack import RegistryFinder
             ps = platform.system()
             if ps == 'Windows':
+                from RegPack import RegistryFinder
                 res['reg'] = RegistryFinder.find(data['reg'], cb)
             else:
                 cb({"text": "Сканирование реестра не разрешено на %s" % ps, "title": "Система", "color": "warning"}, 1)

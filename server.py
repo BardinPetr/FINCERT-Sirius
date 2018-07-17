@@ -25,6 +25,11 @@ server = None
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
+def kill():
+    os.kill(os.getpid(), signal.SIGTERM)
+    os.kill(os.getpid(), signal.SIGKILL)
+
+
 def callback(data, cbt=0):
     """
     Callback to send data to front by WS
@@ -103,6 +108,8 @@ def ws_receive(meta, wss, txt):
                 if pre_stix:
                     callback(pre_stix, 3)
                 pre_stix = None
+            elif data[0] == "POWEROFF":
+                kill()
         except Exception as e:
             print(e)
     else:
@@ -121,6 +128,7 @@ def page_not_found(e):
     except Exception as ex:
         return render_template('error.html', res=ex), ex
 
+
 if __name__ == '__main__':
     server_thread = StoppableThread(lambda: app.run(port=8080, host='0.0.0.0'))
     server_thread.start()
@@ -131,5 +139,4 @@ if __name__ == '__main__':
     server.run_forever()
     server_thread.stop()
 
-    os.kill(os.getpid(), signal.SIGTERM)
-    os.kill(os.getpid(), signal.SIGKILL)
+    kill()
