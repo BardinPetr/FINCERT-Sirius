@@ -114,7 +114,7 @@ ws.onmessage = function (evt) {
             });
         }
     } else if (a.xtype === 2) {
-        document.getElementById('loading_gif').style.visibility = 'hidden';p
+        document.getElementById('loading_gif').style.visibility = 'hidden';
         $("#btn_start").prop("disabled", false);
         $("#btn_stop").prop("disabled", true);
         const text_block = $("#rmodal-body");
