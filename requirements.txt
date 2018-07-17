@@ -2,6 +2,4 @@ scapy
 flask
 cryptography
 stix2
-winreg
-Werkzeug
-wincap
+werkzeug
