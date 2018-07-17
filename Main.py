@@ -3,7 +3,8 @@ from MailPack import MailFinder
 from NetPack import NetFinder
 from time import sleep
 import platform
-
+from RegPack import RegistryFinder
+from RamPack import RamFinder
 
 def run(data, cb):
     print(data)
@@ -17,7 +18,7 @@ def run(data, cb):
         else:
             for j in data[i]:
                 flag = len(data[i][j]) or flag
-
+    print(flag)
     if flag:
         cb({"text": "Начато сканирование", "title": "Сканирование", "color": "success"}, 1)
         sleep(0.5)
@@ -44,7 +45,6 @@ def run(data, cb):
         if flag and 'net' in data:
             NetFinder.clear()
             res['net'] = NetFinder.find(data['net'], cb)
-
         # Проверка на заполнение поля Реестра.
         if 'reg' in data:
             flag = False
@@ -54,7 +54,6 @@ def run(data, cb):
         if flag and 'reg' in data:
             ps = platform.system()
             if ps == 'Windows':
-                from RegPack import RegistryFinder
                 res['reg'] = RegistryFinder.find(data['reg'], cb)
             else:
                 cb({"text": "Сканирование реестра не разрешено на %s" % ps, "title": "Система", "color": "warning"}, 1)
@@ -66,7 +65,7 @@ def run(data, cb):
                 flag = len(data['ram'][i]) or flag
 
         if flag and 'ram' in data:
-            pass
+            res['ram'] = RamFinder.find(data['ram'], cb)
 
         sleep(0.5)
         cb({"text": "Сканирование окончено", "title": "Сканирование", "color": "success"}, 1)
