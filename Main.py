@@ -49,7 +49,7 @@ def run(data, cb):
         if 'reg' in data:
             flag = False
             for i in data['reg']:
-                flag = len(data['net'][i]) or flag
+                flag = len(data['reg'][i]) or flag
 
         if flag and 'reg' in data:
             ps = platform.system()
