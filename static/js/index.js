@@ -40,6 +40,22 @@ $(document).ready(function () {
         $("#logs").html(data + "<br>" + $("#logs").html())
     };
 
+    $("#gotop_fab").click(() => {
+        window.scroll({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    window.onscroll = () => {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            $("#gotop_fab").css("display", "block");
+        } else {
+            $("#gotop_fab").css("display", "none");
+        }
+    };
+
     Array.prototype.remove = function () {
         let what, a = arguments, L = a.length, ax;
         while (L && this.length) {
@@ -155,11 +171,19 @@ $(document).ready(function () {
                 }
             }
             if (Object.keys(a).indexOf('net') !== -1) {
-                if (a.net['format'].length !== 0) {
+                if (a.net.length !== 0) {
                     yay++;
                     apnd += `<div class="panel panel-default"><div class="panel-heading">Найденные индикаторы в сети: </div><div class="panel-body"><ul class="list-group">`;
-                    a.net['format'].forEach(function (elem) {
-                        apnd += `<li class="list-group-item list-group-item-danger">${elem}</li>`;
+                    let i = 0;
+                    a.net.forEach(function (elem) {
+                        let cnt = elem[1].length;
+                        apnd += `<li class="list-group-item list-group-item-danger"><strong><p data-toggle="collapse" data-target="#${i}">${elem[0]}<span class="badge" data-toggle="collapse" data-target="#${i}">${cnt}<i style="margin-left: 5px" class="fas fa-arrow-circle-down"></i></span></p></strong>
+                                    <div id="${i}" class="collapse"><ul class="list-group">`;
+                        elem[1].forEach(function (x) {
+                            apnd += `<li class="list-group-item list-group-item-warning">${x}</li>`;
+                        });
+                        apnd += `</ul></div></li>`;
+                        i++;
                     });
                     apnd += `</ul></div></div>`;
                 }

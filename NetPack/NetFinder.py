@@ -3,6 +3,7 @@ This code was verified on Ubuntu 17.10, Windows 10(English), Mac OSX
 """
 
 from utils.encryption import get_cred
+from itertools import groupby
 from scapy.all import *
 import datetime
 import socket
@@ -55,6 +56,10 @@ def clear():
     res['non_format'] = []
 
 
+def postprocess_data():
+    return list(map(lambda x: (x[0], list(x[1])), groupby(res['format'], key=lambda x: x.split(' -- ')[1])))
+
+
 def find(data, cb):
     udata = get_cred()
     if not udata['data']:
@@ -75,4 +80,4 @@ def find(data, cb):
             cb({"text": "Анализ сети не разрешен", "title": "Системная ошибка", "color": "error"}, 1)
         except Exception as ex:
             cb({"text": ex, "title": "Ошибка анализа сети", "color": "error"}, 1)
-    return res
+    return postprocess_data()
