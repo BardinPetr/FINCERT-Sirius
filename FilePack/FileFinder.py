@@ -21,7 +21,7 @@ def find(data, cb):
         :param path: Коренной путь поиска
         :return: путь
     """
-    root_start = '/Users/maximgran/'  # Стартовый корень от которого мы начинаем поиск.
+    root_start = '/'  # Стартовый корень от которого мы начинаем поиск.
     flag = False
     if platform.system() == 'Windows':
         root_start = 'C:\\'

@@ -211,7 +211,7 @@ $(document).ready(function () {
                     yay++;
                     apnd += '<div class="panel panel-default"><div class="panel-heading">\u041D\u0430\u0439\u0434\u0435\u043D\u043D\u044B\u0435 \u0438\u043D\u0434\u0438\u043A\u0430\u0442\u043E\u0440\u044B \u0444\u0430\u0439\u043B\u043E\u0432: </div><div class="panel-body"><ul class="list-group">';
                     Object.keys(a.file).forEach(function (key) {
-                        apnd += '<li class="list-group-item list-group-item-danger">' + key + ' at ' + a.file[key] + '</li>';
+                        apnd += '<li class="list-group-item list-group-item-danger">' + 'Файл: ' + key + ' расположен: ' + a.file[key] + '</li>';
                     });
                     apnd += '</ul></div></div>';
                 }
@@ -221,7 +221,7 @@ $(document).ready(function () {
                     yay++;
                     apnd += '<div class="panel panel-default"><div class="panel-heading">\u041D\u0430\u0439\u0434\u0435\u043D\u043D\u044B\u0435 \u0438\u043D\u0434\u0438\u043A\u0430\u0442\u043E\u0440\u044B \u0432 \u043F\u043E\u0447\u0442\u0435: </div><div class="panel-body"><ul class="list-group">';
                     a.mail.forEach(function (mail) {
-                        apnd += '<li class="list-group-item list-group-item-danger">Mail from ' + mail.from + ' at ' + mail.date + '</li>';
+                        apnd += '<li class="list-group-item list-group-item-danger">Письмо от: ' + mail.from + ' получено: ' + mail.date + '</li>';
                     });
                     apnd += '</ul></div></div>';
                 }
