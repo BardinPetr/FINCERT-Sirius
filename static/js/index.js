@@ -24,7 +24,7 @@ var format_data = {
 };
 
 var resmod_goup = function resmod_goup() {
-    $('#results_modal').animate({ scrollTop: 0 }, 'slow');
+    $('#results_modal').animate({scrollTop: 0}, 'slow');
 };
 
 var format_litxt = function format_litxt(type, name) {
@@ -127,37 +127,37 @@ $(document).ready(function () {
     var addh_file = function addh_file(cur) {
         var disp = cur.name || cur.sha256 || cur.sha1 || cur.md5 || cur.size;
         disp = disp.slice(0, 30) + '...';
-        format_data.files = format_data.files.concat({ disp: disp, norm: cur });
+        format_data.files = format_data.files.concat({disp: disp, norm: cur});
         $('#file_list').prepend(file_item_tmpl(disp, format_data.files.length - 1, 0));
     };
     var addh_mail_a = function addh_mail_a(cur) {
-        format_data.mail.email = format_data.mail.email.concat({ disp: cur, norm: cur });
+        format_data.mail.email = format_data.mail.email.concat({disp: cur, norm: cur});
         $('#mail_addr_list').prepend(file_item_tmpl(cur, format_data.mail.email.length - 1, 1));
     };
     var addh_mail_t = function addh_mail_t(cur) {
         var displaytxt = cur.slice(0, 20) + '...';
-        format_data.mail.text = format_data.mail.text.concat({ disp: displaytxt, norm: cur });
+        format_data.mail.text = format_data.mail.text.concat({disp: displaytxt, norm: cur});
         $('#mail_txt_list').prepend(file_item_tmpl(displaytxt, format_data.mail.text.length - 1, 2));
     };
     var addh_net_i = function addh_net_i(cur) {
-        format_data.net.ip = format_data.net.ip.concat({ disp: cur, norm: cur });
+        format_data.net.ip = format_data.net.ip.concat({disp: cur, norm: cur});
         $('#net_ip_list').prepend(file_item_tmpl(cur, format_data.net.ip.length - 1, 3));
     };
     var addh_net_u = function addh_net_u(cur) {
-        format_data.net.url = format_data.net.url.concat({ disp: cur, norm: cur });
+        format_data.net.url = format_data.net.url.concat({disp: cur, norm: cur});
         $('#net_url_list').prepend(file_item_tmpl(cur, format_data.net.url.length - 1, 4));
     };
     var addh_reg = function addh_reg(cur) {
         var disp = cur.key.split(0, 20) + '...';
-        format_data.reg.keys = format_data.reg.keys.concat({ disp: disp, norm: cur });
+        format_data.reg.keys = format_data.reg.keys.concat({disp: disp, norm: cur});
         $('#reg_list').prepend(file_item_tmpl(disp, format_data.reg.keys.length - 1, 5));
     };
     var addh_ram_p = function addh_ram_p(cur) {
-        format_data.ram.procs = format_data.ram.procs.concat({ disp: cur, norm: cur });
+        format_data.ram.procs = format_data.ram.procs.concat({disp: cur, norm: cur});
         $('#ram_list').prepend(file_item_tmpl(cur, format_data.ram.procs.length - 1, 6));
     };
     var addh_log = function addh_log(cur) {
-        format_data.log = format_data.log.concat({ disp: cur, norm: cur });
+        format_data.log = format_data.log.concat({disp: cur, norm: cur});
         $('#log_list').prepend(file_item_tmpl(cur, format_data.log.length - 1, 7));
     };
 
@@ -177,30 +177,27 @@ $(document).ready(function () {
                     $('#panel_' + elem).show();
                     $('#' + elem + '_cb').prop("checked", true);
                     switch (elem) {
-                        case 'files':
-                            {
-                                a.files.forEach(function (i, x0, z0) {
-                                    addh_file(i);
-                                });
-                                break;
-                            }
-                        case 'net':
-                            {
-                                a.net.ip.forEach(function (i, x0, z0) {
-                                    addh_net_i(i);
-                                });
-                                a.net.url.forEach(function (i, x0, z0) {
-                                    addh_net_u(i);
-                                });
-                                break;
-                            }
-                        case 'mail':
-                            {
-                                a.mail.email.forEach(function (i, x0, z0) {
-                                    addh_mail_a(i);
-                                });
-                                break;
-                            }
+                        case 'files': {
+                            a.files.forEach(function (i, x0, z0) {
+                                addh_file(i);
+                            });
+                            break;
+                        }
+                        case 'net': {
+                            a.net.ip.forEach(function (i, x0, z0) {
+                                addh_net_i(i);
+                            });
+                            a.net.url.forEach(function (i, x0, z0) {
+                                addh_net_u(i);
+                            });
+                            break;
+                        }
+                        case 'mail': {
+                            a.mail.email.forEach(function (i, x0, z0) {
+                                addh_mail_a(i);
+                            });
+                            break;
+                        }
                     }
                 });
             }
@@ -283,7 +280,8 @@ $(document).ready(function () {
         a = {};
     };
 
-    ws.onclose = function () {};
+    ws.onclose = function () {
+    };
 
     $('[data-toggle="tooltip"]').tooltip();
     $("#loading_gif").hide();
@@ -306,7 +304,7 @@ $(document).ready(function () {
         return $("#file_" + x);
     });
 
-    $('#file_add').click(function () {
+    const file_add_f = function (x) {
         var cur = {
             name: file_objs[0].val(),
             size: parseInt(file_objs[1].val()),
@@ -319,95 +317,143 @@ $(document).ready(function () {
                 x.val('');
             });
             addh_file(cur);
-            toastr.info("Успешно добавлен", "Параметры");
+            if (x === undefined) toastr.info("Успешно добавлен", "Параметры");
         } else {
-            toastr.warning("Не все поля заполнены корректно", "Параметры");
+            if (x === undefined) toastr.warning("Не все поля заполнены корректно", "Параметры");
+        }
+    };
+    $('#file_add').click(file_add_f);
+    file_objs[3].keyup(function (e) {
+        if (e.keyCode === 13) {
+            file_add_f();
         }
     });
 
-    $('#mail_addr_add').click(function () {
+    const mail_add_f = function (x) {
         var c = $("#mail_addr_inp");
         var cur = c.val();
         c.val('');
         if (cur) {
             addh_mail_a(cur);
-            toastr.info("Успешно добавлен", "Параметры");
+            if (x === undefined) toastr.info("Успешно добавлен", "Параметры");
         } else {
-            toastr.warning("Не все поля заполнены корректно", "Параметры");
+            if (x === undefined) toastr.warning("Не все поля заполнены корректно", "Параметры");
+        }
+    };
+    $('#mail_addr_add').click(mail_add_f);
+    $("#mail_addr_inp").keyup(function (e) {
+        if (e.keyCode === 13) {
+            mail_add_f();
         }
     });
 
-    $('#mail_txt_add').click(function () {
+    const mail_txt_add_f = function (x) {
         var c = $("#mail_txt_inp");
         var cur = c.val();
         c.val('');
         if (cur) {
             addh_mail_t(cur);
-            toastr.info("Успешно добавлен", "Параметры");
+            if (x === undefined) toastr.info("Успешно добавлен", "Параметры");
         } else {
-            toastr.warning("Не все поля заполнены корректно", "Параметры");
+            if (x === undefined) toastr.warning("Не все поля заполнены корректно", "Параметры");
+        }
+    };
+    $('#mail_txt_add').click(mail_txt_add_f);
+    $("#mail_txt_inp").keyup(function (e) {
+        if (e.keyCode === 13) {
+            mail_txt_add_f();
         }
     });
 
-    $('#net_ip_add').click(function () {
+    const net_ip_add_f = function (x) {
         var c = $("#net_ip_inp");
         var cur = c.val();
         c.val('');
         if (cur) {
             addh_net_i(cur);
-            toastr.info("Успешно добавлен", "Параметры");
+            if (x === undefined) toastr.info("Успешно добавлен", "Параметры");
         } else {
-            toastr.warning("Не все поля заполнены корректно", "Параметры");
+            if (x === undefined) toastr.warning("Не все поля заполнены корректно", "Параметры");
+        }
+    };
+    $('#net_ip_add').click(net_ip_add_f);
+    $("#net_ip_inp").keyup(function (e) {
+        if (e.keyCode === 13) {
+            net_ip_add_f();
         }
     });
 
-    $('#net_url_add').click(function () {
+    const net_url_add_f = function (x) {
         var c = $("#net_url_inp");
         var cur = c.val();
         c.val('');
         if (cur) {
             addh_net_u(cur);
-            toastr.info("Успешно добавлен", "Параметры");
+            if (x === undefined) toastr.info("Успешно добавлен", "Параметры");
         } else {
-            toastr.warning("Не все поля заполнены корректно", "Параметры");
+            if (x === undefined) toastr.warning("Не все поля заполнены корректно", "Параметры");
+        }
+    };
+    $('#net_url_add').click(net_url_add_f);
+    $("#net_url_inp").keyup(function (e) {
+        if (e.keyCode === 13) {
+            net_url_add_f();
         }
     });
 
-    $('#reg_add').click(function () {
+    const reg_add_f = function (x) {
         var k = $("#reg_key"),
             v = $("#reg_val");
-        var cur = { key: k.val(), val: v.val() };
+        var cur = {key: k.val(), val: v.val()};
         k.val('');
         v.val('');
         if (cur.key && cur.val) {
             addh_reg(cur);
-            toastr.info("Успешно добавлен", "Параметры");
+            if (x === undefined) toastr.info("Успешно добавлен", "Параметры");
         } else {
-            toastr.warning("Не все поля заполнены корректно", "Параметры");
+            if (x === undefined) toastr.warning("Не все поля заполнены корректно", "Параметры");
+        }
+    };
+    $('#reg_add').click(reg_add_f);
+    $("#reg_val").keyup(function (e) {
+        if (e.keyCode === 13) {
+            reg_add_f();
         }
     });
 
-    $('#ram_add').click(function () {
+    const ram_add_f = function (x) {
         var c = $("#ram_inp");
         var cur = c.val();
         c.val('');
         if (cur) {
             addh_ram_p(cur);
-            toastr.info("Успешно добавлен", "Параметры");
+            if (x === undefined) toastr.info("Успешно добавлен", "Параметры");
         } else {
-            toastr.warning("Не все поля заполнены корректно", "Параметры");
+            if (x === undefined) toastr.warning("Не все поля заполнены корректно", "Параметры");
+        }
+    };
+    $('#ram_add').click(ram_add_f);
+    $("#ram_inp").keyup(function (e) {
+        if (e.keyCode === 13) {
+            ram_add_f();
         }
     });
 
-    $('#log_add').click(function () {
+    const log_add_f = function (x) {
         var c = $("#log_inp");
         var cur = c.val();
         c.val('');
         if (cur) {
             addh_log(cur);
-            toastr.info("Успешно добавлен", "Параметры");
+            if (x === undefined) toastr.info("Успешно добавлен", "Параметры");
         } else {
-            toastr.warning("Не все поля заполнены корректно", "Параметры");
+            if (x === undefined) toastr.warning("Не все поля заполнены корректно", "Параметры");
+        }
+    };
+    $('#log_add').click(log_add_f);
+    $("#log_inp").keyup(function (e) {
+        if (e.keyCode === 13) {
+            log_add_f();
         }
     });
 
@@ -431,6 +477,18 @@ $(document).ready(function () {
 
     indicate_running(false);
     start_btn.click(function () {
+        if (format_data.used.indexOf('mail') !== -1) {
+            mail_add_f(1);
+            mail_txt_add_f(1);
+        }
+        if (format_data.used.indexOf('net') !== -1) {
+            net_url_add_f(1);
+            net_ip_add_f(1);
+        }
+        if (format_data.used.indexOf('files') !== -1) file_add_f(1);
+        if (format_data.used.indexOf('reg') !== -1) reg_add_f(1);
+        if (format_data.used.indexOf('ram') !== -1) ram_add_f(1);
+        if (format_data.used.indexOf('log') !== -1) log_add_f(1);
         if (format_data.used.length === 0) {
             toastr.warning("Ни один из модулей поиска не выбран", "Сканирование");
         } else {
