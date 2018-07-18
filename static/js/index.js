@@ -1,28 +1,80 @@
+const loc = window.location.hostname,
+    log = console.log;
+
+let format_data = {
+    used: [],
+    mail: {
+        email: [],
+        text: []
+    },
+    net: {
+        ip: [],
+        url: []
+    },
+    reg: {
+        keys: []
+    },
+    files: [],
+    ram: {
+        procs: []
+    },
+    log: []
+};
+
+const resmod_goup = () => {
+    $('#results_modal').animate({scrollTop: 0}, 'slow');
+};
+
+const format_litxt = (type, name) => {
+    return Base64.toBase64(`li${type}txt_${name}`).replace(/\W/g, "0");
+};
+
+const file_item_tmpl = (name, id, type) => {
+    let xname = format_litxt(type, name);
+    return `<li id="${xname}" class="list-group-item">${name}<span class="badge">
+            <i class="fas fa-times" onclick='del_elem("${name}", "${id}", "${type}");'></i></span></li>`;
+};
+
+function del_elem(name, id, type) {
+    type = parseInt(type);
+    $("#" + format_litxt(type, name)).remove();
+    let x = [format_data.files, format_data.mail.email, format_data.mail.text, format_data.net.ip, format_data.net.url,
+        format_data.reg.keys, format_data.ram.procs, format_data.log][type].filter(y => y.disp !== name);
+    switch (type) {
+        case 0:
+            format_data.files = x;
+            break;
+        case 1:
+            format_data.mail.email = x;
+            break;
+        case 2:
+            format_data.mail.text = x;
+            break;
+        case 3:
+            format_data.net.ip = x;
+            break;
+        case 4:
+            format_data.net.url = x;
+            break;
+        case 5:
+            format_data.reg.keys = x;
+            break;
+        case 6:
+            format_data.ram.procs = x;
+            break;
+        case 7:
+            format_data.log = x;
+            break;
+    }
+}
+
+const reset_all = () => {
+    window.location.replace(`http://${loc}:8080/`);
+};
+
 $(document).ready(function () {
-    const ws = new WebSocket("ws://127.0.0.1:9999"),
-        log = console.log;
-
+    const ws = new WebSocket(`ws://${loc}:9999`);
     $("#fs_wrapper").fadeOut(1);
-
-    let format_data = {
-        used: [],
-        mail: {
-            email: [],
-            text: []
-        },
-        net: {
-            ip: [],
-            url: []
-        },
-        reg: {
-            keys: []
-        },
-        files: [],
-        ram: {
-            procs: []
-        },
-        log: []
-    };
 
     const indicate_running = state => {
         if (state) {
@@ -177,12 +229,11 @@ $(document).ready(function () {
                     let i = 0;
                     a.net.forEach(function (elem) {
                         let cnt = elem[1].length;
-                        apnd += `<li class="list-group-item list-group-item-danger"><strong><p data-toggle="collapse" data-target="#${i}">${elem[0]}<span class="badge" data-toggle="collapse" data-target="#${i}">${cnt}<i style="margin-left: 5px" class="fas fa-arrow-circle-down"></i></span></p></strong>
-                                    <div id="${i}" class="collapse"><ul class="list-group">`;
+                        apnd += `<li class="list-group-item list-group-item-danger"><strong><p data-toggle="collapse" data-target="#${i}">${elem[0]}<span class="btn btn-primary btn-sm badge" data-toggle="collapse" data-target="#${i}">${cnt}<i style="margin-left: 5px" class="fas fa-arrow-circle-down"></i></span></p></strong><div id="${i}" class="collapse"><ul class="list-group">`;
                         elem[1].forEach(function (x) {
                             apnd += `<li class="list-group-item list-group-item-warning">${x}</li>`;
                         });
-                        apnd += `</ul></div></li>`;
+                        apnd += `</ul><button class="btn btn-info btn-block" data-toggle="collapse" data-target="#${i}" onclick="resmod_goup()"><i class="fas fa-arrow-circle-up"></i></button></div></li>`;
                         i++;
                     });
                     apnd += `</ul></div></div>`;
@@ -229,49 +280,6 @@ $(document).ready(function () {
     };
 
     ws.onclose = function () {
-    };
-
-    const format_litxt = (type, name) => {
-        return Base64.toBase64(`li${type}txt_${name}`).replace(/\W/g, "0");
-    };
-
-    function del_elem(name, id, type) {
-        type = parseInt(type);
-        $("#" + format_litxt(type, name)).remove();
-        let x = [format_data.files, format_data.mail.email, format_data.mail.text, format_data.net.ip, format_data.net.url,
-            format_data.reg.keys, format_data.ram.procs, format_data.log][type].filter(y => y.disp !== name);
-        switch (type) {
-            case 0:
-                format_data.files = x;
-                break;
-            case 1:
-                format_data.mail.email = x;
-                break;
-            case 2:
-                format_data.mail.text = x;
-                break;
-            case 3:
-                format_data.net.ip = x;
-                break;
-            case 4:
-                format_data.net.url = x;
-                break;
-            case 5:
-                format_data.reg.keys = x;
-                break;
-            case 6:
-                format_data.ram.procs = x;
-                break;
-            case 7:
-                format_data.log = x;
-                break;
-        }
-    }
-
-    const file_item_tmpl = (name, id, type) => {
-        let xname = format_litxt(type, name);
-        return `<li id="${xname}" class="list-group-item">${name}<span class="badge">
-            <i class="fas fa-times" onclick='del_elem("${name}", "${id}", "${type}");'></i></span></li>`;
     };
 
     $('[data-toggle="tooltip"]').tooltip();
