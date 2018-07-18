@@ -76,7 +76,7 @@ def find(data, cb):
         try:
             sniff(prn=lambda x: pkt_callback(x, dt, cb), store=0,
                   timeout=int(
-                      dt['time']) * 10)  # Dt - database, Cb - callback, store=0 means that we won't store our res
+                      dt['time']) * 60)  # Dt - database, Cb - callback, store=0 means that we won't store our res
         except PermissionError:
             cb({"text": "Анализ сети не разрешен", "title": "Системная ошибка", "color": "error"}, 1)
         except Exception as ex:
