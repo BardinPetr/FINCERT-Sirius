@@ -181,7 +181,7 @@ html, body {
 
 #fs_wrapper {
     min-height: 100%;
-    background: #111111 url("/static/images/disconnected.png") no-repeat center center;
+    background: #0000;
 }
 
 a:focus, a:hover {

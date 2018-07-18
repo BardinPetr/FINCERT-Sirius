@@ -2,41 +2,16 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-    <script type="text/javascript" src="static/node_modules/fernet/fernetBrowser.js"></script>
-    <script type="text/javascript" src="static/node_modules/js-base64/base64.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
-    <script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+    <link rel="stylesheet" href="/static/node_modules/@fortawesome/fontawesome-free/css/all.css">
+    <link rel="stylesheet" href="/static/node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/node_modules/toastr/build/toastr.css"/>
     <link rel="stylesheet" href="/static/css/style-black.css">
-    <style>
-        .toast-top-center {
-            top: 12px;
-            left: 50%;
-            margin-left: -150px;
-        }
-
-        @media all and (max-width: 240px) {
-            .toast-top-center {
-                margin-left: -54px;
-            }
-        }
-
-        @media all and (min-width: 241px) and (max-width: 320px) {
-            .toast-top-center {
-                margin-left: -64px;
-            }
-        }
-
-        @media all and (min-width: 321px) and (max-width: 480px) {
-            .toast-top-center {
-                margin-left: -96px;
-            }
-        }
-    </style>
+    <script src="/static/node_modules/js-base64/base64.js"></script>
+    <script src="/static/node_modules/fernet/fernetBrowser.js"></script>
+    <script src="/static/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/static/node_modules/toastr/build/toastr.min.js"></script>
+    <script src="/static/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/static/js/settings.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-light" style="background-color: #333333;">

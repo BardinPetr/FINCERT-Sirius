@@ -289,12 +289,11 @@ $(document).ready(function () {
         ws.send("NOTENC:::POWEROFF");
         indicate_running(false);
         start_btn.prop("disabled", true);
+        $("#fs_wrapper").css('background', '#111111 url("/static/images/disconnected.png") no-repeat center center');
+        $("#all").fadeOut(1000);
         setTimeout(() => {
-            $("#all").fadeOut(1000);
-            setTimeout(() => {
-                $("#fs_wrapper").fadeIn(4000);
-            }, 1000)
-        }, 5000);
+            $("#fs_wrapper").fadeIn(4000);
+        }, 1000);
     });
 
     const start_btn = $('#btn_start'),
