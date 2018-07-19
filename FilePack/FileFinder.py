@@ -1,9 +1,9 @@
-from FilePack import ReadFile, Crypt
-import os
-import platform
 from datetime import datetime, timedelta, timezone
+from utils.encryption import get_cred
+from FilePack import ReadFile, Crypt
 from pathlib import Path
-import time
+import platform
+import os
 
 
 def days_from_modifed(s):  # Подсчет дней с последней модификации файла
@@ -21,6 +21,8 @@ def find(data, cb):
         :param path: Коренной путь поиска
         :return: путь
     """
+    dfm = int(get_cred()['filetime'] or 10)
+
     root_start = '/'  # Стартовый корень от которого мы начинаем поиск.
     flag = False
     if platform.system() == 'Windows':
@@ -41,7 +43,7 @@ def find(data, cb):
                 continue
 
             if days_from_modifed(
-                    file) > 10:  # Сколько времени прошло с последнего изменения файла. Если более 10 дней, то пропустим
+                    file) > dfm:  # Сколько времени прошло с последнего изменения файла. Если более 10 дней, то пропустим
                 continue
 
             check_name = False

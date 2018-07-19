@@ -102,7 +102,7 @@ def find(data, cb):
     result = []
 
     udata = get_cred()
-    if not udata['data'] or (udata['data'] and not udata['mail']):
+    if not udata['data'] or (udata['data'] and udata['mail']):
         cb({"text": "Параметры почты не настроены в разделе НАСТРОЙКИ", "title": "Ошибка анализа почты",
             "color": "error"}, 1)
         return result
@@ -113,6 +113,7 @@ def find(data, cb):
     if preres:
         cb({"text": "Параметры почты неверны (imap/email/pass)", "title": "Ошибка анализа почты", "color": "error"}, 1)
     else:
+        days = udata['mailtime']
         date = (datetime.date.today() - datetime.timedelta(7)).strftime(
             "%d-%b-%Y")  # In timedelta choose amount of days ago, one week .
 

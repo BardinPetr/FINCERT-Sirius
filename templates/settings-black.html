@@ -53,30 +53,48 @@
                         <ul class="dropdown-menu" id="imapsel_dd"></ul>
                       </div>
                     </span>
-                    <input id="iserver" type="text" class="form-control" name="msg"
+                    <input id="iserver" type="text" class="form-control"
                            placeholder="Сервер" {% if cred.data %} value="{{ cred.imaphost }}" {% endif %}>
-                    <input id="iport" type="number" class="form-control" name="msg" min="1"
+                    <input id="iport" type="number" class="form-control" min="1"
                            placeholder="Порт (993)" {% if cred.data %} value="{{ cred.imapport }}" {% endif %}>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                     <input data-error="Этот EMail невалиден" id="email" type="email"
-                           class="form-control" name="email" placeholder="Email"
+                           class="form-control" placeholder="Email"
                            {% if cred.data %} value="{{ cred.cred[0] }}" {% endif %}>
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                    <input id="password" type="password" class="form-control" name="password"
+                    <input id="password" type="password" class="form-control"
                            placeholder="Пароль">
                 </div>
             </div>
         </div>
         <div class="panel panel-primary">
-            <div class="panel-heading">Время анализа сети в минутах (рекомендуемо 10 минут)</div>
+            <div class="panel-heading">Параметры времени</div>
             <div class="panel-body">
-                <input id="time" type="number" class="form-control" name="mnt"
-                       placeholder="Введите время в минутах" min="1"
-                       {% if cred.data %} value="{{ cred.snifftime }}" {% endif %}>
+                <h5>Время анализа сети (рекомендуемо 10 минут):</h5>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fas fa-clock"></i> <strong>МИНУТЫ</strong></span>
+                    <input id="time" type="number" class="form-control"
+                           placeholder="Введите время в минутах" min="1"
+                           {% if cred.data %} value="{{ cred.snifftime }}" {% else %} value="10" {% endif %}>
+                </div>
+                <h5>Промежуток дат анализа файлов (рекомендуемо 10 дней):</h5>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="far fa-calendar-alt"></i> <strong>ДНИ</strong></span>
+                    <input id="daysf" type="number" class="form-control"
+                           placeholder="Введите время в днях" min="1"
+                           {% if cred.data %} value="{{ cred.filetime }}" {% else %} value="10"  {% endif %}>
+                </div>
+                <h5>Промежуток дат анализа писем (рекомендуемо 14 дней):</h5>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="far fa-calendar-plus"></i> <strong>ДНИ</strong></span>
+                    <input id="daysm" type="number" class="form-control"
+                           placeholder="Введите время в днях" min="1"
+                           {% if cred.data %} value="{{ cred.mailtime }}" {% else %} value="14"  {% endif %}>
+                </div>
             </div>
         </div>
         <button id="save" type="button" class="btn btn-default btn-block" style="font-size: 20px;">
