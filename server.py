@@ -79,6 +79,15 @@ def settings():
     except Exception as ex:
         return render_template('error.html', res=ex)
 
+@app.route('/faq', methods=['GET', 'POST'])
+@nocache
+def faq():
+    try:
+        return render_template('help_faq.html', cred=get_cred())
+    except Exception as ex:
+        return render_template('error.html', res=ex)
+
+
 
 def ws_receive(meta, wss, txt):
     global mainthread, pre_stix
