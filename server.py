@@ -6,6 +6,7 @@ from STIX2Parse.Parse import parse_stix
 from utils.nocache import nocache
 from utils.encryption import *
 from flask import Flask
+from time import sleep
 from Main import run
 import webbrowser
 import logging
@@ -79,14 +80,14 @@ def settings():
     except Exception as ex:
         return render_template('error.html', res=ex)
 
+
 @app.route('/faq', methods=['GET', 'POST'])
 @nocache
 def faq():
     try:
-        return render_template('help_faq.html', cred=get_cred())
+        return render_template('help_faq.html')
     except Exception as ex:
         return render_template('error.html', res=ex)
-
 
 
 def ws_receive(meta, wss, txt):
@@ -118,6 +119,7 @@ def ws_receive(meta, wss, txt):
                     callback(pre_stix, 3)
                 pre_stix = None
             elif data[0] == "POWEROFF":
+                sleep(5)
                 kill()
         except Exception as e:
             print(e)
