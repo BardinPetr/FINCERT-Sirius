@@ -35,6 +35,10 @@ var sel = function sel(x, y) {
 };
 
 $(document).ready(function () {
+    $("#time").val($("#time").val() || "10");
+    $("#daysf").val($("#daysf").val() || "10");
+    $("#daysm").val($("#daysm").val() || "14");
+
     var data = [["GMail", "imap.gmail.com", 993], ["Yandex", "imap.yandex.ru", 993],
         ["Yahoo!", "imap.mail.yahoo.com", 993], ["Mail.ru", "imap.mail.ru", 993], ["Rambler", "imap.rambler.ru", 993],
         ["Outlook", "imap-mail.outlook.com", 993]];
