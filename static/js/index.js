@@ -81,10 +81,12 @@ $(document).ready(function () {
     var indicate_running = function indicate_running(state) {
         if (state) {
             $("#loading_gif").fadeIn(4000);
+            $("#settings_tab").fadeOut(2000);
             start_btn.prop("disabled", true);
             stop_btn.prop("disabled", false);
         } else {
             $("#loading_gif").fadeOut(4000);
+            $("#settings_tab").fadeIn(2000);
             stop_btn.prop("disabled", true);
             start_btn.prop("disabled", false);
         }
@@ -317,9 +319,9 @@ $(document).ready(function () {
                 x.val('');
             });
             addh_file(cur);
-            if (x !== true) toastr.info("Успешно добавлен", "Параметры");
+            if (x !== 1) toastr.info("Успешно добавлен", "Параметры");
         } else {
-            if (x !== true) toastr.warning("Не все поля заполнены корректно", "Параметры");
+            if (x !== 1) toastr.warning("Не все поля заполнены корректно", "Параметры");
         }
     };
     $('#file_add').click(file_add_f);
@@ -335,9 +337,9 @@ $(document).ready(function () {
         c.val('');
         if (cur) {
             addh_mail_a(cur);
-            if (x !== true) toastr.info("Успешно добавлен", "Параметры");
+            if (x !== 1) toastr.info("Успешно добавлен", "Параметры");
         } else {
-            if (x !== true) toastr.warning("Не все поля заполнены корректно", "Параметры");
+            if (x !== 1) toastr.warning("Не все поля заполнены корректно", "Параметры");
         }
     };
     $('#mail_addr_add').click(mail_add_f);
@@ -353,9 +355,9 @@ $(document).ready(function () {
         c.val('');
         if (cur) {
             addh_mail_t(cur);
-            if (x !== true) toastr.info("Успешно добавлен", "Параметры");
+            if (x !== 1) toastr.info("Успешно добавлен", "Параметры");
         } else {
-            if (x !== true) toastr.warning("Не все поля заполнены корректно", "Параметры");
+            if (x !== 1) toastr.warning("Не все поля заполнены корректно", "Параметры");
         }
     };
     $('#mail_txt_add').click(mail_txt_add_f);
@@ -372,9 +374,9 @@ $(document).ready(function () {
         c.val('');
         if (cur && ip_re.test(cur)) {
             addh_net_i(cur);
-            if (x !== true) toastr.info("Успешно добавлен", "Параметры");
+            if (x !== 1) toastr.info("Успешно добавлен", "Параметры");
         } else {
-            if (x !== true) toastr.warning("Не все поля заполнены корректно", "Параметры");
+            if (x !== 1) toastr.warning("Не все поля заполнены корректно", "Параметры");
         }
     };
     $('#net_ip_add').click(net_ip_add_f);
@@ -391,9 +393,9 @@ $(document).ready(function () {
         c.val('');
         if (cur && url_re.test(cur)) {
             addh_net_u(cur);
-            if (x !== true) toastr.info("Успешно добавлен", "Параметры");
+            if (x !== 1) toastr.info("Успешно добавлен", "Параметры");
         } else {
-            if (x !== true) toastr.warning("Не все поля заполнены корректно", "Параметры");
+            if (x !== 1) toastr.warning("Не все поля заполнены корректно", "Параметры");
         }
     };
     $('#net_url_add').click(net_url_add_f);
@@ -411,9 +413,9 @@ $(document).ready(function () {
         v.val('');
         if (cur.key && cur.val) {
             addh_reg(cur);
-            if (x !== true) toastr.info("Успешно добавлен", "Параметры");
+            if (x !== 1) toastr.info("Успешно добавлен", "Параметры");
         } else {
-            if (x !== true) toastr.warning("Не все поля заполнены корректно", "Параметры");
+            if (x !== 1) toastr.warning("Не все поля заполнены корректно", "Параметры");
         }
     };
     $('#reg_add').click(reg_add_f);
@@ -429,9 +431,9 @@ $(document).ready(function () {
         c.val('');
         if (cur) {
             addh_ram_p(cur);
-            if (x !== true) toastr.info("Успешно добавлен", "Параметры");
+            if (x !== 1) toastr.info("Успешно добавлен", "Параметры");
         } else {
-            if (x !== true) toastr.warning("Не все поля заполнены корректно", "Параметры");
+            if (x !== 1) toastr.warning("Не все поля заполнены корректно", "Параметры");
         }
     };
     $('#ram_add').click(ram_add_f);
@@ -447,9 +449,9 @@ $(document).ready(function () {
         c.val('');
         if (cur) {
             addh_log(cur);
-            if (x !== true) toastr.info("Успешно добавлен", "Параметры");
+            if (x !== 1) toastr.info("Успешно добавлен", "Параметры");
         } else {
-            if (x !== true) toastr.warning("Не все поля заполнены корректно", "Параметры");
+            if (x !== 1) toastr.warning("Не все поля заполнены корректно", "Параметры");
         }
     };
     $('#log_add').click(log_add_f);
