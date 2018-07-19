@@ -3,11 +3,14 @@
 var ws = new WebSocket("ws://127.0.0.1:9999"),
     log = console.log;
 
-ws.onopen = function () {};
+ws.onopen = function () {
+};
 
-ws.onmessage = function (evt) {};
+ws.onmessage = function (evt) {
+};
 
-ws.onclose = function () {};
+ws.onclose = function () {
+};
 
 var enc = function enc(a) {
     var currentdate = new Date();
@@ -38,20 +41,50 @@ $(document).ready(function () {
     });
 
     $("#save").click(function () {
-        var data = {
+        var mdata = {
             imaphost: $("#iserver").val(),
             imapport: $("#iport").val(),
-            cred: [$("#email").val(), $("#password").val()],
+            cred: [$("#email").val(), $("#password").val()]
+        };
+        var tdata = {
             snifftime: $("#time").val()
         };
         var ihost_re = new RegExp(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/);
         var email_re = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
         var pass_re = new RegExp(/^.{6,}$/g);
-        if (ihost_re.test(data.imaphost) && email_re.test(data.cred[0]) && pass_re.test(data.cred[1]) && !isNaN(parseInt(data.imapport)) || !isNaN(parseInt(data.snifftime))) {
-            send(data);
-            toastr.success("Настройки сохранены на ваш компьютер", "Настройки");
-        } else {
-            toastr.error("Данные неверно введены", "Настройки");
+        var mail_x = ihost_re.test(mdata.imaphost) && email_re.test(mdata.cred[0]) && pass_re.test(mdata.cred[1]) && !isNaN(parseInt(mdata.imapport)) && parseInt(mdata.imapport) > 0,
+            time_x = !isNaN(parseInt(tdata.snifftime)) && parseInt(tdata.snifftime) > 0;
+        var ismail = mdata.imapport || mdata.imaphost || mdata.cred[0] || mdata.cred[1];
+        var istime = Boolean(tdata.snifftime);
+        tdata.snifftime = parseInt(tdata.snifftime);
+
+        var res = {mail: false, time: false, snifftime: 10, imapport: '', imaphost: '', cred: ['', '']};
+        if (ismail) {
+            if (mail_x) {
+                res = Object.assign(res, mdata);
+                res.mail = true;
+            } else {
+                toastr.error("Данные почты неверно введены", "Настройки");
+                return;
+            }
         }
+        if (istime) {
+            if (time_x) {
+                res = Object.assign(res, tdata);
+                res.time = true;
+            } else {
+                toastr.error("Данные времени неверно введены", "Настройки");
+                return;
+            }
+        }
+
+        if (!ismail && !istime) {
+            toastr.error("Данные времени неверно введены", "Настройки");
+            return;
+        }
+
+        log(res)
+        send(res);
+        toastr.success("Настройки сохранены на ваш компьютер", "Настройки");
     });
 });

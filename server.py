@@ -122,6 +122,7 @@ def ws_receive(meta, wss, txt):
 @app.errorhandler(404)
 @app.errorhandler(403)
 @app.errorhandler(400)
+@app.errorhandler(Exception)
 def page_not_found(e):
     try:
         return render_template('error.html', res="%d - %s" % (e.code, e.name)), e.code

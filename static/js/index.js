@@ -317,9 +317,9 @@ $(document).ready(function () {
                 x.val('');
             });
             addh_file(cur);
-            if (x === undefined) toastr.info("Успешно добавлен", "Параметры");
+            if (x !== true) toastr.info("Успешно добавлен", "Параметры");
         } else {
-            if (x === undefined) toastr.warning("Не все поля заполнены корректно", "Параметры");
+            if (x !== true) toastr.warning("Не все поля заполнены корректно", "Параметры");
         }
     };
     $('#file_add').click(file_add_f);
@@ -335,9 +335,9 @@ $(document).ready(function () {
         c.val('');
         if (cur) {
             addh_mail_a(cur);
-            if (x === undefined) toastr.info("Успешно добавлен", "Параметры");
+            if (x !== true) toastr.info("Успешно добавлен", "Параметры");
         } else {
-            if (x === undefined) toastr.warning("Не все поля заполнены корректно", "Параметры");
+            if (x !== true) toastr.warning("Не все поля заполнены корректно", "Параметры");
         }
     };
     $('#mail_addr_add').click(mail_add_f);
@@ -353,9 +353,9 @@ $(document).ready(function () {
         c.val('');
         if (cur) {
             addh_mail_t(cur);
-            if (x === undefined) toastr.info("Успешно добавлен", "Параметры");
+            if (x !== true) toastr.info("Успешно добавлен", "Параметры");
         } else {
-            if (x === undefined) toastr.warning("Не все поля заполнены корректно", "Параметры");
+            if (x !== true) toastr.warning("Не все поля заполнены корректно", "Параметры");
         }
     };
     $('#mail_txt_add').click(mail_txt_add_f);
@@ -365,15 +365,16 @@ $(document).ready(function () {
         }
     });
 
+    const ip_re = new RegExp(/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/g);
     const net_ip_add_f = function (x) {
         var c = $("#net_ip_inp");
         var cur = c.val();
         c.val('');
-        if (cur) {
+        if (cur && ip_re.test(cur)) {
             addh_net_i(cur);
-            if (x === undefined) toastr.info("Успешно добавлен", "Параметры");
+            if (x !== true) toastr.info("Успешно добавлен", "Параметры");
         } else {
-            if (x === undefined) toastr.warning("Не все поля заполнены корректно", "Параметры");
+            if (x !== true) toastr.warning("Не все поля заполнены корректно", "Параметры");
         }
     };
     $('#net_ip_add').click(net_ip_add_f);
@@ -383,15 +384,16 @@ $(document).ready(function () {
         }
     });
 
+    const url_re = new RegExp(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/g);
     const net_url_add_f = function (x) {
         var c = $("#net_url_inp");
         var cur = c.val();
         c.val('');
-        if (cur) {
+        if (cur && url_re.test(cur)) {
             addh_net_u(cur);
-            if (x === undefined) toastr.info("Успешно добавлен", "Параметры");
+            if (x !== true) toastr.info("Успешно добавлен", "Параметры");
         } else {
-            if (x === undefined) toastr.warning("Не все поля заполнены корректно", "Параметры");
+            if (x !== true) toastr.warning("Не все поля заполнены корректно", "Параметры");
         }
     };
     $('#net_url_add').click(net_url_add_f);
@@ -409,9 +411,9 @@ $(document).ready(function () {
         v.val('');
         if (cur.key && cur.val) {
             addh_reg(cur);
-            if (x === undefined) toastr.info("Успешно добавлен", "Параметры");
+            if (x !== true) toastr.info("Успешно добавлен", "Параметры");
         } else {
-            if (x === undefined) toastr.warning("Не все поля заполнены корректно", "Параметры");
+            if (x !== true) toastr.warning("Не все поля заполнены корректно", "Параметры");
         }
     };
     $('#reg_add').click(reg_add_f);
@@ -427,9 +429,9 @@ $(document).ready(function () {
         c.val('');
         if (cur) {
             addh_ram_p(cur);
-            if (x === undefined) toastr.info("Успешно добавлен", "Параметры");
+            if (x !== true) toastr.info("Успешно добавлен", "Параметры");
         } else {
-            if (x === undefined) toastr.warning("Не все поля заполнены корректно", "Параметры");
+            if (x !== true) toastr.warning("Не все поля заполнены корректно", "Параметры");
         }
     };
     $('#ram_add').click(ram_add_f);
@@ -445,9 +447,9 @@ $(document).ready(function () {
         c.val('');
         if (cur) {
             addh_log(cur);
-            if (x === undefined) toastr.info("Успешно добавлен", "Параметры");
+            if (x !== true) toastr.info("Успешно добавлен", "Параметры");
         } else {
-            if (x === undefined) toastr.warning("Не все поля заполнены корректно", "Параметры");
+            if (x !== true) toastr.warning("Не все поля заполнены корректно", "Параметры");
         }
     };
     $('#log_add').click(log_add_f);

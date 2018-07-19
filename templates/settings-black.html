@@ -55,7 +55,7 @@
                     </span>
                     <input id="iserver" type="text" class="form-control" name="msg"
                            placeholder="Сервер" {% if cred.data %} value="{{ cred.imaphost }}" {% endif %}>
-                    <input id="iport" type="number" class="form-control" name="msg"
+                    <input id="iport" type="number" class="form-control" name="msg" min="1"
                            placeholder="Порт (993)" {% if cred.data %} value="{{ cred.imapport }}" {% endif %}>
                 </div>
                 <div class="input-group">
@@ -75,7 +75,7 @@
             <div class="panel-heading">Время анализа сети в минутах (рекомендуемо 10 минут)</div>
             <div class="panel-body">
                 <input id="time" type="number" class="form-control" name="mnt"
-                       placeholder="Введите время в минутах"
+                       placeholder="Введите время в минутах" min="1"
                        {% if cred.data %} value="{{ cred.snifftime }}" {% endif %}>
             </div>
         </div>

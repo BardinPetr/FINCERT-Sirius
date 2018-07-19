@@ -63,7 +63,8 @@ def postprocess_data():
 
 def find(data, cb):
     udata = get_cred()
-    if not udata['data']:
+
+    if not udata['data'] or (udata['data'] and not udata['time']):
         cb({"text": "Время не настроено в разделе НАСТРОЙКИ", "title": "Ошибка анализа сети", "color": "error"}, 1)
     else:
         dt = ({'ip': data['ip'], 'time': udata['snifftime'], 'ip_url': {}})

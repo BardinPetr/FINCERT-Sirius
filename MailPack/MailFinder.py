@@ -102,7 +102,7 @@ def find(data, cb):
     result = []
 
     udata = get_cred()
-    if not udata['data']:
+    if not udata['data'] or (udata['data'] and not udata['mail']):
         cb({"text": "Параметры почты не настроены в разделе НАСТРОЙКИ", "title": "Ошибка анализа почты",
             "color": "error"}, 1)
         return result
