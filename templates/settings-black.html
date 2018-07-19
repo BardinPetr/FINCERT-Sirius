@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta charset="UTF-8">
     <title>ФинЦЕРТ</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -13,7 +13,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="/static/lib/css3-mediaqueries.min.js"></script>
-        <script src="/static/node_modules/fernet/fernetBrowser.js"></script>
+    <script src="/static/node_modules/fernet/fernetBrowser.js"></script>
     <script src="/static/js/settings.js"></script>
     <script type='text/javascript' src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.7.1/modernizr.min.js"></script>
     <!--[if lt IE 9]>
@@ -46,7 +46,13 @@
             <div class="panel-heading">Введите Ваши учетные данные почты для анализа</div>
             <div class="panel-body">
                 <div class="input-group">
-                    <span class="input-group-addon">imap</span>
+                    <span class="input-group-addon">imap<br>
+                      <div class="dropdown">
+                        <button class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown">
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu" id="imapsel_dd"></ul>
+                      </div>
+                    </span>
                     <input id="iserver" type="text" class="form-control" name="msg"
                            placeholder="Сервер" {% if cred.data %} value="{{ cred.imaphost }}" {% endif %}>
                     <input id="iport" type="number" class="form-control" name="msg"

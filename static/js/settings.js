@@ -26,7 +26,17 @@ var send = function send(a) {
     ws.send(x);
 };
 
+var sel = function sel(x, y) {
+    $("#iserver").val(x);
+    $("#iport").val(y);
+};
+
 $(document).ready(function () {
+    var data = [["GMail", "imap.gmail.com", 993], ["Yandex", "imap.yandex.ru", 993], ["Mail.ru", "imap.mail.ru", 993], ["Rambler", "imap.rambler.ru", 993], ["Outlook", "imap-mail.outlook.com", 993]];
+    data.forEach(function (i, a, b) {
+        $("#imapsel_dd").append("<li><button type=\"button\" class=\"btn btn-link btn-block\" onclick=\"sel('" + i[1] + "', '" + i[2] + "')\">" + i[0] + "</button></li>");
+    });
+
     $("#save").click(function () {
         var data = {
             imaphost: $("#iserver").val(),
