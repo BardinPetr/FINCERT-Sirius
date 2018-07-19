@@ -5,7 +5,6 @@ import datetime
 import imaplib
 import email
 import re
-import locale
 
 
 class MailRunner:
@@ -102,7 +101,7 @@ def find(data, cb):
     result = []
 
     udata = get_cred()
-    if not udata['data'] or (udata['data'] and udata['mail']):
+    if not udata['data'] or (udata['data'] and not udata['mail']):
         cb({"text": "Параметры почты не настроены в разделе НАСТРОЙКИ", "title": "Ошибка анализа почты",
             "color": "error"}, 1)
         return result
@@ -113,11 +112,11 @@ def find(data, cb):
     if preres:
         cb({"text": "Параметры почты неверны (imap/email/pass)", "title": "Ошибка анализа почты", "color": "error"}, 1)
     else:
-        days = udata['mailtime']
-        date = (datetime.date.today() - datetime.timedelta(7)).strftime(
+        modifsince = int(get_cred()['mailtime'] or 14)
+        date = (datetime.date.today() - datetime.timedelta(modifsince)).strftime(
             "%d-%b-%Y")  # In timedelta choose amount of days ago, one week .
 
-        mails = mr.get_emails(None, '(SENTSINCE {date})'.format(
+        mails = mr.get_emails(None, '(SINCE {date})'.format(
             date=date))  # Get all emails sorted for data
 
         for mail in mails:

@@ -106,9 +106,9 @@ $(document).ready(function () {
 
     window.onscroll = function () {
         if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            $("#gotop_fab").css("display", "block");
+            $("#gotop_fab").fadeIn(1000);
         } else {
-            $("#gotop_fab").css("display", "none");
+            $("#gotop_fab").fadeOut(1000);
         }
     };
 
@@ -367,7 +367,7 @@ $(document).ready(function () {
         }
     });
 
-    const ip_re = new RegExp(/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/g);
+    const ip_re = new RegExp(/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/);
     const net_ip_add_f = function (x) {
         var c = $("#net_ip_inp");
         var cur = c.val();
@@ -386,7 +386,7 @@ $(document).ready(function () {
         }
     });
 
-    const url_re = new RegExp(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/g);
+    const url_re = new RegExp(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/);
     const net_url_add_f = function (x) {
         var c = $("#net_url_inp");
         var cur = c.val();
