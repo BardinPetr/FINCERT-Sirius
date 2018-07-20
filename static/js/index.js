@@ -82,11 +82,13 @@ $(document).ready(function () {
         if (state) {
             $("#loading_gif").fadeIn(4000);
             $("#settings_tab").fadeOut(2000);
+            $("#faq_tab").fadeOut(2000);
             start_btn.prop("disabled", true);
             stop_btn.prop("disabled", false);
         } else {
             $("#loading_gif").fadeOut(4000);
             $("#settings_tab").fadeIn(2000);
+            $("#faq_tab").fadeIn(2000);
             stop_btn.prop("disabled", true);
             start_btn.prop("disabled", false);
         }
