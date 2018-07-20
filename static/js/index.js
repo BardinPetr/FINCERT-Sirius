@@ -135,7 +135,8 @@ $(document).ready(function () {
         $('#file_list').prepend(file_item_tmpl(disp, format_data.files.length - 1, 0));
     };
     var addh_mail_a = function addh_mail_a(cur) {
-        format_data.mail.email = format_data.mail.email.concat({disp: cur, norm: cur});
+        var disp = cur.slice(0, 35) + '...';
+        format_data.mail.email = format_data.mail.email.concat({disp: disp, norm: cur});
         $('#mail_addr_list').prepend(file_item_tmpl(cur, format_data.mail.email.length - 1, 1));
     };
     var addh_mail_t = function addh_mail_t(cur) {
@@ -148,16 +149,18 @@ $(document).ready(function () {
         $('#net_ip_list').prepend(file_item_tmpl(cur, format_data.net.ip.length - 1, 3));
     };
     var addh_net_u = function addh_net_u(cur) {
-        format_data.net.url = format_data.net.url.concat({disp: cur, norm: cur});
+        var disp = cur.slice(0, 35) + '...';
+        format_data.net.url = format_data.net.url.concat({disp: disp, norm: cur});
         $('#net_url_list').prepend(file_item_tmpl(cur, format_data.net.url.length - 1, 4));
     };
     var addh_reg = function addh_reg(cur) {
-        var disp = cur.key.split(0, 20) + '...';
+        var disp = cur.key.slice(0, 35) + '...';
         format_data.reg.keys = format_data.reg.keys.concat({disp: disp, norm: cur});
         $('#reg_list').prepend(file_item_tmpl(disp, format_data.reg.keys.length - 1, 5));
     };
     var addh_ram_p = function addh_ram_p(cur) {
-        format_data.ram.procs = format_data.ram.procs.concat({disp: cur, norm: cur});
+        var disp = cur.slice(0, 35) + '...';
+        format_data.ram.procs = format_data.ram.procs.concat({disp: disp, norm: cur});
         $('#ram_list').prepend(file_item_tmpl(cur, format_data.ram.procs.length - 1, 6));
     };
     var addh_log = function addh_log(cur) {
