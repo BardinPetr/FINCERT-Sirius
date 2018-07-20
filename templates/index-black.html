@@ -4,6 +4,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta charset="UTF-8">
     <title>CyberOWL</title>
+    <link rel="icon" href="/static/images/owl.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="/static/node_modules/@fortawesome/fontawesome-free/css/all.css">
@@ -45,17 +46,12 @@
                 <a class="navbar-brand" href="/"><img src="/static/images/owl3.png" style="height: 150%"></a>
             </div>
             <div class="navbar-header">
-                <a class="navbar-brand" href="/">CyberOWL</a>
+                <a class="navbar-brand" href="/" id="cyberowl_tab">CyberOWL</a>
+                <a class="navbar-brand" href="/"  id="main_tab">Главная</a>
+                <a class="navbar-brand" href="/settings" id="settings_tab">Настройки</a>
+                <a class="navbar-brand" href="/faq" id="faq_tab">Справка</a>
             </div>
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/">Главная</a>
-            </div>
-            <div class="navbar-header" id="settings_tab">
-                <a class="navbar-brand" href="/settings">Настройки</a>
-            </div>
-            <div class="navbar-header" id="faq_tab">
-                <a class="navbar-brand" href="/faq">Справка</a>
-            </div>
+            <p id="ntext" class="navbar-text">Не уходите со страницы во время работы</p>
             <ul class="nav navbar-nav navbar-right" style="margin-right: 0">
                 <li data-toggle="tooltip" data-placement="bottom" title="Сканирование....">
                     <img id="loading_gif" src="/static/images/loadinfo2.net.gif"

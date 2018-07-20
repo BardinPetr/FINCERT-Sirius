@@ -1,3 +1,8 @@
+var sel = function sel(x, y) {
+    $("#iserver").val(x);
+    $("#iport").val(y);
+};
+
 "use strict";
 
 var ws = new WebSocket("ws://127.0.0.1:9999"),
@@ -27,11 +32,6 @@ var enc = function enc(a) {
 var send = function send(a) {
     var x = enc(a);
     ws.send(x);
-};
-
-var sel = function sel(x, y) {
-    $("#iserver").val(x);
-    $("#iport").val(y);
 };
 
 $(document).ready(function () {

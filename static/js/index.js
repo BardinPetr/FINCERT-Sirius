@@ -76,21 +76,29 @@ var reset_all = function reset_all() {
 
 $(document).ready(function () {
     var ws = new WebSocket('ws://' + loc + ':9999');
-    $("#fs_wrapper").fadeOut(1);
+    $("#fs_wrapper").fadeOut(0);
+    $("#ntext").fadeOut(0);
 
+    var tabs = ["#cyberowl_tab", "#settings_tab", "#main_tab", "#faq_tab"]
     var indicate_running = function indicate_running(state) {
         if (state) {
             $("#loading_gif").fadeIn(4000);
-            $("#settings_tab").fadeOut(2000);
-            $("#faq_tab").fadeOut(2000);
+            $("#ntext").fadeIn(2000);
             start_btn.prop("disabled", true);
             stop_btn.prop("disabled", false);
+            tabs.forEach(function(x, a, b) {
+                $(x).addClass("not-active-a");
+            });
         } else {
             $("#loading_gif").fadeOut(4000);
-            $("#settings_tab").fadeIn(2000);
-            $("#faq_tab").fadeIn(2000);
+            $("#ntext").fadeOut(2000);
             stop_btn.prop("disabled", true);
             start_btn.prop("disabled", false);
+            tabs.forEach(function(x, a, b) {
+                $(x).removeClass("not-active-a");
+                $(x).removeAttr('data-toggle');
+                $(x).removeAttr('title');
+            });
         }
     };
 
@@ -337,11 +345,12 @@ $(document).ready(function () {
         }
     });
 
+    const email_re = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
     const mail_add_f = function (x) {
         var c = $("#mail_addr_inp");
         var cur = c.val();
         c.val('');
-        if (cur) {
+        if (cur && email_re.test(cur)) {
             addh_mail_a(cur);
             if (x !== 1) toastr.info("Успешно добавлен", "Параметры");
         } else {
