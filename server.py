@@ -9,6 +9,7 @@ from flask import Flask
 from time import sleep
 from Main import run
 import webbrowser
+import platform
 import logging
 import signal
 import json
@@ -67,7 +68,7 @@ def index():
                 file.save(filename)
                 file.close()
                 pre_stix = parse_stix(open(filename, 'r'))
-        return render_template('index-black.html')
+        return render_template('index-black.html', disabled=(platform.system() != 'Windows'))
     except Exception as ex:
         return render_template('error.html', res=ex)
 

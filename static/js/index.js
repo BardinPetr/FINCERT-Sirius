@@ -258,11 +258,12 @@ $(document).ready(function () {
                 }
             }
             if (Object.keys(a).indexOf('ram') !== -1) {
+                log(a.ram)
                 if (a.ram.length !== 0) {
                     yay++;
                     apnd += '<div class="panel panel-default"><div class="panel-heading">\u041D\u0430\u0439\u0434\u0435\u043D\u043D\u044B\u0435 \u0437\u0430\u043F\u0443\u0449\u0435\u043D\u043D\u044B\u0435 \u043F\u0440\u043E\u0446\u0435\u0441\u0441\u044B: </div><div class="panel-body"><ul class="list-group">';
                     a.ram.forEach(function (elem) {
-                        apnd += '<li class="list-group-item list-group-item-danger">' + elem + '</li>';
+                        apnd += '<li class="list-group-item list-group-item-danger">Наличие процесса в системе: ' + elem + '</li>';
                     });
                     apnd += '</ul></div></div>';
                 }

@@ -81,14 +81,18 @@
                     <div class="checkbox">
                         <label><input id="mail_cb" type="checkbox" value="">Почта</label>
                     </div>
-                    <div class="checkbox ">
+                    <div class="checkbox">
                         <label><input id="net_cb" type="checkbox" value="">Сеть</label>
                     </div>
-                    <div class="checkbox ">
-                        <label><input id="reg_cb" type="checkbox" value="">Реестр</label>
+                    <div class="checkbox" {% if disabled %} style="color: #777" {% endif %}>
+                        <label {% if disabled %} disabled data-toggle="tooltip" title="Доступно только для ОС Windows"
+                               {% endif %}><input {% if disabled %} disabled {% endif%}
+                                                  id="reg_cb" type="checkbox" value="">Реестр</label>
                     </div>
-                    <div class="checkbox ">
-                        <label><input id="ram_cb" type="checkbox" value="">ОЗУ</label>
+                    <div class="checkbox" {% if disabled %} style="color: #777" {% endif %}>
+                        <label {% if disabled %} data-toggle="tooltip" title="Доступно только для ОС Windows"
+                               {% endif %}><input {% if disabled %} disabled {% endif%}
+                                                  id="ram_cb" type="checkbox" value="">ОЗУ</label>
                     </div>
                     <!--
                     <div class="checkbox ">
