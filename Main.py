@@ -3,7 +3,6 @@ from MailPack import MailFinder
 from NetPack import NetFinder
 from time import sleep
 import platform
-from RamPack import RamFinder
 
 
 # TODO remove Flag
@@ -29,6 +28,8 @@ def run(data, cb):
         is_valid_data = False
         if 'files' in data:
             res['file'] = FileFinder.find(data['files'], cb)
+
+        # Проверка на заполнение поля Почты.
 
         if 'mail' in data:
             for i in data['mail']:
@@ -61,7 +62,7 @@ def run(data, cb):
             else:
                 cb({"text": "Сканирование реестра не разрешено на %s" % ps, "title": "Система", "color": "warning"}, 1)
 
-        # TODO Проверка на заполнение поля ОЗУ.
+        # Проверка на заполнение поля ОЗУ.
 
         is_valid_data = False
         if 'ram' in data:
@@ -69,7 +70,12 @@ def run(data, cb):
                 is_valid_data = len(data['ram'][i]) or is_valid_data
 
         if is_valid_data and 'ram' in data:
-            res['ram'] = RamFinder.find(data['ram'], cb)
+            ps = platform.system()
+            if ps == "Windows":
+                from RamPack import RamFinder
+                res['ram'] = RamFinder.find(data['ram'], cb)
+            else:
+                cb({"text": "Сканирование ОЗУ не разрешено на %s" % ps, "title": "Система", "color": "warning"}, 1)
 
         sleep(0.5)
         cb({"text": "Сканирование окончено", "title": "Сканирование", "color": "success"}, 1)
