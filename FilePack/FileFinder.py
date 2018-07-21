@@ -65,10 +65,9 @@ def find(data, cb):
 
                 for t in data:  # Обход данных из бюллетени
                     if int(t['size']) == file_size:
-                        if t['md5'] == Crypt.crypt_md5(file_text):
-                            if t['sha1'] == Crypt.crypt_sha1(file_text):
-                                if t['sha256'] == Crypt.crypt_sha256(file_text):
-                                    result[file_inf] = path
-                                    cb('Найден файл: ', result[file_inf])
-
+                        if (t['md5'] and t['md5'] == Crypt.crypt_md5(file_text)) or \
+                                (t['sha1'] and t['sha1'] == Crypt.crypt_sha1(file_text)) or \
+                                (t['sha256'] and t['sha256'] == Crypt.crypt_sha256(file_text)):
+                            result[file_inf] = path
+                            cb('Найден файл: ', result[file_inf])
     return result

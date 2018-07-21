@@ -320,6 +320,9 @@ $(document).ready(function () {
         return $("#file_" + x);
     });
 
+    const md5re = RegExp(/^[0-9a-fA-F]{32}$/i);
+    const sha1re = RegExp(/^[0-9a-fA-F]{40}$/i);
+    const sha256re = RegExp(/^[0-9a-fA-F]{64}$/i);
     const file_add_f = function (x) {
         var cur = {
             name: file_objs[0].val(),
@@ -328,7 +331,10 @@ $(document).ready(function () {
             sha256: file_objs[3].val(),
             md5: file_objs[4].val()
         };
-        if (cur.name && cur.size && cur.md5 && cur.sha1 && cur.sha256) {
+        var ismd5 = cur.md5 && md5re.test(cur.md5);
+        var issha1 = cur.sha1 && sha1re.test(cur.sha1);
+        var issha256 = cur.sha256 && sha256re.test(cur.sha256);
+        if (cur.name && cur.size && (ismd5 || issha1 || issha256)) {
             file_objs.map(function (x, i, a) {
                 x.val('');
             });
