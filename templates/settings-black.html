@@ -4,6 +4,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta charset="UTF-8">
     <title>CyberOWL</title>
+    <link rel="icon" href="/static/images/icon.ico">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="/static/node_modules/@fortawesome/fontawesome-free/css/all.css">
@@ -90,14 +91,14 @@
                     <span class="input-group-addon"><i class="far fa-calendar-alt"></i> <strong>ДНИ</strong></span>
                     <input id="daysf" type="number" class="form-control"
                            placeholder="Введите время в днях" min="1"
-                           {% if cred.data %} value="{{ cred.filetime }}" {% else %} value="10"  {% endif %}>
+                           {% if cred.data %} value="{{ cred.filetime }}" {% else %} value="10" {% endif %}>
                 </div>
                 <h5>Промежуток дат анализа писем (рекомендуемо 14 дней):</h5>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="far fa-calendar-plus"></i> <strong>ДНИ</strong></span>
                     <input id="daysm" type="number" class="form-control"
                            placeholder="Введите время в днях" min="1"
-                           {% if cred.data %} value="{{ cred.mailtime }}" {% else %} value="14"  {% endif %}>
+                           {% if cred.data %} value="{{ cred.mailtime }}" {% else %} value="14" {% endif %}>
                 </div>
             </div>
         </div>
