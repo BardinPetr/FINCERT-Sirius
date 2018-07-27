@@ -3,3 +3,4 @@ flask
 cryptography
 stix2
 Werkzeug
+yara-python

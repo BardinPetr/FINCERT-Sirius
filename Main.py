@@ -1,6 +1,7 @@
 from FilePack import FileFinder
 from MailPack import MailFinder
 from NetPack import NetFinder
+from YaraPack import YaraFinder
 from time import sleep
 import platform
 
@@ -76,6 +77,14 @@ def run(data, cb):
                 res['ram'] = RamFinder.find(data['ram'], cb)
             else:
                 cb({"text": "Сканирование ОЗУ не разрешено на %s" % ps, "title": "Система", "color": "warning"}, 1)
+
+        is_valid_data = False
+        if 'yara' in data:
+            for i in data['yara']:
+                is_valid_data = len(data['yara'][i]) or is_valid_data
+
+        if is_valid_data and 'yara' in data:
+            res['yara'] = YaraFinder.find(data['yara'], cb)
 
         sleep(0.5)
         cb({"text": "Сканирование окончено", "title": "Сканирование", "color": "success"}, 1)
