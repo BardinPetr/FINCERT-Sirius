@@ -4,19 +4,17 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta charset="UTF-8">
     <title>CyberOWL</title>
-    <link rel="icon" href="/static/images/icon.ico">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="/static/node_modules/@fortawesome/fontawesome-free/css/all.css">
+    <link rel="stylesheet" href="/static/node_modules/toastr/build/toastr.css">
+    <link rel="stylesheet" href="/static/lib/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/style-black.css">
+    <script src="/static/node_modules/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="/static/node_modules/js-base64/base64.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.2.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="/static/lib/css3-mediaqueries.min.js"></script>
+    <script src="/static/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script type='text/javascript' src="/static/lib/modernizr.min.js"></script>
+    <script src="/static/node_modules/toastr/build/toastr.min.js"></script>
     <script src="/static/node_modules/fernet/fernetBrowser.js"></script>
     <script src="/static/js/settings.js"></script>
-    <script type='text/javascript' src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.7.1/modernizr.min.js"></script>
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -64,13 +62,13 @@
                            placeholder="Порт (993)" {% if cred.data %} value="{{ cred.imapport }}" {% endif %}>
                 </div>
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <span class="input-group-addon"><i class="fas fa-user"></i></span>
                     <input data-error="Этот EMail невалиден" id="email" type="email"
                            class="form-control" placeholder="Email"
                            {% if cred.data %} value="{{ cred.cred[0] }}" {% endif %}>
                 </div>
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <span class="input-group-addon"><i class="fas fa-key"></i></span>
                     <input id="password" type="password" class="form-control"
                            placeholder="Пароль">
                 </div>
