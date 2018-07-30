@@ -400,11 +400,6 @@ $(document).ready(function () {
         }
     };
     $('#mail_txt_add').click(mail_txt_add_f);
-    $("#mail_txt_inp").keyup(function (e) {
-        if (e.keyCode === 13) {
-            mail_txt_add_f();
-        }
-    });
 
     const ip_re = new RegExp(/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/);
     const net_ip_add_f = function (x) {
@@ -505,7 +500,7 @@ $(document).ready(function () {
         var c = $("#yara_inp");
         var cur = c.val();
         c.val('');
-        if (cur) {
+        if (cur.length > 0) {
             addh_yara(cur);
             if (x !== 1) toastr.info("Успешно добавлен", "Параметры");
         } else {
@@ -513,11 +508,7 @@ $(document).ready(function () {
         }
     };
     $('#yara_add').click(yara_add_f);
-    $("#yara_inp").keyup(function (e) {
-        if (e.keyCode === 13) {
-            yara_add_f();
-        }
-    });
+
 
     var panel_names = ["files", "mail", "net", "reg", "ram", "log", "yara"];
     panel_names.map(function (name, index, arr) {

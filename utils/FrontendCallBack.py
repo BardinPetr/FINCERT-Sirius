@@ -31,6 +31,11 @@ class FrontendCallBack:
     def send_running(self):
         self.send({'xtype': 2})
 
+    def stixparse(self, data):
+        res = {'xtype': 3}
+        res.update(data)
+        self.send(res)
+
     def old(self, data, cbt=0):
         res = {'xtype': cbt}
         if type(data) == dict:

@@ -100,11 +100,11 @@ def ws_receive(meta, wss, txt):
                 mainthread = StoppableThread(lambda: run(res, callback))
                 mainthread.start()
             elif data[0] == "STOP":
-                callback({"text": "Сканирование закончено вручную", "title": "Сканирование", "color": "error"}, 1)
+                callback.toast_red("Сканирование", "Сканирование закончено вручную")
                 mainthread.stop()
             elif data[0] == "GETSTIX":
                 if pre_stix:
-                    callback(pre_stix, 3)
+                    callback.stixparse(pre_stix)
                 pre_stix = None
             elif data[0] == "POWEROFF":
                 sleep(5)

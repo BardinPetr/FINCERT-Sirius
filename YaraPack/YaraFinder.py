@@ -23,7 +23,7 @@ def run_yara(data, cb):
         rule = yara.compile(
             source=data)  # Создание yara.Rules object
     except yara.SyntaxError:
-        cb.toast_error("Ошибка ввода данных", "Найдено невалидное YARA-правило!")
+        cb.toast_red("Ошибка ввода данных", "Найдено невалидное YARA-правило!")
         return []
     root_start = '/home/petr/Pictures'  # Стартовый корень от которого мы начинаем поиск.
     result = list()

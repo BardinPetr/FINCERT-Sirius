@@ -25,7 +25,7 @@ def run(data, cb):
 
     if is_valid_data:
         res = {}
-        cb.indicate_running()
+        cb.send_running()
         sleep(0.5)
         cb.toast_green("Сканирование", "Начато сканирование")
 

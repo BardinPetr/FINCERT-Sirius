@@ -9,7 +9,7 @@ class StoppableThread(threading.Thread):
         trg()
 
     def __init__(self, x, start_timeout=0):
-        trg = lambda: StoppableThread.wait(start_timeout, x) if start_timeout != 0 else x
+        trg = (lambda: StoppableThread.wait(start_timeout, x)) if start_timeout != 0 else x
         super(StoppableThread, self).__init__(target=trg)
         self._stop_event = threading.Event()
 
