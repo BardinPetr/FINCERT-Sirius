@@ -278,12 +278,21 @@ $(document).ready(function () {
                 }
             }
             if (Object.keys(a).indexOf('ram') !== -1) {
-                log(a.ram)
                 if (a.ram.length !== 0) {
                     yay++;
                     apnd += '<div class="panel panel-default"><div class="panel-heading">\u041D\u0430\u0439\u0434\u0435\u043D\u043D\u044B\u0435 \u0437\u0430\u043F\u0443\u0449\u0435\u043D\u043D\u044B\u0435 \u043F\u0440\u043E\u0446\u0435\u0441\u0441\u044B: </div><div class="panel-body"><ul class="list-group">';
                     a.ram.forEach(function (elem) {
                         apnd += '<li class="list-group-item list-group-item-danger">Наличие процесса в системе: ' + elem + '</li>';
+                    });
+                    apnd += '</ul></div></div>';
+                }
+            }
+            if (Object.keys(a).indexOf('yara') !== -1) {
+                if (a.yara.length !== 0) {
+                    yay++;
+                    apnd += '<div class="panel panel-default"><div class="panel-heading">Индикаторы из YARA-правил: </div><div class="panel-body"><ul class="list-group">';
+                    a.yara.forEach(function (elem) {
+                        apnd += '<li class="list-group-item list-group-item-danger">Наличие файла в системе: ' + elem[1] + ' из правила ' + elem[0] + '</li>';
                     });
                     apnd += '</ul></div></div>';
                 }
@@ -512,7 +521,6 @@ $(document).ready(function () {
 
     var panel_names = ["files", "mail", "net", "reg", "ram", "log", "yara"];
     panel_names.map(function (name, index, arr) {
-        log(name)
         $('#panel_' + name).hide();
         $('#' + name + '_cb').on('click', function () {
             if ($('#' + name + '_cb').prop('checked')) {
@@ -531,7 +539,6 @@ $(document).ready(function () {
 
     indicate_running(false);
     start_btn.click(function () {
-        log(1);
         if (format_data.used.indexOf('mail') !== -1) {
             mail_add_f(1);
             mail_txt_add_f(1);

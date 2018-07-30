@@ -26,7 +26,7 @@ def run_yara(data, cb):
         cb({"text": "Найдено невалидное YARA-правило!", "title": "Ошибка ввода данных", "color": "error"}, 1)
         return []
     root_start = '/home/petr/Pictures'  # Стартовый корень от которого мы начинаем поиск.
-    result = dict()
+    result = list()
     # print(rule)
     flag = False
     if platform.system() == 'Windows':
@@ -38,7 +38,8 @@ def run_yara(data, cb):
             file_inf = file
             file = os.path.join(root, file)
             if len(rule.match(file)):
-                result[str(rule.match(file))] = file
+                result.append(
+                    [str(rule.match(file)), file])  # Results be like [(%matched rule name%, %matched file path%)]
             # print(len(rule.match(file)))
             # print(file)
     return result
