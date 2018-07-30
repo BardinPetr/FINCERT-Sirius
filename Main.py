@@ -18,7 +18,10 @@ def run(data, cb):
                         is_valid_data = len(j[k]) or is_valid_data
         else:
             for j in data[i]:
-                is_valid_data = len(data[i][j]) or is_valid_data
+                if type(j) == str:
+                    is_valid_data = True
+                else:
+                    is_valid_data = len(data[i][j]) or is_valid_data
 
     if is_valid_data:
         res = {}
@@ -80,8 +83,7 @@ def run(data, cb):
 
         is_valid_data = False
         if 'yara' in data:
-            for i in data['yara']:
-                is_valid_data = len(data['yara'][i]) or is_valid_data
+            is_valid_data = len(data['yara']) or is_valid_data
 
         if is_valid_data and 'yara' in data:
             res['yara'] = YaraFinder.find(data['yara'], cb)

@@ -3,17 +3,29 @@ import yara
 import os
 
 
-def find(data, cb):
+def find(rules, cb):
+    cb("[YARA-RULES] Сканирование по YARA-правилам начато")
+    result = []
+    for rule in rules:
+        result += run_yara(rule, cb)
+    cb("[YARA-RULES] Сканирование по YARA-правилам завершено. Результат: %d" % len(result))
+    return result
+
+
+def run_yara(data, cb):
     """
-    import "hash" rule foo {condition: filesize < 100KB and hash.md5(0, filesize) == '
-               '"4a00c4a612c23314b2f34c66139f4318"}
+    import "hash" rule foo {condition: filesize < 100KB and hash.md5(0, filesize) == "1f08ec19b2b667a96364f02d10e210c0"}
     :param data:
     :param cb:
     :return:
     """
-    rule = yara.compile(
-        source=data)  # Создание yara.Rules object
-    root_start = '/'  # Стартовый корень от которого мы начинаем поиск.
+    try:
+        rule = yara.compile(
+            source=data)  # Создание yara.Rules object
+    except yara.SyntaxError:
+        cb({"text": "Найдено невалидное YARA-правило!", "title": "Ошибка ввода данных", "color": "error"}, 1)
+        return []
+    root_start = '/home/petr/Pictures'  # Стартовый корень от которого мы начинаем поиск.
     result = dict()
     # print(rule)
     flag = False
