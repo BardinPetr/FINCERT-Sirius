@@ -20,7 +20,8 @@ var format_data = {
     ram: {
         procs: []
     },
-    log: []
+    log: [],
+    yara: []
 };
 
 var resmod_goup = function resmod_goup() {
@@ -39,7 +40,7 @@ var file_item_tmpl = function file_item_tmpl(name, id, type) {
 function del_elem(name, id, type) {
     type = parseInt(type);
     $("#" + format_litxt(type, name)).remove();
-    var x = [format_data.files, format_data.mail.email, format_data.mail.text, format_data.net.ip, format_data.net.url, format_data.reg.keys, format_data.ram.procs, format_data.log][type].filter(function (y) {
+    var x = [format_data.files, format_data.mail.email, format_data.mail.text, format_data.net.ip, format_data.net.url, format_data.reg.keys, format_data.ram.procs, format_data.log, format_data.yara][type].filter(function (y) {
         return y.disp !== name;
     });
     switch (type) {
@@ -67,6 +68,9 @@ function del_elem(name, id, type) {
         case 7:
             format_data.log = x;
             break;
+        case 7:
+            format_data.yara = x;
+            break;
     }
 }
 
@@ -86,7 +90,7 @@ $(document).ready(function () {
             $("#ntext").fadeIn(2000);
             start_btn.prop("disabled", true);
             stop_btn.prop("disabled", false);
-            tabs.forEach(function(x, a, b) {
+            tabs.forEach(function (x, a, b) {
                 $(x).addClass("not-active-a");
             });
         } else {
@@ -94,7 +98,7 @@ $(document).ready(function () {
             $("#ntext").fadeOut(2000);
             stop_btn.prop("disabled", true);
             start_btn.prop("disabled", false);
-            tabs.forEach(function(x, a, b) {
+            tabs.forEach(function (x, a, b) {
                 $(x).removeClass("not-active-a");
                 $(x).removeAttr('data-toggle');
                 $(x).removeAttr('title');
@@ -136,44 +140,49 @@ $(document).ready(function () {
         return this;
     };
 
-    var addh_file = function addh_file(cur) {
+    var addh_file = function (cur) {
         var disp = cur.name || cur.sha256 || cur.sha1 || cur.md5 || cur.size;
         disp = disp.slice(0, 30) + '...';
         format_data.files = format_data.files.concat({disp: disp, norm: cur});
         $('#file_list').prepend(file_item_tmpl(disp, format_data.files.length - 1, 0));
     };
-    var addh_mail_a = function addh_mail_a(cur) {
+    var addh_mail_a = function (cur) {
         var disp = cur.slice(0, 35) + '...';
         format_data.mail.email = format_data.mail.email.concat({disp: disp, norm: cur});
         $('#mail_addr_list').prepend(file_item_tmpl(disp, format_data.mail.email.length - 1, 1));
     };
-    var addh_mail_t = function addh_mail_t(cur) {
+    var addh_mail_t = function (cur) {
         var displaytxt = cur.slice(0, 20) + '...';
         format_data.mail.text = format_data.mail.text.concat({disp: displaytxt, norm: cur});
         $('#mail_txt_list').prepend(file_item_tmpl(displaytxt, format_data.mail.text.length - 1, 2));
     };
-    var addh_net_i = function addh_net_i(cur) {
+    var addh_net_i = function (cur) {
         format_data.net.ip = format_data.net.ip.concat({disp: cur, norm: cur});
         $('#net_ip_list').prepend(file_item_tmpl(cur, format_data.net.ip.length - 1, 3));
     };
-    var addh_net_u = function addh_net_u(cur) {
+    var addh_net_u = function (cur) {
         var disp = cur.slice(0, 10) + '...';
         format_data.net.url = format_data.net.url.concat({disp: disp, norm: cur});
         $('#net_url_list').prepend(file_item_tmpl(disp, format_data.net.url.length - 1, 4));
     };
-    var addh_reg = function addh_reg(cur) {
+    var addh_reg = function (cur) {
         var disp = cur.key.slice(0, 35) + '...';
         format_data.reg.keys = format_data.reg.keys.concat({disp: disp, norm: cur});
         $('#reg_list').prepend(file_item_tmpl(disp, format_data.reg.keys.length - 1, 5));
     };
-    var addh_ram_p = function addh_ram_p(cur) {
+    var addh_ram_p = function (cur) {
         var disp = cur.slice(0, 35) + '...';
         format_data.ram.procs = format_data.ram.procs.concat({disp: disp, norm: cur});
         $('#ram_list').prepend(file_item_tmpl(disp, format_data.ram.procs.length - 1, 6));
     };
-    var addh_log = function addh_log(cur) {
+    var addh_log = function (cur) {
         format_data.log = format_data.log.concat({disp: cur, norm: cur});
         $('#log_list').prepend(file_item_tmpl(cur, format_data.log.length - 1, 7));
+    };
+    var addh_yara = function (cur) {
+        var displaytxt = cur.slice(0, 20) + '...';
+        format_data.yara = format_data.yara.concat({disp: displaytxt, norm: cur});
+        $('#yara_list').prepend(file_item_tmpl(displaytxt, format_data.yara.length - 1, 2));
     };
 
     ws.onopen = function () {
@@ -482,8 +491,28 @@ $(document).ready(function () {
         }
     });
 
-    var panel_names = ["files", "mail", "net", "reg", "ram", "log"];
+
+    const yara_add_f = function (x) {
+        var c = $("#yara_inp");
+        var cur = c.val();
+        c.val('');
+        if (cur) {
+            addh_yara(cur);
+            if (x !== 1) toastr.info("Успешно добавлен", "Параметры");
+        } else {
+            if (x !== 1) toastr.warning("Не все поля заполнены корректно", "Параметры");
+        }
+    };
+    $('#yara_add').click(yara_add_f);
+    $("#yara_inp").keyup(function (e) {
+        if (e.keyCode === 13) {
+            yara_add_f();
+        }
+    });
+
+    var panel_names = ["files", "mail", "net", "reg", "ram", "log", "yara"];
     panel_names.map(function (name, index, arr) {
+        log(name)
         $('#panel_' + name).hide();
         $('#' + name + '_cb').on('click', function () {
             if ($('#' + name + '_cb').prop('checked')) {
@@ -502,6 +531,7 @@ $(document).ready(function () {
 
     indicate_running(false);
     start_btn.click(function () {
+        log(1);
         if (format_data.used.indexOf('mail') !== -1) {
             mail_add_f(1);
             mail_txt_add_f(1);
@@ -514,6 +544,7 @@ $(document).ready(function () {
         if (format_data.used.indexOf('reg') !== -1) reg_add_f(1);
         if (format_data.used.indexOf('ram') !== -1) ram_add_f(1);
         if (format_data.used.indexOf('log') !== -1) log_add_f(1);
+        if (format_data.used.indexOf('yara') !== -1) yara_add_f(1);
         if (format_data.used.length === 0) {
             toastr.warning("Ни один из модулей поиска не выбран", "Сканирование");
         } else {
