@@ -48,25 +48,25 @@ def pkt_callback(pkt, data, cb):
             res['non_format'].append({'ip': ip_source, 'time': tm, 'type': tp + ' to'})
             s = 'Дата: {} -- [{}] {} -> {} '.format(tm, tp, ip_source, ip_destination)
             res['format'].append(s)
-            cb(s)
+            cb.log(s)
 
         if ip_destination in data['ip']:
             res['non_format'].append({'ip': ip_destination, 'time': tm, 'type': tp + ' from'})
             s = 'Дата: {} -- [{}] {} -> {} '.format(tm, tp, ip_source, ip_destination)
             res['format'].append(s)
-            cb(s)
+            cb.log(s)
 
         if ip_source in data['ip_url']:
             res['non_format'].append({'ip': ip_source, 'time': tm, 'type': tp + ' to'})
             s = 'Дата: {} -- [{}] {}'.format(tm, tp, data['ip_url'][ip_source])
             res['format'].append(s)
-            cb(s)
+            cb.log(s)
 
         if ip_destination in data['ip_url']:
             res['non_format'].append({'ip': ip_source, 'time': tm, 'type': tp + ' from'})
             s = 'Дата: {} -- [{}] {}'.format(tm, tp, data['ip_url'][ip_destination])
             res['format'].append(s)
-            cb(s)
+            cb.log(s)
 
 
 def clear():
@@ -86,7 +86,7 @@ def find(data, cb):
         a = udata['snifftime']
         if int(a) <= 0: raise Exception
     except Exception:
-        cb({"text": "Время не настроено в разделе НАСТРОЙКИ", "title": "Ошибка анализа сети", "color": "error"}, 1)
+        cb.toast_red("Ошибка анализа сети", "Время не настроено в разделе НАСТРОЙКИ")
     else:
         dt = ({'ip': data['ip'], 'time': udata['snifftime'], 'ip_url': {}})
         for i in data['url']:
@@ -100,7 +100,7 @@ def find(data, cb):
                   timeout=int(
                       dt['time']) * 60)  # Dt - database, Cb - callback, store=0 means that we won't store our res
         except PermissionError:
-            cb({"text": "Анализ сети не разрешен", "title": "Системная ошибка", "color": "error"}, 1)
+            cb.toast_red("Системная ошибка", "Анализ сети не разрешен")
         except Exception as ex:
-            cb({"text": ex, "title": "Ошибка анализа сети", "color": "error"}, 1)
+            cb.toast_red("Ошибка анализа сети", ex)
     return postprocess_data()

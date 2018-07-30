@@ -69,5 +69,5 @@ def find(data, cb):
                                 (t['sha1'] and t['sha1'] == Crypt.crypt_sha1(file_text)) or \
                                 (t['sha256'] and t['sha256'] == Crypt.crypt_sha256(file_text)):
                             result[file_inf] = path
-                            cb('Найден файл: ', result[file_inf])
+                            cb.log('Найден файл: ' + result[file_inf])
     return result

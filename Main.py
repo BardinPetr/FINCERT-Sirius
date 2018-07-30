@@ -25,9 +25,9 @@ def run(data, cb):
 
     if is_valid_data:
         res = {}
-        cb("", 4)
+        cb.indicate_running()
         sleep(0.5)
-        cb({"text": "Начато сканирование", "title": "Сканирование", "color": "success"}, 1)
+        cb.toast_green("Сканирование", "Начато сканирование")
 
         is_valid_data = False
         if 'files' in data:
@@ -64,7 +64,7 @@ def run(data, cb):
                 from RegPack import RegistryFinder
                 res['reg'] = RegistryFinder.find(data['reg'], cb)
             else:
-                cb({"text": "Сканирование реестра не разрешено на %s" % ps, "title": "Система", "color": "warning"}, 1)
+                cb.toast_orange("Система", "Сканирование реестра не разрешено на %s")
 
         # Проверка на заполнение поля ОЗУ.
 
@@ -79,7 +79,7 @@ def run(data, cb):
                 from RamPack import RamFinder
                 res['ram'] = RamFinder.find(data['ram'], cb)
             else:
-                cb({"text": "Сканирование ОЗУ не разрешено на %s" % ps, "title": "Система", "color": "warning"}, 1)
+                cb.toast_orange("Система", "Сканирование ОЗУ не разрешено на %s" % ps)
 
         is_valid_data = False
         if 'yara' in data:
@@ -89,8 +89,8 @@ def run(data, cb):
             res['yara'] = YaraFinder.find(data['yara'], cb)
 
         sleep(0.5)
-        cb({"text": "Сканирование окончено", "title": "Сканирование", "color": "success"}, 1)
+        cb.toast_green("Сканирование", "Сканирование окончено")
         sleep(0.5)
-        cb(res, 2)
+        cb.send_results(res)
     else:
-        cb({"text": "Данные не введены", "title": "Ошибка ввода данных", "color": "error"}, 1)
+        cb.toast_red("Ошибка ввода данных", "Данные не введены")

@@ -4,11 +4,11 @@ import os
 
 
 def find(rules, cb):
-    cb("[YARA-RULES] Сканирование по YARA-правилам начато")
+    cb.log("[YARA-RULES] Сканирование по YARA-правилам начато")
     result = []
     for rule in rules:
         result += run_yara(rule, cb)
-    cb("[YARA-RULES] Сканирование по YARA-правилам завершено. Результат: %d" % len(result))
+    cb.log("[YARA-RULES] Сканирование по YARA-правилам завершено. Результат: %d" % len(result))
     return result
 
 
@@ -23,7 +23,7 @@ def run_yara(data, cb):
         rule = yara.compile(
             source=data)  # Создание yara.Rules object
     except yara.SyntaxError:
-        cb({"text": "Найдено невалидное YARA-правило!", "title": "Ошибка ввода данных", "color": "error"}, 1)
+        cb.toast_error("Ошибка ввода данных", "Найдено невалидное YARA-правило!")
         return []
     root_start = '/home/petr/Pictures'  # Стартовый корень от которого мы начинаем поиск.
     result = list()
