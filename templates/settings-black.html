@@ -100,6 +100,20 @@
                 </div>
             </div>
         </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Параметры анализа файлов</div>
+            <div class="panel-body">
+                <h5>Корневой каталог поиска</h5>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fas fa-hashtag"></i></span>
+                    <input id="rootpath" type="number" class="form-control"
+                           placeholder="Путь корневого каталога анализа" min="1"
+                           {% if cred.data %} value="{{ cred.rootpath }}"
+                           {% elif disabled %} value="/"
+                           {% else %} value="C:\\" {% endif %}>
+                </div>
+            </div>
+        </div>
         <button id="save" type="button" class="btn btn-default btn-block" style="font-size: 20px;">
             <strong>Сохранить</strong>
         </button>
