@@ -62,13 +62,14 @@ $(document).ready(function () {
         };
         var ihost_re = new RegExp(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/);
         var email_re = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-        var path_re = new RegExp(/^(?:[a-zA-Z]\:|\\\\[\w\.]+\\[\w.$]+)\\(?:[\w]+\\)*\w([\w.])+$/);
+        var path_re = new RegExp(/^(?:(?:[\w]\:\\)|(?:\/))([\w\.\-_]+[\\/])*(?:[\w\.\-_]+)?$/g);
+        var file_path_re = new RegExp(/.+\.\w*$/g);
         var pass_re = new RegExp(/^.{6,}$/g);
         var mail_x = ihost_re.test(mdata.imaphost) && email_re.test(mdata.cred[0]) && pass_re.test(mdata.cred[1]) && !isNaN(parseInt(mdata.imapport)) && parseInt(mdata.imapport) > 0,
             time_x = !isNaN(parseInt(tdata.snifftime)) && parseInt(tdata.snifftime) > 0,
             mtime_x = !isNaN(parseInt(tdata.mailtime)) && parseInt(tdata.mailtime) > 0,
             ftime_x = !isNaN(parseInt(tdata.filetime)) && parseInt(tdata.filetime) > 0,
-            path_x = path_x.test(pdata.rpath);
+            path_x = path_re.test(pdata.rpath) && !file_path_re.test(pdata.rpath);
         var ismail = mdata.imapport || mdata.imaphost || mdata.cred[0] || mdata.cred[1];
         var istime = Boolean(tdata.snifftime);
         var istimef = Boolean(tdata.filetime);
