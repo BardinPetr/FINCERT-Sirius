@@ -554,5 +554,10 @@ $(document).ready(function () {
         indicate_running(false);
         ws.send("NOTENC:::STOP");
     });
+
+    $("#clearlogsbtn").click(function () {
+        $("#logs").html('[СИСТЕМА] Логи отчищены');
+    });
+
     append_log('[СИСТЕМА] ВЕБ-часть загружена');
 });
