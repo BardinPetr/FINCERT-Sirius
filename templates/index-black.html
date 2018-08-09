@@ -71,27 +71,65 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">Выберете модули</div>
                 <div class="panel-body">
-                    <div class="checkbox">
-                        <label><input id="files_cb" type="checkbox" value="">Файлы</label>
+                    <div class="SliderSwitch">
+                        <label for="files_cb">
+                            <input id="files_cb" type="checkbox"/>
+                            <div class="SliderSwitch__container">
+                                <div class="SliderSwitch__toggle">
+                                </div>
+                            </div>
+                            <i style="margin-left: 8px">Файлы</i>
+                        </label>
                     </div>
-                    <div class="checkbox">
-                        <label><input id="mail_cb" type="checkbox" value="">Почта</label>
+                    <div class="SliderSwitch">
+                        <label for="mail_cb">
+                            <input id="mail_cb" type="checkbox"/>
+                            <div class="SliderSwitch__container">
+                                <div class="SliderSwitch__toggle">
+                                </div>
+                            </div>
+                            <i style="margin-left: 8px">Почта</i>
+                        </label>
                     </div>
-                    <div class="checkbox">
-                        <label><input id="net_cb" type="checkbox" value="">Сеть</label>
+                    <div class="SliderSwitch">
+                        <label for="net_cb">
+                            <input id="net_cb" type="checkbox"/>
+                            <div class="SliderSwitch__container">
+                                <div class="SliderSwitch__toggle">
+                                </div>
+                            </div>
+                            <i style="margin-left: 8px">Сеть</i>
+                        </label>
                     </div>
-                    <div class="checkbox">
-                        <label><input id="yara_cb" type="checkbox" value="">YARA-правила</label>
+                    <div class="SliderSwitch">
+                        <label for="yara_cb">
+                            <input id="yara_cb" type="checkbox"/>
+                            <div class="SliderSwitch__container">
+                                <div class="SliderSwitch__toggle">
+                                </div>
+                            </div>
+                            <i style="margin-left: 8px">YARA</i>
+                        </label>
                     </div>
-                    <div class="checkbox" {% if disabled %} style="color: #777" {% endif %}>
-                        <label {% if disabled %} disabled data-toggle="tooltip" title="Доступно только для ОС Windows"
-                               {% endif %}><input {% if disabled %} disabled {% endif%}
-                                                  id="reg_cb" type="checkbox" value="">Реестр</label>
+                    <div class="SliderSwitch">
+                        <label for="reg_cb">
+                            <input {% if disabled %} disabled {% endif %} id="reg_cb" type="checkbox"/>
+                            <div class="SliderSwitch__container {% if disabled %} disabled {% endif %}">
+                                <div class="SliderSwitch__toggle">
+                                </div>
+                            </div>
+                            <i style="margin-left: 8px; {% if disabled %} color: #8c8c8c; {% endif %}">Реестр</i>
+                        </label>
                     </div>
-                    <div class="checkbox" {% if disabled %} style="color: #777" {% endif %}>
-                        <label {% if disabled %} data-toggle="tooltip" title="Доступно только для ОС Windows"
-                               {% endif %}><input {% if disabled %} disabled {% endif%}
-                                                  id="ram_cb" type="checkbox" value="">ОЗУ</label>
+                    <div class="SliderSwitch">
+                        <label for="ram_cb">
+                            <input {% if disabled %} disabled {% endif %} id="ram_cb" type="checkbox"/>
+                            <div class="SliderSwitch__container {% if disabled %} disabled {% endif %}">
+                                <div class="SliderSwitch__toggle">
+                                </div>
+                            </div>
+                            <i style="margin-left: 8px; {% if disabled %} color: #8c8c8c; {% endif %}">ОЗУ</i>
+                        </label>
                     </div>
                     <!--
                     <div class="checkbox ">
@@ -357,5 +395,6 @@
         </div>
         <button id="gotop_fab" title="Go to top"><i class="fas fa-arrow-up"></i></button>
     </div>
+</div>
 </body>
 </html>
