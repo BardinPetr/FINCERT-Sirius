@@ -168,7 +168,7 @@ def find(data, cb):
     count_ip_destination.clear()
     used_source.clear()
     used_destination.clear()
-    
+
     udata = get_cred()
 
     try:
