@@ -23,10 +23,11 @@ def find(data, cb):
     """
     dfm = int(get_cred()['filetime'] or 10)
 
-    root_start = '/'  # Стартовый корень от которого мы начинаем поиск.
+    root_start = get_cred()['rootpath'] \
+        if get_cred()['data'] else '/'  # Стартовый корень от которого мы начинаем поиск.
     flag = False
     if platform.system() == 'Windows':
-        root_start = 'C:\\'
+        root_start = 'C:\\' if root_start == '/' else root_start
         flag = True
 
     result = dict()  # Результат нашей проверки.
