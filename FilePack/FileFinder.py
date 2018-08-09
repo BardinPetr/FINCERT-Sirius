@@ -3,6 +3,7 @@ from utils.encryption import get_cred
 from FilePack import ReadFile, Crypt
 from pathlib import Path
 import platform
+import re
 import os
 
 
@@ -50,7 +51,8 @@ def find(data, cb):
             check_name = False
 
             for t in data:
-                check_name = t['name'] == file_inf or check_name
+                check_name = (t['name'] == file_inf or
+                              (t['name'].startswith('regexp/') and re.match(t['name'][7:-1], file_inf))) or check_name
 
             if check_name:
                 statinfo = os.stat(file)
