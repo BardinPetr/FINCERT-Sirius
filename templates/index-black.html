@@ -151,6 +151,40 @@
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fas fa-file"></i></span>
                                         <input id="file_name" type="text" class="form-control" placeholder="Имя">
+                                        <div class="input-group-btn">
+                                            <div class="dropdown">
+                                                <button class="btn btn-primary dropdown-toggle" type="button"
+                                                        data-toggle="dropdown">
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a class="btn btn-link"
+                                                           onclick="$('#file_name').val('regexp/^\\w+\\.\\w+$/')">
+                                                            Цифры и буквы
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="btn btn-link"
+                                                           onclick="$('#file_name').val('regexp/^[A-zА-я]+\\.[A-z]+$/')">
+                                                            Цифры
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="btn btn-link"
+                                                           onclick="$('#file_name').val('regexp/^[0-9]+\\.\\w+$/')">
+                                                            Буквы
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="btn btn-link"
+                                                           onclick="$('#file_name').val('regexp/^.*$/')">
+                                                            Любые символы
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fas fa-weight"></i></span>
@@ -345,9 +379,10 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <div class="btn-group btn-group-xs pull-right">
-                        <a id="clearlogsbtn" href="#" class="btn btn-default btn-sm"><i class="fas fa-eraser"></i></a>
+                        <a id="clearlogsbtn" href="#" class="btn btn-default btn-sm">Отчистить логи
+                            <i class="fas fa-eraser"></i></a>
                     </div>
-                    Panel header
+                    Логи
                 </div>
                 <div class="panel-body">
                     <p id="logs"></p>

@@ -556,7 +556,7 @@ $(document).ready(function () {
     });
 
     $("#clearlogsbtn").click(function () {
-        $("#logs").html('[СИСТЕМА] Логи отчищены');
+        $("#logs").html('[СИСТЕМА] Логи очищены');
     });
 
     append_log('[СИСТЕМА] ВЕБ-часть загружена');
