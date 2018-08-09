@@ -8,9 +8,7 @@ import re
 
 
 class MailRunner:
-    imaps = ['imap.gmail.com', 'imap.yandex.ru']
-
-    def __init__(self, cred, imap=imaps[0], port=imaplib.IMAP4_SSL_PORT):
+    def __init__(self, cred, imap, port=imaplib.IMAP4_SSL_PORT):
         """
         Initializes MailRunner class
         :param cred: tuple -> (email -> str, pass -> str)
@@ -19,7 +17,7 @@ class MailRunner:
         """
         self.mail = None
         self.cred = cred
-        self.imap = MailRunner.imaps[imap] if type(imap) == int else imap
+        self.imap = imap
         self.port = port
 
     def init(self):
