@@ -11,5 +11,5 @@ def find(data, cb):
 
     result = list(set(real_processes) & set(processes))
     for r in result:
-        cb("Наличие процесса в системе: {}".format(str(r)))
+        cb.log("Наличие процесса в системе: {}".format(str(r)))
     return result

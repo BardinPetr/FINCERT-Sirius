@@ -3,6 +3,7 @@ from utils.encryption import get_cred
 from FilePack import ReadFile, Crypt
 from pathlib import Path
 import platform
+import re
 import os
 
 
@@ -23,10 +24,11 @@ def find(data, cb):
     """
     dfm = int(get_cred()['filetime'] or 10)
 
-    root_start = '/'  # Стартовый корень от которого мы начинаем поиск.
+    root_start = get_cred()['rootpath'] \
+        if get_cred()['data'] else '/'  # Стартовый корень от которого мы начинаем поиск.
     flag = False
     if platform.system() == 'Windows':
-        root_start = 'C:\\'
+        root_start = 'C:\\' if root_start == '/' else root_start
         flag = True
 
     result = dict()  # Результат нашей проверки.
@@ -49,7 +51,8 @@ def find(data, cb):
             check_name = False
 
             for t in data:
-                check_name = t['name'] == file_inf or check_name
+                check_name = (t['name'] == file_inf or
+                              (t['name'].startswith('regexp/') and re.match(t['name'][7:-1], file_inf))) or check_name
 
             if check_name:
                 statinfo = os.stat(file)
@@ -69,5 +72,5 @@ def find(data, cb):
                                 (t['sha1'] and t['sha1'] == Crypt.crypt_sha1(file_text)) or \
                                 (t['sha256'] and t['sha256'] == Crypt.crypt_sha256(file_text)):
                             result[file_inf] = path
-                            cb('Найден файл: ', result[file_inf])
+                            cb.log('Найден файл: ' + result[file_inf])
     return result

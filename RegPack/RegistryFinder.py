@@ -36,9 +36,9 @@ def is_kv_exists(key, value):
 def find(data, cb):
     res = []
     for i in data['keys']:
-        cb('[REGISTRY] Trying key: %s' % i['key'])
+        cb.log('[REGISTRY] Trying key: %s' % i['key'])
         r = is_kv_exists(i['key'], i['val'])
-        cb('FOUND' if r else 'NOT FOUND')
+        cb.log('FOUND' if r else 'NOT FOUND')
         res += [i['key']] if r else []
     return res
 

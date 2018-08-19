@@ -8,9 +8,7 @@ import re
 
 
 class MailRunner:
-    imaps = ['imap.gmail.com', 'imap.yandex.ru']
-
-    def __init__(self, cred, imap=imaps[0], port=imaplib.IMAP4_SSL_PORT):
+    def __init__(self, cred, imap, port=imaplib.IMAP4_SSL_PORT):
         """
         Initializes MailRunner class
         :param cred: tuple -> (email -> str, pass -> str)
@@ -19,7 +17,7 @@ class MailRunner:
         """
         self.mail = None
         self.cred = cred
-        self.imap = MailRunner.imaps[imap] if type(imap) == int else imap
+        self.imap = imap
         self.port = port
 
     def init(self):
@@ -102,15 +100,14 @@ def find(data, cb):
 
     udata = get_cred()
     if not udata['data'] or (udata['data'] and not udata['mail']):
-        cb({"text": "Параметры почты не настроены в разделе НАСТРОЙКИ", "title": "Ошибка анализа почты",
-            "color": "error"}, 1)
+        cb.toast_red("Ошибка анализа почты", "Параметры почты не настроены в разделе НАСТРОЙКИ")
         return result
 
     mr = MailRunner(udata['cred'], imap=udata['imaphost'], port=udata['imapport'])
 
     preres = mr.init()
     if preres:
-        cb({"text": "Параметры почты неверны (imap/email/pass)", "title": "Ошибка анализа почты", "color": "error"}, 1)
+        cb.toast_red("Ошибка анализа почты", "Параметры почты неверны (imap/email/pass)")
     else:
         modifsince = int(get_cred()['mailtime'] or 14)
         date = (datetime.date.today() - datetime.timedelta(modifsince)).strftime(
@@ -128,5 +125,5 @@ def find(data, cb):
                     any(filter(lambda x: x > 0.8, map(lambda x: cosine_dist(x, mail['body']), data['text']))):
                 result.append({'from': mail['from'], 'date': mail['date'],
                                'subj': mail['subj']})  # Check FROM and TEXT in data from bulletin
-                cb('Дата получения: {} с темой: {} Исходило от: {}'.format(mail['date'], mail['subj'], mail['from']))
+                cb.log('Дата получения: {} с темой: {} Исходило от: {}'.format(mail['date'], mail['subj'], mail['from']))
     return result

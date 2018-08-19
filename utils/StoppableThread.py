@@ -1,9 +1,16 @@
 import threading
+import time
 
 
 class StoppableThread(threading.Thread):
-    def __init__(self, x):
-        super(StoppableThread, self).__init__(target=x)
+    @staticmethod
+    def wait(t, trg):
+        time.sleep(t)
+        trg()
+
+    def __init__(self, x, start_timeout=0):
+        trg = (lambda: StoppableThread.wait(start_timeout, x)) if start_timeout != 0 else x
+        super(StoppableThread, self).__init__(target=trg)
         self._stop_event = threading.Event()
 
     def stop(self):

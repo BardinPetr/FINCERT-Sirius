@@ -5,18 +5,17 @@
     <meta charset="UTF-8">
     <title>CyberOWL</title>
     <link rel="icon" href="/static/images/icon.ico">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="/static/node_modules/@fortawesome/fontawesome-free/css/all.css">
+    <link rel="stylesheet" href="/static/node_modules/toastr/build/toastr.css">
+    <link rel="stylesheet" href="/static/lib/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/style-black.css">
+    <script src="/static/node_modules/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="/static/node_modules/js-base64/base64.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.2.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="/static/lib/css3-mediaqueries.min.js"></script>
+    <script src="/static/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script type='text/javascript' src="/static/lib/modernizr.min.js"></script>
+    <script src="/static/node_modules/toastr/build/toastr.min.js"></script>
     <script src="/static/node_modules/fernet/fernetBrowser.js"></script>
     <script src="/static/js/settings.js"></script>
-    <script type='text/javascript' src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.7.1/modernizr.min.js"></script>
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -44,13 +43,53 @@
 
     </div>
 </nav>
-<form id="f1" data-toggle="validator" role="form">
-    <div class="col-lg-2"></div>
-    <div class="col-lg-8">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Введите Ваши учетные данные почты для анализа</div>
-            <div class="panel-body">
-                <div class="input-group">
+<div class="col-lg-6">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Параметры времени</div>
+        <div class="panel-body">
+            <h5>Время анализа сети (рекомендуемо 10 минут):</h5>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fas fa-clock"></i> <strong>МИНУТЫ</strong></span>
+                <input id="time" type="number" class="form-control"
+                       placeholder="Введите время в минутах" min="1"
+                       {% if cred.data %} value="{{ cred.snifftime }}" {% else %} value="10" {% endif %}>
+            </div>
+            <h5>Промежуток дат анализа файлов (рекомендуемо 10 дней):</h5>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="far fa-calendar-alt"></i> <strong>ДНИ</strong></span>
+                <input id="daysf" type="number" class="form-control"
+                       placeholder="Введите время в днях" min="1"
+                       {% if cred.data %} value="{{ cred.filetime }}" {% else %} value="10" {% endif %}>
+            </div>
+            <h5>Промежуток дат анализа писем (рекомендуемо 14 дней):</h5>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="far fa-calendar-plus"></i> <strong>ДНИ</strong></span>
+                <input id="daysm" type="number" class="form-control"
+                       placeholder="Введите время в днях" min="1"
+                       {% if cred.data %} value="{{ cred.mailtime }}" {% else %} value="14" {% endif %}>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">Параметры анализа файлов</div>
+        <div class="panel-body">
+            <h5>Корневой каталог поиска</h5>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fas fa-hashtag"></i></span>
+                <input id="rootpath" type="text" class="form-control"
+                       placeholder="Путь корневого каталога анализа"
+                       {% if cred.data %} value="{{ cred.rootpath }}"
+                       {% elif disabled %} value="/"
+                       {% else %} value="C:\\" {% endif %}>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-lg-6">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Учетные данные почты для анализа</div>
+        <div class="panel-body">
+            <div class="input-group">
                     <span class="input-group-addon">imap<br>
                       <div class="dropdown">
                         <button class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown">
@@ -58,55 +97,29 @@
                         <ul class="dropdown-menu" id="imapsel_dd"></ul>
                       </div>
                     </span>
-                    <input id="iserver" type="text" class="form-control"
-                           placeholder="Сервер" {% if cred.data %} value="{{ cred.imaphost }}" {% endif %}>
-                    <input id="iport" type="number" class="form-control" min="1"
-                           placeholder="Порт (993)" {% if cred.data %} value="{{ cred.imapport }}" {% endif %}>
-                </div>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                    <input data-error="Этот EMail невалиден" id="email" type="email"
-                           class="form-control" placeholder="Email"
-                           {% if cred.data %} value="{{ cred.cred[0] }}" {% endif %}>
-                </div>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                    <input id="password" type="password" class="form-control"
-                           placeholder="Пароль">
-                </div>
+                <input id="iserver" type="text" class="form-control"
+                       placeholder="Сервер" {% if cred.data %} value="{{ cred.imaphost }}" {% endif %}>
+                <input id="iport" type="number" class="form-control" min="1"
+                       placeholder="Порт (993)" {% if cred.data %} value="{{ cred.imapport }}" {% endif %}>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fas fa-user"></i></span>
+                <input data-error="Этот EMail невалиден" id="email" type="email"
+                       class="form-control" placeholder="Email"
+                       {% if cred.data %} value="{{ cred.cred[0] }}" {% endif %}>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fas fa-key"></i></span>
+                <input id="password" type="password" class="form-control"
+                       placeholder="Пароль">
             </div>
         </div>
-        <div class="panel panel-primary">
-            <div class="panel-heading">Параметры времени</div>
-            <div class="panel-body">
-                <h5>Время анализа сети (рекомендуемо 10 минут):</h5>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fas fa-clock"></i> <strong>МИНУТЫ</strong></span>
-                    <input id="time" type="number" class="form-control"
-                           placeholder="Введите время в минутах" min="1"
-                           {% if cred.data %} value="{{ cred.snifftime }}" {% else %} value="10" {% endif %}>
-                </div>
-                <h5>Промежуток дат анализа файлов (рекомендуемо 10 дней):</h5>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="far fa-calendar-alt"></i> <strong>ДНИ</strong></span>
-                    <input id="daysf" type="number" class="form-control"
-                           placeholder="Введите время в днях" min="1"
-                           {% if cred.data %} value="{{ cred.filetime }}" {% else %} value="10" {% endif %}>
-                </div>
-                <h5>Промежуток дат анализа писем (рекомендуемо 14 дней):</h5>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="far fa-calendar-plus"></i> <strong>ДНИ</strong></span>
-                    <input id="daysm" type="number" class="form-control"
-                           placeholder="Введите время в днях" min="1"
-                           {% if cred.data %} value="{{ cred.mailtime }}" {% else %} value="14" {% endif %}>
-                </div>
-            </div>
-        </div>
-        <button id="save" type="button" class="btn btn-default btn-block" style="font-size: 20px;">
-            <strong>Сохранить</strong>
-        </button>
     </div>
-    <div class="col-lg-2"></div>
-</form>
+</div>
+<div class="container-fluid">
+    <button id="save" type="button" class="btn btn-default btn-block" style="font-size: 20px;">
+        <strong>Сохранить</strong>
+    </button>
+</div>
 </body>
 </html>

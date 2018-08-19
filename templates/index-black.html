@@ -5,17 +5,17 @@
     <meta charset="UTF-8">
     <title>CyberOWL</title>
     <link rel="icon" href="/static/images/icon.ico">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="/static/node_modules/@fortawesome/fontawesome-free/css/all.css">
+    <link rel="stylesheet" href="/static/node_modules/toastr/build/toastr.css">
+    <link rel="stylesheet" href="/static/lib/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/style-black.css">
+    <script src="/static/node_modules/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="/static/node_modules/js-base64/base64.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.2.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="/static/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script type='text/javascript' src="/static/lib/modernizr.min.js"></script>
+    <script src="/static/node_modules/toastr/build/toastr.min.js"></script>
     <script src="/static/lib/css3-mediaqueries.min.js"></script>
     <script src="/static/js/index.js"></script>
-    <script type='text/javascript' src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.7.1/modernizr.min.js"></script>
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -47,7 +47,7 @@
             </div>
             <div class="navbar-header">
                 <a class="navbar-brand" href="/" id="cyberowl_tab">CyberOWL</a>
-                <a class="navbar-brand" href="/"  id="main_tab">Главная</a>
+                <a class="navbar-brand" href="/" id="main_tab">Главная</a>
                 <a class="navbar-brand" href="/settings" id="settings_tab">Настройки</a>
                 <a class="navbar-brand" href="/faq" id="faq_tab">Справка</a>
             </div>
@@ -79,6 +79,9 @@
                     </div>
                     <div class="checkbox">
                         <label><input id="net_cb" type="checkbox" value="">Сеть</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input id="yara_cb" type="checkbox" value="">YARA-правила</label>
                     </div>
                     <div class="checkbox" {% if disabled %} style="color: #777" {% endif %}>
                         <label {% if disabled %} disabled data-toggle="tooltip" title="Доступно только для ОС Windows"
@@ -148,6 +151,40 @@
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fas fa-file"></i></span>
                                         <input id="file_name" type="text" class="form-control" placeholder="Имя">
+                                        <div class="input-group-btn">
+                                            <div class="dropdown">
+                                                <button class="btn btn-primary dropdown-toggle" type="button"
+                                                        data-toggle="dropdown">
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a class="btn btn-link"
+                                                           onclick="$('#file_name').val('regexp/^\\w+\\.\\w+$/')">
+                                                            Цифры и буквы
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="btn btn-link"
+                                                           onclick="$('#file_name').val('regexp/^[A-zА-я]+\\.[A-z]+$/')">
+                                                            Цифры
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="btn btn-link"
+                                                           onclick="$('#file_name').val('regexp/^[0-9]+\\.\\w+$/')">
+                                                            Буквы
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="btn btn-link"
+                                                           onclick="$('#file_name').val('regexp/^.*$/')">
+                                                            Любые символы
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fas fa-weight"></i></span>
@@ -241,6 +278,24 @@
                             </div>
                         </div>
                     </div>
+                    <div id="panel_yara" class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#collapse-group" href="#el7">YARA-правила:</a>
+                            </h4>
+                        </div>
+                        <div id="el7" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <textarea class="form-control" name="mail_text" rows="5" id="yara_inp"
+                                          style="width: 100%; resize: vertical;"></textarea>
+                                <button id="yara_add" type="button" class="btn btn-default"
+                                        style="width: 100%; margin-top: 3px;">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <ul class="list-group" id="yara_list"></ul>
+                            </div>
+                        </div>
+                    </div>
                     <div id="panel_reg" class="panel panel-info">
                         <div class="panel-heading">
                             <h4 class="panel-title">
@@ -322,14 +377,20 @@
         </div>
         <div class="col-lg-5 col-md-5">
             <div class="panel panel-primary">
-                <div class="panel-heading">Логи</div>
+                <div class="panel-heading">
+                    <div class="btn-group btn-group-xs pull-right">
+                        <a id="clearlogsbtn" href="#" class="btn btn-default btn-sm">Очистить
+                            <i class="fas fa-eraser"></i></a>
+                    </div>
+                    Логи
+                </div>
                 <div class="panel-body">
                     <p id="logs"></p>
                 </div>
             </div>
         </div>
+        <button id="gotop_fab" title="Go to top"><i class="fas fa-arrow-up"></i></button>
     </div>
-    <button id="gotop_fab" title="Go to top"><i class="fas fa-arrow-up"></i></button>
 </div>
 </body>
 </html>
