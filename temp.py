@@ -15,7 +15,4 @@ def run():
     print(Crypt.crypt_sha256(file_text))
     print(time.time())
 
-
-s = 'Дата: {} -- [{}] {} -> {} '.format(tm, tp, ip_source, ip_destination)
-
 run()
