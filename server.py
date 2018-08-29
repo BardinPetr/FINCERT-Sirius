@@ -80,7 +80,6 @@ def faq():
 
 def ws_receive(meta, wss, txt):
     global mainthread, pre_stix
-    print("Received by WS:", txt)
     if txt.startswith("NOTENC"):
         data = txt.split(':::')[1:]
         try:

@@ -6,7 +6,6 @@ class FrontendCallBack:
         self._ws = wsserver
 
     def send(self, data):
-        print(json.dumps(data, ensure_ascii=False))
         self._ws.send_message_to_all(json.dumps(data, ensure_ascii=False))
 
     def log(self, logtxt):
@@ -25,10 +24,8 @@ class FrontendCallBack:
         self.send({'xtype': 1, "title": title, "text": text, "color": "success"})
 
     def send_results(self, data):
-        print(data)
         res = {'xtype': 2}
         res.update(data)
-        print(res)
         self.send(res)
 
     def send_running(self):
