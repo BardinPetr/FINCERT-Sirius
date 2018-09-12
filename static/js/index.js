@@ -24,6 +24,8 @@ var format_data = {
     yara: []
 };
 
+var re_count = 0;
+
 var resmod_goup = function resmod_goup() {
     $('#results_modal').animate({scrollTop: 0}, 'slow');
 };
@@ -38,6 +40,7 @@ var file_item_tmpl = function file_item_tmpl(name, id, type) {
 };
 
 function del_elem(name, id, type) {
+    re_count -= name.startsWith('RegularExpression');
     type = parseInt(type);
     $("#" + format_litxt(type, name)).remove();
     var x = [format_data.files, format_data.mail.email, format_data.mail.text, format_data.net.ip, format_data.net.url, format_data.reg.keys, format_data.ram.procs, format_data.log, format_data.yara][type].filter(function (y) {
@@ -68,7 +71,7 @@ function del_elem(name, id, type) {
         case 7:
             format_data.log = x;
             break;
-        case 7:
+        case 8:
             format_data.yara = x;
             break;
     }
@@ -141,8 +144,8 @@ $(document).ready(function () {
     };
 
     var addh_file = function (cur) {
-        var disp = cur.name || cur.sha256 || cur.sha1 || cur.md5 || cur.size;
-        disp = disp.slice(0, 30) + '...';
+        var disp = (cur.name.startsWith('regexp') ?
+            ("RegularExpression#" + re_count++) : (cur.name.slice(0, 30) + '...'));
         format_data.files = format_data.files.concat({disp: disp, norm: cur});
         $('#file_list').prepend(file_item_tmpl(disp, format_data.files.length - 1, 0));
     };
@@ -182,7 +185,7 @@ $(document).ready(function () {
     var addh_yara = function (cur) {
         var displaytxt = cur.slice(0, 20) + '...';
         format_data.yara = format_data.yara.concat({disp: displaytxt, norm: cur});
-        $('#yara_list').prepend(file_item_tmpl(displaytxt, format_data.yara.length - 1, 2));
+        $('#yara_list').prepend(file_item_tmpl(displaytxt, format_data.yara.length - 1, 7));
     };
 
     ws.onopen = function () {
