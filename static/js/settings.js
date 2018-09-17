@@ -127,19 +127,26 @@ $(document).ready(function () {
             }
         }
         if (ispath) {
-            if (path_x) {
-                res.rootpath = pdata.rpath;
-            } else {
-                toastr.error("Данные путей неверно введены", "Настройки");
-                return;
-            }
+            $.get("exists", {x: Base64.encode(pdata.rpath)}, function (data) {
+                if (parseInt(data)) {
+                    res.rootpath = pdata.rpath;
+                } else {
+                    toastr.error("Данные путей неверно введены", "Настройки");
+                    return;
+                }
+                done();
+            });
+        } else {
+            done();
         }
 
-        if (!ismail && !istime && !istimef && !istimem) {
-            toastr.error("Данные времени неверно введены", "Настройки");
-            return;
+        function done() {
+            if (!ismail && !istime && !istimef && !istimem) {
+                toastr.error("Данные времени неверно введены", "Настройки");
+                return;
+            }
+            send(res);
+            toastr.success("Настройки сохранены на ваш компьютер", "Настройки");
         }
-        send(res);
-        toastr.success("Настройки сохранены на ваш компьютер", "Настройки");
     });
 });

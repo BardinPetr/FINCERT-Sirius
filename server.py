@@ -6,6 +6,7 @@ from flask import render_template, request
 from STIX2Parse.Parse import parse_stix
 from utils.nocache import nocache
 from utils.encryption import *
+from base64 import b64decode
 from flask import Flask
 from time import sleep
 from Main import run
@@ -58,6 +59,13 @@ def index():
         return render_template('index-black.html', disabled=(platform.system() != 'Windows'))
     except Exception as ex:
         return render_template('error.html', res=ex)
+
+
+@app.route('/exists', methods=['GET'])
+@nocache
+def exists():
+    xxx = b64decode(request.args['x'].encode()).decode()
+    return str(int(os.path.isdir(xxx) or os.path.exists(xxx)))
 
 
 @app.route('/settings', methods=['GET', 'POST'])
