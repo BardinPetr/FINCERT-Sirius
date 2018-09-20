@@ -35,16 +35,15 @@ var format_litxt = function format_litxt(type, name) {
 };
 
 var file_item_tmpl = function file_item_tmpl(name, id, type) {
-    var xname = format_litxt(type, name);
-    return '<li id="' + xname + '" class="list-group-item">' + name + '<span class="badge">\n            <i class="fas fa-times" onclick=\'del_elem("' + name + '", "' + id + '", "' + type + '");\'></i></span></li>';
+    var xname = format_litxt(type, Base64.toBase64(name));
+    return '<li id="' + xname + '" class="list-group-item">' + name + '<span class="badge">\n            <i class="fas fa-times" onclick=\'del_elem("' + name + '", "' + id + '", "' + type + '", "' + Base64.toBase64(name) + '");\'></i></span></li>';
 };
 
-function del_elem(name, id, type) {
-    re_count -= name.startsWith('RegularExpression');
+function del_elem(name, id, type, b64) {
     type = parseInt(type);
-    $("#" + format_litxt(type, name)).remove();
+    $("#" + format_litxt(type, b64)).remove();
     var x = [format_data.files, format_data.mail.email, format_data.mail.text, format_data.net.ip, format_data.net.url, format_data.reg.keys, format_data.ram.procs, format_data.log, format_data.yara][type].filter(function (y) {
-        return y.disp !== name;
+        return Base64.toBase64(y.disp).toString() !== b64;
     });
     switch (type) {
         case 0:
@@ -145,7 +144,7 @@ $(document).ready(function () {
 
     var addh_file = function (cur) {
         var disp = (cur.name.startsWith('regexp') ?
-            ("RegularExpression#" + re_count++) : (cur.name.slice(0, 30) + '...'));
+            (cur.name + '.hash.' + (cur.sha256 || cur.sha1 || cur.md5).slice(0, 10) + '...') : (cur.name.slice(0, 50) + '...'));
         format_data.files = format_data.files.concat({disp: disp, norm: cur});
         $('#file_list').prepend(file_item_tmpl(disp, format_data.files.length - 1, 0));
     };
