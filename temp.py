@@ -3,8 +3,7 @@ import os
 import time
 
 
-def run():
-    file = '/Users/maximgran/Desktop/rw/gg'
+def run(file):
     statinfo = os.stat(file)
     file_size = statinfo.st_size  # Размер файла
     file_text = ReadFile.file_get_contents(file)
@@ -13,6 +12,9 @@ def run():
     print(Crypt.crypt_md5(file_text))
     print(Crypt.crypt_sha1(file_text))
     print(Crypt.crypt_sha256(file_text))
-    print(time.time())
+    print()
 
-run()
+run('/mnt/Data/гыыыы/65757656757687.jpg')
+run('/mnt/Data/гыыыы/F-YHN__HoP_UJFUH.jpg')
+run('/mnt/Data/гыыыы/random5293ui8jrwh89wguofh.jpg')
+run('/mnt/Data/гыыыы/чотоплохосовсем.jpg')
